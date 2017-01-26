@@ -1,8 +1,9 @@
 var numCartas = 24; // Número par
 var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea simétrico.
 var enJuego = false;
+var mensajeInicio = "<br/><br/>¡ Sheep Couples ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
 var mensajeGameOver = "<br/><br/>¡ CONGRATULATIONS ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
-var muestraInicio = true; // False si no se quiere barrido al principio
+var muestraInicio = false; // False si no se quiere barrido al principio
 var arrCartas = [];
 var valorMaxCarta = 12;
 var cartaAnterior = null;
@@ -21,57 +22,43 @@ Array.prototype.barajar = function() {
    return this;
 };
 
-// Crear array con los números de cartas;
-for (var i = 0; i<(numCartas/2); i++) {
-  var valor = Math.ceil(Math.random()*valorMaxCarta);
-  // Si el valor no existe lo añado, si existe vuelvo a intentarlo
-  if (arrCartas.indexOf(valor) == -1) {
-    arrCartas.push(valor);// Añado la carta
-    arrCartas.push(valor);// La duplico
-  } else {
-    i--; // Si la carta ya existía, vuelvo a generar otra.
+function arrayCartas() {
+  // Crear array con los números de cartas;
+  for (var i = 0; i<(numCartas/2); i++) {
+    var valor = Math.ceil(Math.random()*valorMaxCarta);
+    // Si el valor no existe lo añado, si existe vuelvo a intentarlo
+    if (arrCartas.indexOf(valor) == -1) {
+      arrCartas.push(valor);// Añado la carta
+      arrCartas.push(valor);// La duplico
+    } else {
+      i--; // Si la carta ya existía, vuelvo a generar otra.
+    }
   }
+  arrCartas.barajar();
 }
-arrCartas.barajar();
 
 $(document).ready (function () {
-  //crearBotones();
-  crearTablero();
-  crearCartas();
+  crearTablero(); // Muestro el tablero por primera vez
+  
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
     click: function() {
+      crearTablero(); // Limpio el tablero y muestro cartas.
       enJuego = true;
       $(this).attr("src", "images/startPulsado.png");
     }
   })
   $(document).keydown(function(event){
     if ((event.key).toUpperCase() == "S" ) {
+      crearTablero(); // Limpio el tablero y muestro cartas.
       enJuego = true;
       $("#start").attr("src", "images/startPulsado.png");
     }
   });
-
-  $(".carta").on({
-    click: function(e) {
-      if (enJuego) {
-        var event = e || window.event;
-        posX = e.pageX;
-        posY = e.pageY;
-        var carta = $(this);
-        if (carta.text() == "") { // La carta no está mostrada
-          muestraCarta(carta);
-        } else {
-          return; // Si ya se ha mostrado no hago nada.
-        }
-      } else {
-          pistaIniciar();
-      }
-    }
-  });
 });
 
-// Se indica visualmente donde hacer clic para comenzar
+/*
+// Se indica visualmente donde hacer clic para comenzar. muestraInicio = true
 function pistaIniciar() {
   if (!($("#leftStart").is("img"))) { // Evito duplicar flechas
     var sup = $("#startSup");
@@ -113,16 +100,16 @@ function pistaIniciar() {
       marginLeft: "1px"
     }, 1000, function () {
                 inf.animate({
-                  fontSize: "+=0.2em",
-                  opacity: "0.5",
+                  fontSize: "+=0.4em",
+                  opacity: "0.5"
                 }, 500, function () { 
                   inf.text("");
-                  inf.css({opacity: "1", fontSize: "1.2em"});
+                  inf.css({opacity: "1", fontSize: "0.8em"});
                 });
              });
-
   }
 }
+// Ya no tiene razón de ser */
 
 function muestraCarta(carta) {
   carta.text(carta.attr("value"));
@@ -157,6 +144,7 @@ function compruebaPareja(carta) {
       compruebaFin(); // Comprobar si todas están descubiertas.
     } else {
       // Las cartas no son iguales, vuelvo a ocultar las cartas.
+      intentos++;
       ocultaCarta(carta);
       ocultaCarta(cartaAnterior);
     }
@@ -175,7 +163,7 @@ function compruebaFin() {
     setTimeout(function () { 
         $('body').fireworks('destroy');
         enJuego = false;
-        destruirCartas();
+        destruirJuego();
       }, tiempoFuegos);
   }
 }
@@ -220,7 +208,7 @@ function ocultaCarta(carta) {
 
 function acierto(carta) {
   carta.animate({
-    fontSize:   "+=15px",
+    fontSize:   "+=10px",
     color:      "#0b0",
     fontWeigth: "bolder"
   });
@@ -228,14 +216,26 @@ function acierto(carta) {
 }
 
 function crearTablero() {
-  var padre = $("body");
-  // Creamos div para marcador e info
-  var atributos = {id: "marcador"};
-  var marcador = crearElemento(padre, "<DIV/>", atributos);
-  marcadorText();
-  // Creamos el espacio de las cartas
-  atributos = {id: "tablero"};
-  var tablero = crearElemento(padre, "<DIV/>", atributos);
+  if ($("body").children().length == 0) { // Inicio del juego
+    var padre = $("body");
+    // Creamos div para marcador e info
+    var atributos = {id: "marcador"};
+    var marcador = crearElemento(padre, "<DIV/>", atributos);
+    marcadorText();
+    // Creamos el espacio de las cartas
+    atributos = {id: "tablero", class: "tableroInicioFin"};
+    var tablero = crearElemento(padre, "<DIV/>", atributos);
+    tablero.html(mensajeInicio);
+    return; // Salgo de la función;
+  } else {
+     $("#tablero").empty(); // Vacío el tablero para poner las cartas.
+    // Si las cartas ya están creadas vacío el array de cartas
+    if (arrayCartas.length > 0 ) {
+      arrayCartas.splice(0, arrayCartas.length);
+    }
+    arrayCartas(); // Creo los números para las cartas. Repartir y barajar.
+    crearCartas(); // Creo las cartas y las muestro.
+  }
 }
 
 function marcadorText() {
@@ -286,16 +286,34 @@ function crearCartas() {
       padre.append(rompeFila);
     }
     // Barrido de cartas. 
-    setTimeout(muestraCarta, 50*i, $("#c"+i));
+    if (muestraInicio) {
+        setTimeout(muestraCarta, 50*i, $("#c"+i));
+    }
   }
+  // Creo el evento click para las cartas.
+  $(".carta").on({
+    click: function(e) {
+      if (enJuego) {
+        var event = e || window.event;
+        posX = e.pageX;
+        posY = e.pageY;
+        var carta = $(this);
+        if (carta.text() == "") { // La carta no está mostrada
+          muestraCarta(carta);
+        } else {
+          return; // Si ya se ha mostrado no hago nada.
+        }
+      } else {
+          pistaIniciar();
+      }
+    }
+  });
 }
 
-function destruirCartas() {
+function destruirJuego() {
   var tablero = $("#tablero");
-  var altura = tablero.height();
-  tablero.addClass("tableroGameOver").css("font-size", "40px");
-  tablero.empty().css("height", altura).html(mensajeGameOver);
-  //tablero.addClass("msgFin");
+  tablero.addClass("tableroInicioFin");
+  tablero.empty().html(mensajeGameOver);
   $("#start").attr("src", "images/start.png");
 }
 

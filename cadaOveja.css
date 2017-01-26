@@ -54,27 +54,38 @@ body {
 }
 
 #tablero {
-  min-height: 200px;
+  height: 610px;
   overflow: auto;
-  height: auto;
-  font-size: 5em;
+  font-size: 40px;
 }
 
-.tableroGameOver {
+.tableroInicioFin {
   font-family: 'Press Start 2P', cursive;
   color: #fff;
   text-shadow: 4px 4px #555;
+
 }
 
 .gloria {
   font-family: 'Gloria Hallelujah', cursive;
 }
 
+.carta:before, .carta:after {
+  content:"";
+  position:absolute;
+  bottom:0;top:2px;left:15px;right:15px;
+  z-index:-1;
+  border-radius:100px/30px;
+ -webkit-box-shadow:0 0 15px 2px #000;
+  -moz-box-shadow:0 0 15px 2px #000;
+  box-shadow: 0 0 15px 2px #000;
+}
+
 .carta {
   position: relative;
   float: left;
-  color: #fff;
-  margin: 25px 10px;
+  color: #f00;
+  margin: 25px 11px;
   min-height: 150px; 
   width: 100px;
   background: url(images/reversocarta.jpg);
@@ -83,7 +94,9 @@ body {
   border: 1px solid black;
   line-height: 135px;
   text-align: center;
-  font-size: 50px;
+  font-size: 35px;
+  font-family: Arial, sans-serif;
+  text-shadow: 2px 2px #333;
   border-radius: 10px;
   /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.38);*/
 }
@@ -143,7 +156,7 @@ body {
 #botonStart {
   float: left;
   margin: 0 auto;
-  width: 400px;
+  width: 500px;
   height: 120px;
 }
 
@@ -160,7 +173,7 @@ body {
   opacity: 1;
   margin: 10px auto;
   color: #fff;
-  font-size: 1.2em;
+  font-size: 0.8 em;
   text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF;
 }
 

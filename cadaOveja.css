@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+body {
+  background-color: #000;
+  background-image: url(images/tapete.jpg);
+  background-repeat: repeat;    
+}
+
+#marcador, #tablero {
+  position: relative;
+  border: 2px solid #050;
+  border-radius: 10px 10px 10px 10px;
+  background-color:rgba(0,0,0,0.3);
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.45);
+  margin: 25px auto;
+  width: 1000px;
+  text-align: center;
+}
+
+#marcador {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;  
+  height: 120px;
+}
+
+.titulo {
+  text-decoration: underline;
+}
+
+#puntuacion, #tiradas, #botonStart {
+  width: 200px;
+  text-align: center;
+  font-weight: bolder;
+  color: #ff0;
+  line-height: 0em;
+  text-shadow: 2px 2px #a50;
+  font-size: 1.3em;
+}
+
+#puntuacion{
+  float: left;
+}
+
+#puntuacion > p, #tiradas >p {
+  line-height: 1em;
+  font-size: 1.5em;
+}
+
+#tiradas {
+  float: right;
+}
+
+#tablero {
+  min-height: 200px;
+  overflow: auto;
+  height: auto;
+  font-size: 5em;
+}
+
+.tableroGameOver {
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+  text-shadow: 4px 4px #555;
+}
+
+.gloria {
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+.carta {
+  position: relative;
+  float: left;
+  color: #fff;
+  margin: 25px 10px;
+  min-height: 150px; 
+  width: 100px;
+  background: url(images/reversocarta.jpg);
+  background-size: 100% 100%;
+  background-color: #ccc;
+  border: 1px solid black;
+  line-height: 135px;
+  text-align: center;
+  font-size: 50px;
+  border-radius: 10px;
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.38);*/
+}
+
+.cartaMostrada {
+  background: url(images/anversocarta.jpg);
+  background-size: 100% 100%;
+}
+
+.cartaAcertada {
+  background: url(images/cartaacertada.jpg);
+  background-size: 100% 100%;
+}
+
+.clear {
+    clear: both;
+}
+
+/* Burbujas */
+
+.burbuja {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 85px;
+  color: #fff;
+  position: fixed;
+  width: 150px;
+  height: 162px;
+  line-height: 150px;
+  text-align: center;
+}
+
+.burbOra {
+  background-image: url(images/burbOrange.png);
+  background-size: 100%;
+  text-shadow: 2px 2px #f57127;
+}
+
+.burbBlue {
+  background-image: url(images/burbBlue.png);
+  background-size: 100%;
+  text-shadow: 2px 2px #00a3ff;
+}
+
+.burbOraRota {
+  background-image: url(images/burbOraRota.png);
+  background-size: 100%;
+  text-shadow: 2px 2px #f57127;
+}
+
+.burbBlueRota {
+  background-image: url(images/burbBlueRota.png);
+  background-size: 100%;
+  text-shadow: 2px 2px #00a3ff;
+}
+
+/* Botones */
+#botonStart {
+  float: left;
+  margin: 0 auto;
+  width: 400px;
+  height: 120px;
+}
+
+#leftStart {
+  margin: 0 65px 0 0;
+  border: 0 dotted yellow;
+}
+
+#start {
+  margin: 15px auto 0;
+}
+
+#startInf {
+  opacity: 1;
+  margin: 10px auto;
+  color: #fff;
+  font-size: 1.2em;
+  text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF;
+}
+
+#rightStart {
+  margin: 0 0 0 65px;
+}

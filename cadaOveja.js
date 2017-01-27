@@ -3,6 +3,7 @@ var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea sim�
 var enJuego = false;
 var mensajeInicio = "<br/><br/>¡ Sheep Couples ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
 var mensajeGameOver = "<br/><br/>¡ CONGRATULATIONS ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
+var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
 var muestraInicio = false; // False si no se quiere barrido al principio
 var arrCartas = [];
 var valorMaxCarta = 12;
@@ -11,6 +12,7 @@ var intentos = 0;
 var posX = 0; // Posición x del ratón. Para mostrar burbujas puntuación.
 var poxY = 0; // Posición y del ratón. Para mostrar burbujas puntuación.
 var tiempoFuegos = 8000; // Tiempo (ms) duran los fuegos art. finales
+var tiempoMuestraCarta = 500; // Tiempos en milisegundos que se muestra la carta
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -119,7 +121,7 @@ function muestraCarta(carta) {
     fontSize:   "+=15px",
     color:      "#c00",
     fontWeigth: "bolder"
-  }, 1000, function() {
+  }, tiempoMuestraCarta, function() {
       if (cartaAnterior != null) { // Ya hay una carta descubierta
         compruebaPareja(carta);
         var tir = $("#numTiradas");
@@ -222,16 +224,19 @@ function crearTablero() {
     var atributos = {id: "marcador"};
     var marcador = crearElemento(padre, "<DIV/>", atributos);
     marcadorText();
-    // Creamos el espacio de las cartas
+    // Creamos el tapete para las cartas
     atributos = {id: "tablero", class: "tableroInicioFin"};
     var tablero = crearElemento(padre, "<DIV/>", atributos);
     tablero.html(mensajeInicio);
+    atributos = {id: "copyright", class: "footer"};
+    var foot = crearElemento(padre, "<FOOTER/>", atributos);
+    foot.html(mensajeFooter);
     return; // Salgo de la función;
-  } else {
+  } else { //
      $("#tablero").empty(); // Vacío el tablero para poner las cartas.
     // Si las cartas ya están creadas vacío el array de cartas
-    if (arrayCartas.length > 0 ) {
-      arrayCartas.splice(0, arrayCartas.length);
+    if (arrCartas.length > 0 ) {
+      arrCartas.splice(0, arrCartas.length);
     }
     arrayCartas(); // Creo los números para las cartas. Repartir y barajar.
     crearCartas(); // Creo las cartas y las muestro.

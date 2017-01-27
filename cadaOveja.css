@@ -57,6 +57,7 @@ body {
   height: 610px;
   overflow: auto;
   font-size: 40px;
+  margin: 25px auto 10px;
 }
 
 .tableroInicioFin {
@@ -179,4 +180,10 @@ body {
 
 #rightStart {
   margin: 0 0 0 65px;
+}
+
+#copyright {
+  font-size: 1em;
+  color: white;
+  text-align: center;
 }

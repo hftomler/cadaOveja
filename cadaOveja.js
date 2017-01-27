@@ -46,18 +46,25 @@ $(document).ready (function () {
   $("#start").on({
     click: function() {
       crearTablero(); // Limpio el tablero y muestro cartas.
-      enJuego = true;
-      $(this).attr("src", "images/startPulsado.png");
+      inicVar();
     }
   })
   $(document).keydown(function(event){
     if ((event.key).toUpperCase() == "S" ) {
       crearTablero(); // Limpio el tablero y muestro cartas.
-      enJuego = true;
-      $("#start").attr("src", "images/startPulsado.png");
+      inicVar();
     }
   });
 });
+
+
+function inicVar() {
+  $("#puntos").text("0");
+  $("#numTiradas").text("0");
+  tiradas = 0;
+  enJuego = true;
+  $("#start").attr("src", "images/startPulsado.png");
+}
 
 /*
 // Se indica visualmente donde hacer clic para comenzar. muestraInicio = true

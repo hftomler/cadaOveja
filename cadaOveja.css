@@ -95,7 +95,7 @@ body {
   border: 1px solid black;
   line-height: 135px;
   text-align: center;
-  font-size: 35px;
+  font-size: 40px;
   font-family: Arial, sans-serif;
   text-shadow: 2px 2px #333;
   border-radius: 10px;
@@ -174,7 +174,7 @@ body {
   opacity: 1;
   margin: 10px auto;
   color: #fff;
-  font-size: 0.8 em;
+  font-size: 0.8em;
   text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF;
 }
 

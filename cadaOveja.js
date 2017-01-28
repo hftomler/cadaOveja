@@ -1,10 +1,11 @@
 var numCartas = 24; // Número par
 var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea simétrico.
 var enJuego = false;
-var mensajeInicio = "<br/><br/>¡ Sheep Couples ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
+var mensajeInicio = "<br/><br/>¡ Sheep Couples ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>or press 'S' to play"
 var mensajeGameOver = "<br/><br/>¡ CONGRATULATIONS ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
 var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
-var muestraInicio = false; // False si no se quiere barrido al principio
+var muestraInicio = true; // False si no se quiere barrido al principio
+var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
 var valorMaxCarta = 12;
 var cartaAnterior = null;
@@ -12,7 +13,8 @@ var intentos = 0;
 var posX = 0; // Posición x del ratón. Para mostrar burbujas puntuación.
 var poxY = 0; // Posición y del ratón. Para mostrar burbujas puntuación.
 var tiempoFuegos = 8000; // Tiempo (ms) duran los fuegos art. finales
-var tiempoMuestraCarta = 500; // Tiempos en milisegundos que se muestra la carta
+var tiempoMuestraCarta = 300; // Tiempos en milisegundos que se muestra la carta
+var pista; // Variable para intervalo pista de pulsación botón start.
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -41,18 +43,31 @@ function arrayCartas() {
 
 $(document).ready (function () {
   crearTablero(); // Muestro el tablero por primera vez
-  
+  pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
     click: function() {
-      crearTablero(); // Limpio el tablero y muestro cartas.
-      inicVar();
+      if (!enJuego) {
+        clearInterval(pista); // Elimino la pista de donde pulsar
+        crearTablero(); // Limpio el tablero y muestro cartas.
+        if (muestraInicio) { // Retardo para esperar el barrido de cartas inicial
+         setTimeout(inicVar, retBarr*(numCartas+4)); 
+        } else {
+          inicVar();
+        }
+      }
     }
   })
   $(document).keydown(function(event){
     if ((event.key).toUpperCase() == "S" ) {
-      crearTablero(); // Limpio el tablero y muestro cartas.
-      inicVar();
+      if (!enJuego) {
+        clearInterval(pista);
+        crearTablero(); // Limpio el tablero y muestro cartas.
+        if (muestraInicio) {
+         setTimeout(inicVar, retBarr*(numCartas+4)); 
+        } else {
+          inicVar();
+        }      }
     }
   });
 });
@@ -66,10 +81,10 @@ function inicVar() {
   $("#start").attr("src", "images/startPulsado.png");
 }
 
-/*
-// Se indica visualmente donde hacer clic para comenzar. muestraInicio = true
+
+// Se indica visualmente donde hacer clic para comenzar. 
 function pistaIniciar() {
-  if (!($("#leftStart").is("img"))) { // Evito duplicar flechas
+  if (!($("#leftStart").is("img"))) { // Ya se está mostrando una flecha.
     var sup = $("#startSup");
     var inf = $("#startInf");
     inf.text("Haz clic en el botón o pulsa 'S'");
@@ -95,7 +110,7 @@ function pistaIniciar() {
                 fleIzq.attr("src", "images/lArrRed.png");
                 fleIzq.animate({
                   opacity: "0.2",
-                }, 500, function () { fleIzq.remove()});
+                }, 750, function () { fleIzq.remove()});
              });
     fleDer.animate({
       marginLeft: "1px"
@@ -103,29 +118,26 @@ function pistaIniciar() {
                 fleDer.attr("src", "images/rArrRed.png");
                 fleDer.animate({
                   opacity: "0.2",
-                }, 500, function () { fleDer.remove()});
+                }, 750, function () { fleDer.remove()});
              });
     inf.animate({
-      marginLeft: "1px"
+      fontSize: "+=0.5em",
+      opacity: "1"    
     }, 1000, function () {
                 inf.animate({
-                  fontSize: "+=0.4em",
-                  opacity: "0.5"
-                }, 500, function () { 
-                  inf.text("");
-                  inf.css({opacity: "1", fontSize: "0.8em"});
-                });
+                  fontSize: "-=0.5em",
+                  opacity: "0"
+                }, 750, function () {inf.text("")})
              });
   }
 }
-// Ya no tiene razón de ser */
 
 function muestraCarta(carta) {
   carta.text(carta.attr("value"));
   //carta.css("background-image", "url(images/anversocarta.jpg)");
   carta.toggleClass("cartaMostrada");
   carta.animate({
-    fontSize:   "+=15px",
+    fontSize:   "+=5px",
     color:      "#c00",
     fontWeigth: "bolder"
   }, tiempoMuestraCarta, function() {
@@ -207,7 +219,7 @@ function burbuja(carta, puntObt) {
 
 function ocultaCarta(carta) {
   carta.animate({
-    fontSize:   "-=15px",
+    fontSize:   "-=5px",
     color:      "#fff",
     fontWeigth: "normal"
   }, 250, function () {
@@ -217,7 +229,7 @@ function ocultaCarta(carta) {
 
 function acierto(carta) {
   carta.animate({
-    fontSize:   "+=10px",
+    fontSize:   "+=5px",
     color:      "#0b0",
     fontWeigth: "bolder"
   });
@@ -256,7 +268,7 @@ function marcadorText() {
   var atributos = {id: "puntuacion"};
   var punts = crearElemento(padre, "<DIV/>", atributos);
   atributos = {class: "gloria titulo"};
-  crearElemento(punts, "<h2/>", atributos, "Puntuación");
+  crearElemento(punts, "<h2/>", atributos, "Puntos");
   atributos = {id: "puntos", class: "gloria"};
   crearElemento(punts, "<p/>", atributos, "0");
   // DIV Centro
@@ -297,9 +309,9 @@ function crearCartas() {
       rompeFila.attr("class", "clear");
       padre.append(rompeFila);
     }
-    // Barrido de cartas. 
+    // Barrido de cartas. Después de crear las cartas se muestran durante 0.1 segundos. 
     if (muestraInicio) {
-        setTimeout(muestraCarta, 50*i, $("#c"+i));
+        setTimeout(muestraCarta, retBarr*i, $("#c"+i));
     }
   }
   // Creo el evento click para las cartas.
@@ -327,6 +339,8 @@ function destruirJuego() {
   tablero.addClass("tableroInicioFin");
   tablero.empty().html(mensajeGameOver);
   $("#start").attr("src", "images/start.png");
+  pista = setInterval(pistaIniciar, 6000);
+
 }
 
 // Función para simplificar la creación de elementos DOM

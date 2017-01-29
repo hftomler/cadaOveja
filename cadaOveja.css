@@ -62,7 +62,8 @@ body {
 }
 
 .tableroInicioFin {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Oxygen Mono', monotype;
+  font-size: 45px !important;
   color: #fff;
   text-shadow: 4px 4px #555;
 
@@ -192,6 +193,7 @@ body {
   border-radius: 5px;
   border: 2px solid rgba(0,50,0, 1);
   background-color:rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
 }
 
 #rightStart {

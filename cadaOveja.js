@@ -1,15 +1,16 @@
 var numCartas = 24; // Número par
 var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea simétrico.
 var enJuego = false;
-var mensajeInicio = "<br/><br/>¡ Sheep Couples ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>or press 'S' to play"
-var mensajeGameOver = "<br/><br/>¡ CONGRATULATIONS ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
+var insertCoin = "<br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>or press 'S' to play";
+var mensajeInicio = "<br/><br/>¡ Sheep Couples !" + insertCoin;
+var mensajeGameOver = "<br/><br/>¡ FELICIDADES !"
 var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
-var muestraInicio = false; // False si no se quiere barrido al principio
+var muestraInicio = true; // False si no se quiere barrido al principio
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
 var valorMaxCarta = 12;
 var cartaAnterior = null;
-var intentos = 0;
+var intentos = "";
 var posX = 0; // Posición x del ratón. Para mostrar burbujas puntuación.
 var poxY = 0; // Posición y del ratón. Para mostrar burbujas puntuación.
 var tiempoFuegos = 8000; // Tiempo (ms) duran los fuegos art. finales
@@ -18,6 +19,7 @@ var pista; // Variable para intervalo pista de pulsación botón start.
 var crono; // Variable para el intervalo del cronómetro.
 var hinicio; // Variable para capturar hora de inicio del crono.
 var tiempo = 0; // Tiempo que se ha invertido en la partida.
+var nombreJugador = "";
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -80,6 +82,7 @@ function inicVar() {
   $("#puntos").text("0");
   $("#numTiradas").text("0");
   tiradas = 0;
+  intentos = 0;
   enJuego = true;
   $("#start").attr("src", "images/startPulsado.png");
   iniciaCrono();
@@ -195,6 +198,7 @@ function compruebaFin() {
         destruirJuego();
       }, tiempoFuegos);
     paraCrono();
+    pideNombre();
   }
 }
 
@@ -359,6 +363,19 @@ function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
   hijo.text(text);
   idPadre.append(hijo);
   return hijo;
+}
+
+// Pedir nombre. De momento con prompt()
+
+function pideNombre() {
+  do {
+    nombreJugador = prompt("Introduce el nombre para Hall Of Fame: ").trim(); 
+  } while (nombreJugador == "");
+  var puntFinal = $("#puntos").text()
+  var cadenaCookie = puntFinal + "/" + tiempo;
+  setCookie(nombreJugador, cadenaCookie, 30);
+  mensajeGameOver += "<br/><br/>" + nombreJugador + ". Has conseguido " + puntFinal + " puntos";
+  mensajeGameOver += "<br/><br>en " + tiempo.getMinutes() + " minutos y " + tiempo.getSeconds() + " segundos<br/>"; 
 }
 
 // Funciones de cronómetro

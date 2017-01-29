@@ -1,9 +1,9 @@
 var numCartas = 24; // Número par
 var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea simétrico.
 var enJuego = false;
-var insertCoin = "<br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>or press 'S' to play";
-var mensajeInicio = "<br/><br/>¡ Sheep Couples !" + insertCoin;
-var mensajeGameOver = "<br/><br/>¡ FELICIDADES !"
+var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
+var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
+var mensajeGameOver = "¡ FELICIDADES, ";
 var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
 var muestraInicio = true; // False si no se quiere barrido al principio
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
@@ -266,6 +266,7 @@ function crearTablero() {
     return; // Salgo de la función;
   } else { //
      $("#tablero").empty(); // Vacío el tablero para poner las cartas.
+     $("#tablero").removeClass("tableroInicioFin");
     // Si las cartas ya están creadas vacío el array de cartas
     if (arrCartas.length > 0 ) {
       arrCartas.splice(0, arrCartas.length);
@@ -374,7 +375,7 @@ function pideNombre() {
   var puntFinal = $("#puntos").text()
   var cadenaCookie = puntFinal + "/" + tiempo;
   setCookie(nombreJugador, cadenaCookie, 30);
-  mensajeGameOver += "<br/><br/>" + nombreJugador + ". Has conseguido " + puntFinal + " puntos";
+  mensajeGameOver += nombreJugador + " !<br/><br/>" + "Has conseguido " + puntFinal + " puntos";
   mensajeGameOver += "<br/><br>en " + tiempo.getMinutes() + " minutos y " + tiempo.getSeconds() + " segundos<br/>"; 
 }
 

@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 @import url('https://fonts.googleapis.com/css?family=Oxygen+Mono');
 
+/* PARA AJUSTAR TAMAÑOS Y MARGENES
+{
+  outline: 1px dotted yellow;
+}*/
 body {
   background-color: #000;
   background-image: url(images/tapete.jpg);
@@ -14,7 +18,7 @@ body {
   border-radius: 10px 10px 10px 10px;
   background-color:rgba(0,0,0,0.3);
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.45);
-  margin: 25px auto;
+  margin: 15px auto;
   width: 1000px;
   text-align: center;
 }
@@ -24,7 +28,7 @@ body {
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;  
-  height: 120px;
+  height: 90px;
 }
 
 .titulo {
@@ -39,6 +43,7 @@ body {
   line-height: 0em;
   text-shadow: 2px 2px #a50;
   font-size: 1.3em;
+  height: 90px;
 }
 
 #puntuacion{
@@ -47,7 +52,7 @@ body {
 
 #puntuacion > p, #tiradas >p {
   line-height: 1em;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 #tiradas {
@@ -55,17 +60,19 @@ body {
 }
 
 #tablero {
-  height: 610px;
-  overflow: auto;
+  height: 460px;
+  overflow: hidden;
   font-size: 40px;
-  margin: 25px auto 10px;
+  margin: 5px auto 10px;
 }
 
 .tableroInicioFin {
+  padding-top: 15px;
   font-family: 'Oxygen Mono', monotype;
   font-size: 45px !important;
   color: #fff;
   text-shadow: 4px 4px #555;
+  line-height: 1.3em;
 
 }
 
@@ -88,9 +95,9 @@ body {
   position: relative;
   float: left;
   color: #f00;
-  margin: 25px 11px;
-  min-height: 150px; 
-  width: 100px;
+  margin: 15px 11px 5px 16px;
+  width: 95px;
+  height: 130px;
   background: url(images/reversocarta.jpg);
   background-size: 100% 100%;
   background-color: #ccc;
@@ -101,7 +108,6 @@ body {
   font-family: Arial, sans-serif;
   text-shadow: 2px 2px #333;
   border-radius: 10px;
-  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.38);*/
 }
 
 .cartaMostrada {
@@ -160,16 +166,22 @@ body {
   float: left;
   margin: 0 auto;
   width: 500px;
-  height: 120px;
+  height: 90px;
 }
 
 #leftStart {
   margin: 0 65px 0 0;
-  border: 0 dotted yellow;
+  height: 48px;
+}
+
+#rightStart {
+  margin: 0 0 0 65px;
+  height: 48px;
 }
 
 #start {
   margin: 5px auto 0;
+  width: 48px;
 }
 
 #textInf {
@@ -194,10 +206,6 @@ body {
   border: 2px solid rgba(0,50,0, 1);
   background-color:rgba(0,0,0,0.3);
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
-}
-
-#rightStart {
-  margin: 0 0 0 65px;
 }
 
 #copyright {

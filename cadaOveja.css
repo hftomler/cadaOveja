@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+@import url('https://fonts.googleapis.com/css?family=Oxygen+Mono');
 
 body {
   background-color: #000;
@@ -30,7 +31,7 @@ body {
   text-decoration: underline;
 }
 
-#puntuacion, #tiradas, #botonStart {
+#puntuacion, #tiradas{
   width: 200px;
   text-align: center;
   font-weight: bolder;
@@ -167,15 +168,30 @@ body {
 }
 
 #start {
-  margin: 15px auto 0;
+  margin: 5px auto 0;
 }
 
-#startInf {
+#textInf {
   opacity: 1;
-  margin: 10px auto;
+  margin: 0 auto;
   color: #fff;
-  font-size: 0.8em;
+  font-size: 1em;
   text-shadow: 0 0 5px #FF0000, 0 0 5px #0000FF;
+}
+
+#crono {
+  font-family: 'Oxygen Mono', monospace;
+  font-weight: normal;
+  opacity: 0.6;
+  width: 115px;
+  margin: 0 auto;
+  padding: 2px;
+  line-height: 20px;
+  color: #fff;
+  font-size: 24px;
+  border-radius: 5px;
+  border: 2px solid rgba(0,50,0, 1);
+  background-color:rgba(0,0,0,0.3);
 }
 
 #rightStart {

@@ -4,7 +4,7 @@ var enJuego = false;
 var mensajeInicio = "<br/><br/>¡ Sheep Couples ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>or press 'S' to play"
 var mensajeGameOver = "<br/><br/>¡ CONGRATULATIONS ! <br/><br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/><br/>press 'S' to play again"
 var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
-var muestraInicio = true; // False si no se quiere barrido al principio
+var muestraInicio = false; // False si no se quiere barrido al principio
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
 var valorMaxCarta = 12;
@@ -15,6 +15,9 @@ var poxY = 0; // Posición y del ratón. Para mostrar burbujas puntuación.
 var tiempoFuegos = 8000; // Tiempo (ms) duran los fuegos art. finales
 var tiempoMuestraCarta = 300; // Tiempos en milisegundos que se muestra la carta
 var pista; // Variable para intervalo pista de pulsación botón start.
+var crono; // Variable para el intervalo del cronómetro.
+var hinicio; // Variable para capturar hora de inicio del crono.
+var tiempo = 0; // Tiempo que se ha invertido en la partida.
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -50,10 +53,10 @@ $(document).ready (function () {
       if (!enJuego) {
         clearInterval(pista); // Elimino la pista de donde pulsar
         crearTablero(); // Limpio el tablero y muestro cartas.
-        if (muestraInicio) { // Retardo para esperar el barrido de cartas inicial
+        if (muestraInicio) { // Retardo para esperar que acabe el barrido de cartas inicial
          setTimeout(inicVar, retBarr*(numCartas+4)); 
         } else {
-          inicVar();
+          inicVar(); // Si no hay barrido inicial de cartas
         }
       }
     }
@@ -79,6 +82,7 @@ function inicVar() {
   tiradas = 0;
   enJuego = true;
   $("#start").attr("src", "images/startPulsado.png");
+  iniciaCrono();
 }
 
 
@@ -87,7 +91,6 @@ function pistaIniciar() {
   if (!($("#leftStart").is("img"))) { // Ya se está mostrando una flecha.
     var sup = $("#startSup");
     var inf = $("#startInf");
-    inf.text("Haz clic en el botón o pulsa 'S'");
     atributos = {
       id: "leftStart",
       src: "images/lArrBl.png",
@@ -120,14 +123,18 @@ function pistaIniciar() {
                   opacity: "0.2",
                 }, 750, function () { fleDer.remove()});
              });
-    inf.animate({
+    var textInf = $("<p/>");
+    textInf.attr({id: "textInf"});
+    inf.append(textInf);
+    textInf.text("Haz clic en el botón o pulsa 'S'");
+    textInf.animate({
       fontSize: "+=0.5em",
       opacity: "1"    
     }, 1000, function () {
-                inf.animate({
+                textInf.animate({
                   fontSize: "-=0.5em",
                   opacity: "0"
-                }, 750, function () {inf.text("")})
+                }, 750, function () {textInf.remove()})
              });
   }
 }
@@ -183,9 +190,11 @@ function compruebaFin() {
     // Tras 8 segundos desactivo el plugin.
     setTimeout(function () { 
         $('body').fireworks('destroy');
+        $("#crono").remove();
         enJuego = false;
         destruirJuego();
       }, tiempoFuegos);
+    paraCrono();
   }
 }
 
@@ -242,7 +251,7 @@ function crearTablero() {
     // Creamos div para marcador e info
     var atributos = {id: "marcador"};
     var marcador = crearElemento(padre, "<DIV/>", atributos);
-    marcadorText();
+    crearMarcador();
     // Creamos el tapete para las cartas
     atributos = {id: "tablero", class: "tableroInicioFin"};
     var tablero = crearElemento(padre, "<DIV/>", atributos);
@@ -262,7 +271,7 @@ function crearTablero() {
   }
 }
 
-function marcadorText() {
+function crearMarcador() {
   var padre = $("#marcador");
   // DIV Puntuación
   var atributos = {id: "puntuacion"};
@@ -350,4 +359,29 @@ function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
   hijo.text(text);
   idPadre.append(hijo);
   return hijo;
+}
+
+// Funciones de cronómetro
+
+// Función que inicializa e inicia el cronómetro
+function iniciaCrono() {
+  hInicio = new Date();
+  crono = setInterval(actualizaCrono, 1);
+  var inf = $("#startInf");
+  var textInf = $("<DIV/>");
+  textInf.attr({id: "crono"});
+  inf.append(textInf);
+}
+
+function actualizaCrono() {
+  var ahora = new Date();
+  var horaCrono = new Date(ahora - hInicio);
+  horaCrono.setHours(horaCrono.getHours()-1); // ajuste hora
+  $("#crono").text(horaCrono.toLocaleTimeString());
+  tiempo = horaCrono;
+}
+
+// Para el crono cuando se acaba el juego.
+function paraCrono() {
+  clearInterval(crono);
 }

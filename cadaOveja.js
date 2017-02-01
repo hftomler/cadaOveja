@@ -20,6 +20,7 @@ var crono; // Variable para el intervalo del cronómetro.
 var hinicio; // Variable para capturar hora de inicio del crono.
 var tiempo = 0; // Tiempo que se ha invertido en la partida.
 var nombreJugador = "";
+var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -48,6 +49,7 @@ function arrayCartas() {
 
 $(document).ready (function () {
   crearTablero(); // Muestro el tablero por primera vez
+  pideNombre();
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -63,20 +65,27 @@ $(document).ready (function () {
       }
     }
   })
-  $(document).keydown(function(event){
-    if ((event.key).toUpperCase() == "S" ) {
-      if (!enJuego) {
-        clearInterval(pista);
-        crearTablero(); // Limpio el tablero y muestro cartas.
-        if (muestraInicio) {
-         setTimeout(inicVar, retBarr*(numCartas+4)); 
-        } else {
-          inicVar();
-        }      }
-    }
-  });
 });
 
+
+function activaTeclaS() {
+  $(document).on( {
+    keydown: function(event){
+      if ((event.key).toUpperCase() == "S" ) {
+        if (!enJuego) {
+          $(document).off("keydown");
+          clearInterval(pista);
+          crearTablero(); // Limpio el tablero y muestro cartas.
+          if (muestraInicio) {
+           setTimeout(inicVar, retBarr*(numCartas+4)); 
+          } else {
+            inicVar();
+          }      
+        }
+      }
+    }
+  });
+}
 
 function inicVar() {
   $("#puntos").text("0");
@@ -188,6 +197,7 @@ function compruebaFin() {
     if ($(this).text() != 0) numDesc++;
   });
   if (numDesc == numCartas) {
+    paraCrono();
     // Uso el plugin jquery.fireworks.js para crear fuegos artif.
     $("body").fireworks();
     // Tras 8 segundos desactivo el plugin.
@@ -197,8 +207,6 @@ function compruebaFin() {
         enJuego = false;
         destruirJuego();
       }, tiempoFuegos);
-    paraCrono();
-    pideNombre();
   }
 }
 
@@ -252,16 +260,18 @@ function acierto(carta) {
 function crearTablero() {
   if ($("body").children().length == 0) { // Inicio del juego
     var padre = $("body");
+    var atributos = {id: "container"};
+    var container = crearElemento(padre, "<DIV/>", atributos);
     // Creamos div para marcador e info
-    var atributos = {id: "marcador"};
-    var marcador = crearElemento(padre, "<DIV/>", atributos);
+    atributos = {id: "marcador"};
+    var marcador = crearElemento(container, "<DIV/>", atributos);
     crearMarcador();
     // Creamos el tapete para las cartas
     atributos = {id: "tablero", class: "tableroInicioFin"};
-    var tablero = crearElemento(padre, "<DIV/>", atributos);
+    var tablero = crearElemento(container, "<DIV/>", atributos);
     tablero.html(mensajeInicio);
     atributos = {id: "copyright", class: "footer"};
-    var foot = crearElemento(padre, "<FOOTER/>", atributos);
+    var foot = crearElemento(container, "<FOOTER/>", atributos);
     foot.html(mensajeFooter);
     return; // Salgo de la función;
   } else { //
@@ -351,10 +361,19 @@ function crearCartas() {
 function destruirJuego() {
   var tablero = $("#tablero");
   tablero.addClass("tableroInicioFin");
+  ajustaCadenaTiempo();
+  mensajeGameOver += nombreJugador + " !<br/><br/> Tu tiempo: ";
+  mensajeGameOver += tiempo.getMinutes() + " " + minutos + " y " + tiempo.getSeconds() + " " + segundos + ".<br/>";  
+  mensajeGameOver += "Puntuación: " + $("#puntos").text() + " puntos";  
   tablero.empty().html(mensajeGameOver);
   $("#start").attr("src", "images/start.png");
   pista = setInterval(pistaIniciar, 6000);
+  activaTeclaS();
+}
 
+function ajustaCadenaTiempo() {
+  minutos = (tiempo.getMinutes() != 1 ? "minutos": "minuto");
+  segundos = (tiempo.getMinutes() != 1 ? "segundos": "segundo");
 }
 
 // Función para simplificar la creación de elementos DOM
@@ -369,19 +388,71 @@ function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
 // Pedir nombre. De momento con prompt()
 
 function pideNombre() {
-  do {
-    nombreJugador = prompt("Introduce el nombre para Hall Of Fame: ").trim(); 
-  } while (nombreJugador == "");
-  var puntFinal = $("#puntos").text()
-  var cadenaCookie = puntFinal + "/" + tiempo;
-  setCookie(nombreJugador, cadenaCookie, 30);
-  mensajeGameOver += nombreJugador + " !<br/><br/>" + "Has conseguido " + puntFinal + " puntos";
-  mensajeGameOver += "<br/><br>en " + tiempo.getMinutes() + " minutos y " + tiempo.getSeconds() + " segundos<br/>"; 
+  // Crea el div para la ventana modal
+  var padre = $("body");
+  var atributos = {id: "popup", style: "display: none"};
+  var modal = crearElemento(padre, "<DIV/>", atributos);
+  atributos = {class: "popup-overlay"};
+  crearElemento(padre, "<DIV/>", atributos);
+  modal.html("<div class='content-popup'>" +
+                "<div class='close'>" + 
+                  "<a href='#' id='close'><img id='closBt' src='images/close.png' /></a>" +
+                "</div>" +
+                "<div>" +
+                  "<h2>Nombre del Jugador</h2>" +
+                  "<input type='text' id='iNombre'><br/>" +
+                  "<input type='button' id='bNombre' value='Guardar'>" +
+                "</div>" +
+              "</div>");
+  $("#bNombre").on ({
+    click: function () {
+      if ($("#iNombre").val() != "") {
+        $('#popup').fadeOut('slow');
+        $('.popup-overlay').fadeOut('slow');
+        blurElement($("#container"), 0);
+        nombreJugador = $("#iNombre").val();
+        activaTeclaS();
+      } else {
+        $("#iNombre").focus();
+      }      
+    }
+  })
+  $("#close").on({
+    click: function() {
+      if ($("#iNombre").val() != "") {
+        $('#popup').fadeOut('slow');
+        $('.popup-overlay').fadeOut('slow');
+        blurElement($("#container"), 0);
+        nombreJugador = $("#iNombre").val();
+        activaTeclaS();
+      } else {
+        $("#iNombre").focus();
+      }
+    }
+  });
+  $("#popup").fadeIn("slow");
+  var fondo = $(".popup-overlay");
+  fondo.fadeIn("slow");
+  fondo.height($(window).height());
+  fondo.on({
+    click: function() {
+      if ($("#iNombre").val() != "") {
+        $('#popup').fadeOut('slow');
+        $('.popup-overlay').fadeOut('slow');
+        blurElement($("#container"), 0);
+        nombreJugador = $("#iNombre").val();
+        activaTeclaS();
+      } else {
+        $("#iNombre").focus();
+      }
+    }
+  });
+  blurElement("#container", 5); 
+  $("#iNombre").focus();
 }
 
 // Funciones de cronómetro
 
-// Función que inicializa e inicia el cronómetro
 function iniciaCrono() {
   hInicio = new Date();
   crono = setInterval(actualizaCrono, 1);
@@ -399,7 +470,22 @@ function actualizaCrono() {
   tiempo = horaCrono;
 }
 
-// Para el crono cuando se acaba el juego.
 function paraCrono() {
   clearInterval(crono);
+}
+
+// Función para desenfocar un elemento. Lo uso en el modal para el fondo
+ function blurElement(element, size) {
+    var filterVal = 'blur(' + size + 'px)';
+    $(element).css({
+        'filter':filterVal,
+        'webkitFilter':filterVal,
+        'mozFilter':filterVal,
+        'oFilter':filterVal,
+        'msFilter':filterVal,
+        'transition':'all 0.5s ease-out',
+        '-webkit-transition':'all 0.5s ease-out',
+        '-moz-transition':'all 0.5s ease-out',
+        '-o-transition':'all 0.5s ease-out'
+    });
 }

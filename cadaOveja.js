@@ -3,7 +3,7 @@ var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea sim�
 var enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
-var mensajeGameOver = "¡ FELICIDADES, ";
+var mensajeGameOver = "<br/>¡ FELICIDADES, ";
 var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
 var muestraInicio = true; // False si no se quiere barrido al principio
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
@@ -49,7 +49,11 @@ function arrayCartas() {
 
 $(document).ready (function () {
   crearTablero(); // Muestro el tablero por primera vez
-  pideNombre();
+  if (Cookies.get('nombre') == undefined) {
+    pideNombre();
+  } else {
+    playerZone();
+  }
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -262,7 +266,10 @@ function crearTablero() {
     var padre = $("body");
     var atributos = {id: "container"};
     var container = crearElemento(padre, "<DIV/>", atributos);
-    // Creamos div para marcador e info
+    // Div para player y logout
+    atributos = {id: "jugDat"};
+    crearElemento(padre, "<DIV/>", atributos);
+    // Div para marcador e info
     atributos = {id: "marcador"};
     var marcador = crearElemento(container, "<DIV/>", atributos);
     crearMarcador();
@@ -394,61 +401,84 @@ function pideNombre() {
   var modal = crearElemento(padre, "<DIV/>", atributos);
   atributos = {class: "popup-overlay"};
   crearElemento(padre, "<DIV/>", atributos);
-  modal.html("<div class='content-popup'>" +
-                "<div class='close'>" + 
-                  "<a href='#' id='close'><img id='closBt' src='images/close.png' /></a>" +
-                "</div>" +
-                "<div>" +
-                  "<h2>Nombre del Jugador</h2>" +
-                  "<input type='text' id='iNombre'><br/>" +
-                  "<input type='button' id='bNombre' value='Guardar'>" +
-                "</div>" +
-              "</div>");
-  $("#bNombre").on ({
-    click: function () {
-      if ($("#iNombre").val() != "") {
-        $('#popup').fadeOut('slow');
-        $('.popup-overlay').fadeOut('slow');
-        blurElement($("#container"), 0);
-        nombreJugador = $("#iNombre").val();
-        activaTeclaS();
-      } else {
-        $("#iNombre").focus();
-      }      
+  if (Cookies.get('nombre') == undefined) {
+    modal.html("<div class='content-popup'>" +
+                  "<div class='close'>" + 
+                    "<a href='#' id='close'><img id='closBt' src='images/close.png' /></a>" +
+                  "</div>" +
+                  "<div>" +
+                    "<h2>Nombre del Jugador</h2>" +
+                    "<input type='text' id='iNombre'><br/>" +
+                    "<input type='button' id='bNombre' value='Guardar'>" +
+                  "</div>" +
+                "</div>");
+    $("#bNombre").on ({
+      click: function () {
+        if ($("#iNombre").val() != "") {
+          $('#popup').fadeOut('slow');
+          $('.popup-overlay').fadeOut('slow');
+          blurElement($("#container"), 0);
+          nombreJugador = $("#iNombre").val();
+          Cookies.set('nombre', nombreJugador, { expires: 7 });
+          playerZone();
+          activaTeclaS();
+        } else {
+          $("#iNombre").focus();
+        }      
+      }
+    })
+    $("#close").on({
+      click: function() {
+        if ($("#iNombre").val() != "") {
+          $('#popup').fadeOut('slow');
+          $('.popup-overlay').fadeOut('slow');
+          blurElement($("#container"), 0);
+          nombreJugador = $("#iNombre").val();
+          playerZone();
+          activaTeclaS();
+        } else {
+          $("#iNombre").focus();
+        }
+      }
+    });
+    $("#popup").fadeIn("slow");
+    var fondo = $(".popup-overlay");
+    fondo.fadeIn("slow");
+    fondo.height($(window).height());
+    fondo.on({
+      click: function() {
+        if ($("#iNombre").val() != "") {
+          $('#popup').fadeOut('slow');
+          $('.popup-overlay').fadeOut('slow');
+          blurElement($("#container"), 0);
+          nombreJugador = $("#iNombre").val();
+          playerZone();
+          activaTeclaS();
+        } else {
+          $("#iNombre").focus();
+        }
+      }
+    });
+    blurElement("#container", 5); 
+    $("#iNombre").focus();
+  } else {
+    nombreJugador = Cookies.get('nombre');
+    playerZone();
+    activaTeclaS();
+  }
+}
+
+function playerZone() {
+  var padre = $("#jugDat");
+  padre.html("<img src='images/logout.png' /><span>Jugador</span><br/>" + nombreJugador);
+  $("#jugDat img").on ({
+    click: function() {
+      Cookies.remove('nombre');
+      nombreJugador = "";
+      $(document).off("keydown");
+      pideNombre();
     }
   })
-  $("#close").on({
-    click: function() {
-      if ($("#iNombre").val() != "") {
-        $('#popup').fadeOut('slow');
-        $('.popup-overlay').fadeOut('slow');
-        blurElement($("#container"), 0);
-        nombreJugador = $("#iNombre").val();
-        activaTeclaS();
-      } else {
-        $("#iNombre").focus();
-      }
-    }
-  });
-  $("#popup").fadeIn("slow");
-  var fondo = $(".popup-overlay");
-  fondo.fadeIn("slow");
-  fondo.height($(window).height());
-  fondo.on({
-    click: function() {
-      if ($("#iNombre").val() != "") {
-        $('#popup').fadeOut('slow');
-        $('.popup-overlay').fadeOut('slow');
-        blurElement($("#container"), 0);
-        nombreJugador = $("#iNombre").val();
-        activaTeclaS();
-      } else {
-        $("#iNombre").focus();
-      }
-    }
-  });
-  blurElement("#container", 5); 
-  $("#iNombre").focus();
 }
 
 // Funciones de cronómetro

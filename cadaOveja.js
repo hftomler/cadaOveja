@@ -3,7 +3,7 @@ var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea sim�
 var enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
-var mensajeGameOver = "<br/>¡ FELICIDADES, ";
+var mensajeGameOver = "";
 var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
 var muestraInicio = true; // False si no se quiere barrido al principio
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
@@ -49,11 +49,7 @@ function arrayCartas() {
 
 $(document).ready (function () {
   crearTablero(); // Muestro el tablero por primera vez
-  if (Cookies.get('nombre') == undefined) {
     pideNombre();
-  } else {
-    playerZone();
-  }
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -97,6 +93,7 @@ function inicVar() {
   tiradas = 0;
   intentos = 0;
   enJuego = true;
+  mensajeGameOver = "<br/>¡ FELICIDADES, ";
   $("#start").attr("src", "images/startPulsado.png");
   iniciaCrono();
 }
@@ -397,6 +394,7 @@ function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
 function pideNombre() {
   // Crea el div para la ventana modal
   var padre = $("body");
+  var valid = /^[a-zA-ZáéíóúÁÉÍÓÚÑñ]{3,16}$/;
   var atributos = {id: "popup", style: "display: none"};
   var modal = crearElemento(padre, "<DIV/>", atributos);
   atributos = {class: "popup-overlay"};
@@ -414,12 +412,13 @@ function pideNombre() {
                 "</div>");
     $("#bNombre").on ({
       click: function () {
-        if ($("#iNombre").val() != "") {
+        var nombreInt = $("#iNombre").val();
+        if (nombreInt != "" && (valid.test(nombreInt))) {
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           nombreJugador = $("#iNombre").val();
-          Cookies.set('nombre', nombreJugador, { expires: 7 });
+          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
           playerZone();
           activaTeclaS();
         } else {
@@ -434,9 +433,14 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           nombreJugador = $("#iNombre").val();
+          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
           playerZone();
           activaTeclaS();
         } else {
+          // Muestro el nombre anterior y lo selecciono completo.
+          $("#iNombre").on("focus", function () {
+             $(this).select();
+          });
           $("#iNombre").focus();
         }
       }
@@ -452,9 +456,14 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           nombreJugador = $("#iNombre").val();
+          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
           playerZone();
           activaTeclaS();
         } else {
+          // Muestro el nombre anterior y lo selecciono completo.
+          $("#iNombre").on("focus", function () {
+             $(this).select();
+          });
           $("#iNombre").focus();
         }
       }
@@ -462,7 +471,7 @@ function pideNombre() {
     blurElement("#container", 5); 
     $("#iNombre").focus();
   } else {
-    nombreJugador = Cookies.get('nombre');
+    nombreJugador = Cookies.get("nombre");
     playerZone();
     activaTeclaS();
   }
@@ -470,15 +479,18 @@ function pideNombre() {
 
 function playerZone() {
   var padre = $("#jugDat");
+  padre.empty();
   padre.html("<img src='images/logout.png' /><span>Jugador</span><br/>" + nombreJugador);
-  $("#jugDat img").on ({
-    click: function() {
-      Cookies.remove('nombre');
-      nombreJugador = "";
-      $(document).off("keydown");
-      pideNombre();
-    }
-  })
+    $("#jugDat img").on ({
+      click: function() {
+        Cookies.remove('nombre', { path: '' });
+        nombreJugador = undefined;
+        $(document).off("keydown");
+        padre.empty();
+        $("#iNombre").val("");
+        pideNombre();
+      }
+    })
 }
 
 // Funciones de cronómetro
@@ -502,6 +514,7 @@ function actualizaCrono() {
 
 function paraCrono() {
   clearInterval(crono);
+  $("#crono").remove();
 }
 
 // Función para desenfocar un elemento. Lo uso en el modal para el fondo

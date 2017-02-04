@@ -18,11 +18,10 @@ var tiempoMuestraCarta = 300; // Tiempos en milisegundos que se muestra la carta
 var pista; // Variable para intervalo pista de pulsación botón start.
 var crono; // Variable para el intervalo del cronómetro.
 var hinicio; // Variable para capturar hora de inicio del crono.
-var tiempo = 0; // Tiempo que se ha invertido en la partida.
-var mejorTiempo = new Date(0); // Mejor tiempo que el usuario actual ha conseguido.
-    mejorTiempo.setHours(mejorTiempo.getHours()-1); // Ajuste horas
+var tiempo = new Date(-3600000); // Tiempo que se ha invertido en la partida.
 var mejorPunt = 0; // Mejor puntuación del usuario actual
-var nombreJugador = ""; // La primera vez que se ejecuta el nombre está vacío.
+var nombreJugador = "PY1UNN"; // La primera vez que se ejecuta el nombre está vacío.
+nombresPlayers = ["Adrahil", "Aegnor", "Aerandir", "Aghan", "Aglahad", "Ailinel", "Alatar", "Aldamir", "Aldor", "Almarian", "Almiel", "Amandil", "Amdír", "Amlaith", "Amrod", "Amroth", "Anardil", "Anborn", "Ancalagon The Black", "Andróg", "Angbor", "Angelimar", "Angelimir", "Angrod", "Anárion", "Ar-Adûnakhôr", "Ar-Gimilzôr", "Ar-Pharazôn", "Ar-Sakalthôr", "Ar-Zimrathôn", "Arador", "Araglas", "Aragorn I", "Aragorn II Elessar", "Aragost", "Arahad I", "Arahad II", "Arahael", "Aranarth", "Aranuir", "Araphant", "Araphor", "Arassuil", "Arathorn I", "Arathorn II", "Araval", "Aravir", "Aravorn", "Arciryas", "Aredhel", "Argeleb I", "Argeleb II", "Argonui", "Arien", "Artamir", "Arthad", "Arvedui", "Arvegil", "Arveleg I", "Arveleg II", "Arwen", "Asgon", "Atanamir -Atanatar I", "Atanatar II", "Aulë", "Azaghâl", "Azog", "Bain", "Baldor", "Balin", "Barach", "Baragund", "Barahir", "Barahir (Steward)", "Baran", "Bard II", "Bard the Bowman", "Barliman Butterbur", "Beldis", "Belecthor I", "Belecthor II", "Beleg Cúthalion", "Beleg of Arnor", "Belegorn", "Belegund", "Belemir", "Belen", "Beorn", "Beregond", "Beregond (Captain)", "Beren", "Beren (Steward)", "Bergil", "Bilbo Baggins", "Angelica Baggins", "Bilbo Baggins", "Fosco Baggins", "Bungo Baggins", "Frodo Baggins", "Longo Baggins", "Mungo Baggins", "Pansy Baggins", "Bill", "Blanco", "Bob", "Bofur", "Bolg", "Fredegar Bolger", "Tom Bombadil", "Bombur", "Borin", "Borlach", "Borlad", "Boromir", "Boromir", "Boromir (Steward)", "Borthand", "Brand", "Amaranth Brandybuck", "Estella (Bolger) Brandybuck", "Madoc Brandybuck", "Meriadoc Brandybuck", "Brego", "Brodda", "Bungo Baggins", "Bëor", "Calimehtar", "Calmacil", "Captains of the West", "Caranthir", "Carc", "Carcharoth", "Castamir the Usurper", "Celeborn", "Celebrimbor", "Celebrindor", "Celebrían", "Celegorm", "Celepharn", "Cemendur", "Cirion", "Ciryandil", "Ciryatur", "Ciryon", "Curufin", "Círdan", "Farmer Cotton", "Rosie Cotton", "Eärendil", "Ecthelion I", "Ecthelion II", "Ecthelion of the Fountain", "Egalmoth Eilinel", "Elatan", "Elboron", "Eldacar of Gondor", "Eldalótë", "Eldarion", "Elemmakil", "Elendil", "Elfhild", "Elfwine", "Elladan and Elrohir", "Elmo", "Elrond", "Elros", "Eluréd and Elurín", "Elwing", "Enel", "Enerdhil", "Éomer", "Eorl the Young", "Eothain", "Éowyn", "Eradan", "Erchirion", "Erendis", "Erestor", "Erkenbrand", "Eru Ilúvatar", "Eärendil", "Eärendil of Gondor", "Eärendur (Lord of Andúnië)", "Eärendur of Arnor", "Eärendur of Númenor", "Eärnil I", "Eärnil II", "Eärnur", "Eärwen", "Eöl", "Eönwë", "Faramir", "Fastred", "Fengel", "Finarfin", "Findegil", "Finduilas", "Finduilas of Dol Amroth", "Fingolfin", "Fingon", "Finrod Felagund", "Finwë", "Folca", "Folcred", "Folcwine", "Forlong", "Forthwini", "Fram", "Freca", "Frodo Baggins", "Frumgar", "Frár", "Fréa", "Frëawine", "Frór", "Fuinur", "Fundin", "Fëanor", "Fíli", "Hadhod", "Hador", "Hador (Steward)", "Halbarad", "Haldad", "Haldar", "Haldir", "Haleth (Son of Háma)", "Hallacar", "Hallas (Steward)", "Halmir", "Harding", "Hareth", "Helm Hammerhand", "Herion", "Herucalmo", "Herumor", "Hirgon", "Fréaláf Hildeson", "Horn", "Tobias Hornblower", "Tobold Hornblower", "Huan", "Hunthor", "Hyarmendacil I", "Hyarmendacil II", "Háma", "Húrin", "Húrin I", "Húrin II", "Ibûn", "Idril", "Imin", "Imrahil", "Indis", "Ingwion", "Ingwë", "Inzilbêth", "Iorlas", "Irmo", "Isildur", "Isilmo", "Ivorwen", "Khamûl", "Khîm", "Kíli", "Legolas", "Lenwë", "Lindo", "Lindórië", "Lorgan", "Lothíriel", "Lugdush", "Léod", "Brytta Léofa", "Lúthien", "Mablung", "Mablung the Ranger", "Maedhros", "Maeglin", "Maglor", "Farmer Maggot", "Mahtan", "Mahud", "Mahúr", "Mairen", "Malach", "Mallor", "Malvegil", "Man in the Moon", "Mandos", "Marach", "Marcho", "Marhari", "Marhwini", "Master of Laketown", "Melian", "Melkor", "Meneldil", "Meneldor", "Minardil", "Minastan", "Mithrellas", "Morwen", "The Moth", "Mouth of Sauron", "Muzgash", "Míriel", "Mîm", "Narmacil I", "Narmacil II", "Nellas", "Nerdanel", "Nessa", "Nienna", "Nimloth (elf)", "Niënor", "Nob", "Náin I", "Númendil", "Olwë", "Ondoher Orchaldor", "Orcobal", "Ori", "Orodreth", "Orodreth (Steward)", "Oromë", "Oropher", "Orophin", "Ossë", "Ostoher", "Radagast", "River-woman", "Rogash", "Roäc", "Ruffian Leader", "Rumil", "Rómendacil I", "Rómendacil II", "Andwise Roper", "Rúmil", "Lobelia Sackville-Baggins", "Lotho Sackville-Baggins", "Sador", "Saeros", "Salmar", "Saruman", "Sauron", "Shadowfax", "Shagrat", "Shelob", "Silmariën", "Siriondil", "Smaug", "Sméagol", "Soronto", "Squint-eyed Southerner", "Morwen Steelsheen", "Robin Smallburrow", "Tar-Alcarin", "Tar-Aldarion", "Tar-Amandil", "Tar-Ancalimon", "Tar-Ancalimë", "Tar-Anárion", "Tar-Ardamin", "Tar-Atanamir", "Tar-Calmacil", "Tar-Ciryatan", "Tar-Elendil", "Tar-Meneldur", "Tar-Minastir", "Tar-Míriel -Tar-Palantir", "Tar-Súrion", "Tar-Telemmaitë", "Tar-Telperiën", "Tar-Vanimeldë", "Tarannon Falastur", "Tarcil", "Targon", "Tarondor", "Tata", "Telemnar", "Telumehtar", "Tevildo", "Thengel", "Thingol", "Thorin I", "Thorin II Oakenshield", "Thorin III Stonehelm", "Thorondir", "Thorondor", "Thranduil", "Thráin I", "Thráin II", "Thrór", "Théoden", "Théodred", "Tilion", "Tom, Bert, and William", "Tom Bombadil", "Adalgrim Took", "Bullroarer Took", "Adelard Took", "Goldilocks (Gardner) Took", "Peregrin Took", "Esmeralda Took", "Pimpernel Took", "Treebeard", "Tulkas", "Tuor", "Turambar", "Turgon", "Turgon (Steward)", "Two Watchers", "Túrin I", "Túrin II", "Túrin Turambar", "Daddy Twofoot", "Ulbar", "Uglúk", "Uinen", "Uldor", "Ulfang", "Ulfast", "Ulmo", "Ulrad", "Ulwarth", "Ungoliant", "Vairë", "Valacar", "Valandil", "Valandil of Andúnië", "Varda", "Vardamir Nólimon", "Vidugavia", "Vidumavi", "Vorondil the Hunter", "Voronwë", "Vána", "Vëantur", "Walda", "Wife of Barach", "Witch-king of Angmar", "Wulf", "Yavanna", "Zamîn"]
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
 var posicion = "right";
 
@@ -48,14 +47,14 @@ function arrayCartas() {
       i--; // Si la carta ya existía, vuelvo a generar otra.
     }
   }
-  arrCartas.barajar();
+  //arrCartas.barajar();
 }
 
 $(document).ready (function () {
   $("html").css("height", "100%");
   $("body").css("min-height", "100%"); // Establezco el body a la altura máxima de pantalla
   crearTablero(); // Muestro el tablero por primera vez
-    pideNombre();
+  pideNombre();
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -205,10 +204,9 @@ function compruebaFin() {
   });
   if (numDesc == numCartas) {
     paraCrono();
-    mejorTiempo = (tiempo < mejorTiempo ? tiempo : mejorTiempo);
     // Uso el plugin jquery.fireworks.js para crear fuegos artif.
     $("body").fireworks();
-    // Tras 8 segundos desactivo el plugin.
+    // Tras 5 segundos desactivo el plugin.
     setTimeout(function () { 
         $('body').fireworks('destroy');
         $("#crono").remove();
@@ -378,6 +376,7 @@ function destruirJuego() {
   mensajeGameOver += tiempo.getMinutes() + " " + minutos + " y " + tiempo.getSeconds() + " " + segundos + ".<br/>";  
   mensajeGameOver += "Puntuación: " + $("#puntos").text() + " puntos";  
   tablero.empty().html(mensajeGameOver);
+  guardaDatos(); // Guarda los datos en la cookie del jugador si son mejores que los que había.
   setTimeout(function() { // Vuelvo al mensaje de Inicio
     tablero.empty().html(mensajeInicio);
   }, 6000);
@@ -392,7 +391,7 @@ function destruirJuego() {
 // Pedir nombre. De momento con prompt()
 
 function pideNombre() {
-  if (Cookies.get('nombre') == undefined) {
+  if (Cookies.getJSON(nombreJugador) == undefined) {
     // Crea el div para la ventana modal
     var padre = $("body");
     var valid = /^[a-zA-ZáéíóúÁÉÍÓÚÑñ]{3,16}$/;
@@ -410,8 +409,8 @@ function pideNombre() {
                     "<input type='button' id='bNombre' value='Guardar'>" +
                   "</div>" +
                 "</div>");
-    blurElement("#container", 5); 
     $("#iNombre").focus();
+    blurElement("#container", 5); 
     $("#popup").fadeIn("slow");
     var fondo = $(".popup-overlay");
     fondo.fadeIn("slow");
@@ -424,36 +423,41 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           nombreJugador = $("#iNombre").val().toUpperCase();
-          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
+          Cookies.set(nombreJugador, {tiempo: tiempo, puntos: 0}, { expires: 7, path: ''});
           $("#popup, .popup-overlay").remove();
-          playerZone();
           activaTeclaS();
+          playerZone();
         } else {
           $("#iNombre").focus();
         }      
       }
     });
+      /* Si en la ventana modal se pulsa cerrar o pulsamos fuera, no se valida el nombre 
+         introducido y el valor de nombreJugador es "PY1UNN", entonces se escoge un nombre
+         aleatorio y se crea la cookie. 
+      */
       $("#close, .popup-overlay").on ({
       click: function () {
-        if (nombreJugador != "") {
-          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
+        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayers[Math.floor(Math.random()*nombresPlayers.length)];
+          Cookies.set(nombreJugador, {tiempo: tiempo, puntos: 0}, { expires: 7, path: ''});
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popup, .popup-overlay").remove();
-          playerZone();
           activaTeclaS();
-        }
+          playerZone();
       }    
     });
   } else {
-    nombreJugador = Cookies.get("nombre");
-    playerZone();
     activaTeclaS();
+    playerZone();
   }
 }
 
 function playerZone() {
+  var coo = Cookies.getJSON(nombreJugador);
+  var tiempoJug = new Date(coo.tiempo);
+  var puntosJug = coo.puntos;
   var padre = $("#jugDat");
   padre.css(posicion, "15px");
   var img = "1star.png";
@@ -463,17 +467,19 @@ function playerZone() {
   if ($("#puntos").text() > 90) img = "5star.png";
   padre.empty();
   padre.html("<div><img src='images/user.png' /><br/>" + nombreJugador +"</div>" +
-             "<div><img src='images/clock.png' /><br/>" + mejorTiempo.toLocaleTimeString() + "</div>" +
-             "<div><img src='images/"+ img + "' /><br/>" + $("#puntos").text() + " puntos</div>" +
+             "<div><img src='images/clock.png' /><br/>" + tiempoJug.toLocaleTimeString() + "</div>" +
+             "<div><img src='images/"+ img + "' /><br/>" + puntosJug + " puntos</div>" +
              "<div><img src='images/logout.png' />");
     $("#jugDat img").on ({
       click: function() {
-        Cookies.remove('nombre', { path: '' });
-        //nombreJugador = undefined;
-        $(document).off("keydown");
-        padre.empty();
-        $("#iNombre").val("");
-        pideNombre();
+        if (!enJuego) {
+          nombreJugador = "PY1UNN";
+          tiempo = tiempo.setTime(-3600000);
+          $(document).off("keydown");
+          padre.empty();
+          $("#iNombre").val("");
+          pideNombre();
+        }
       }
     })
 }
@@ -534,4 +540,17 @@ function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
   hijo.text(text);
   idPadre.append(hijo);
   return hijo;
+}
+
+// FUNCIONES RELACIONADAS CON COOKIES
+
+// Guarda los datos del jugador en su cookie
+
+function guardaDatos() {
+  /*var datos = Cookies.getJSON(nombreJugador); // Recupero los datos guardados.
+  var puntosAnt = datos.puntos; // Mejor puntuación guardada.
+  var puntosNuevo = (puntosAnt > $("#puntos").text() ? puntosAnt : $("#puntos").text());
+  // Vuelvo a almacenar la cookie y actualizo el PlayerZone*/
+  Cookies.set(nombreJugador, {tiempo: tiempo, puntos: $("#puntos").text()}, { expires: 7, path: ''});
+  playerZone();
 }

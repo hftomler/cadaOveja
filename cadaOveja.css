@@ -312,14 +312,12 @@ body {
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
 }
 
-#bNombre {
-  padding: 5px 10px;
-  text-transform: uppercase;
+#bNombre, #bNombreAleat {
+  padding: 0 10px;
   font-size: 1.1em;
+  font-family: 'Gloria Hallelujah', cursive;
   color: #0a0;
-  border-radius: 5px;
-  border-color: none;
-  margin: 15px 0;
+  margin: 10px 5px;
   border: 2px solid #050;
   border-radius: 10px 10px 10px 10px;
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);

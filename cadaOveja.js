@@ -407,6 +407,7 @@ function pideNombre() {
                     "<h2>Nombre del Jugador</h2>" +
                     "<input type='text' id='iNombre'><br/>" +
                     "<input type='button' id='bNombre' value='Guardar'>" +
+                    "<input type='button' id='bNombreAleat' value='Nombre ESLA'>" +
                   "</div>" +
                 "</div>");
     $("#iNombre").focus();
@@ -436,7 +437,19 @@ function pideNombre() {
          introducido y el valor de nombreJugador es "PY1UNN", entonces se escoge un nombre
          aleatorio y se crea la cookie. 
       */
-      $("#close, .popup-overlay").on ({
+    $("#bNombreAleat").on ({
+      click: function () {
+        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayers[Math.floor(Math.random()*nombresPlayers.length)];
+          Cookies.set(nombreJugador, {tiempo: tiempo, puntos: 0}, { expires: 7, path: ''});
+          $('#popup').fadeOut('slow');
+          $('.popup-overlay').fadeOut('slow');
+          blurElement($("#container"), 0);
+          $("#popup, .popup-overlay").remove();
+          activaTeclaS();
+          playerZone();
+      }
+    });
+    $("#close, .popup-overlay").on ({
       click: function () {
         if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayers[Math.floor(Math.random()*nombresPlayers.length)];
           Cookies.set(nombreJugador, {tiempo: tiempo, puntos: 0}, { expires: 7, path: ''});
@@ -466,11 +479,13 @@ function playerZone() {
   if ($("#puntos").text() > 70) img = "4star.png";
   if ($("#puntos").text() > 90) img = "5star.png";
   padre.empty();
-  padre.html("<div><img src='images/user.png' /><br/>" + nombreJugador +"</div>" +
+  padre.html("<div><img src='images/configuration.png' /></div>" +
+             "<div><img src='images/user.png' /><br/>" + nombreJugador +"</div>" +
+
              "<div><img src='images/clock.png' /><br/>" + tiempoJug.toLocaleTimeString() + "</div>" +
              "<div><img src='images/"+ img + "' /><br/>" + puntosJug + " puntos</div>" +
-             "<div><img src='images/logout.png' />");
-    $("#jugDat img").on ({
+             "<div><img id='logout' src='images/logout.png' />");
+    $("#logout").on ({
       click: function() {
         if (!enJuego) {
           nombreJugador = "PY1UNN";

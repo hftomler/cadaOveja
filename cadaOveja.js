@@ -20,8 +20,11 @@ var crono; // Variable para el intervalo del cronómetro.
 var hinicio; // Variable para capturar hora de inicio del crono.
 var tiempo = 0; // Tiempo que se ha invertido en la partida.
 var mejorTiempo = new Date(0); // Mejor tiempo que el usuario actual ha conseguido.
+    mejorTiempo.setHours(mejorTiempo.getHours()-1); // Ajuste horas
+var mejorPunt = 0; // Mejor puntuación del usuario actual
 var nombreJugador = "";
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
+var posicion = "right";
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -385,31 +388,18 @@ function destruirJuego() {
   playerZone();
 }
 
-function ajustaCadenaTiempo() {
-  minutos = (tiempo.getMinutes() != 1 ? "minutos": "minuto");
-  segundos = (tiempo.getMinutes() != 1 ? "segundos": "segundo");
-}
-
-// Función para simplificar la creación de elementos DOM
-function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
-  var hijo = $(tipo);
-  hijo.attr(tipoValorAttr);
-  hijo.text(text);
-  idPadre.append(hijo);
-  return hijo;
-}
 
 // Pedir nombre. De momento con prompt()
 
 function pideNombre() {
-  // Crea el div para la ventana modal
-  var padre = $("body");
-  var valid = /^[a-zA-ZáéíóúÁÉÍÓÚÑñ]{3,16}$/;
-  var atributos = {id: "popup", style: "display: none"};
-  var modal = crearElemento(padre, "<DIV/>", atributos);
-  atributos = {class: "popup-overlay"};
-  crearElemento(padre, "<DIV/>", atributos);
   if (Cookies.get('nombre') == undefined) {
+    // Crea el div para la ventana modal
+    var padre = $("body");
+    var valid = /^[a-zA-ZáéíóúÁÉÍÓÚÑñ]{3,16}$/;
+    var atributos = {id: "popup", style: "display: none"};
+    var modal = crearElemento(padre, "<DIV/>", atributos);
+    atributos = {class: "popup-overlay"};
+    crearElemento(padre, "<DIV/>", atributos);
     modal.html("<div class='content-popup'>" +
                   "<div class='close'>" + 
                     "<a href='#' id='close'><img id='closBt' src='images/close.png' /></a>" +
@@ -469,6 +459,8 @@ function pideNombre() {
           Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
           playerZone();
           activaTeclaS();
+          $("#popup").remove();
+          $(".popup-overlay").remove();
         } else {
           // Muestro el nombre anterior y lo selecciono completo.
           $("#iNombre").on("focus", function () {
@@ -489,6 +481,7 @@ function pideNombre() {
 
 function playerZone() {
   var padre = $("#jugDat");
+  padre.css(posicion, "15px");
   var img = "1star.png";
   if ($("#puntos").text() > 30) img = "2star.png";
   if ($("#puntos").text() > 50) img = "3star.png";
@@ -510,6 +503,8 @@ function playerZone() {
       }
     })
 }
+
+// FUNCTIONES AUXILIARES
 
 // Funciones de cronómetro
 
@@ -549,4 +544,20 @@ function paraCrono() {
         '-moz-transition':'all 0.5s ease-out',
         '-o-transition':'all 0.5s ease-out'
     });
+}
+
+// Para mostrar strings de tiempo
+
+function ajustaCadenaTiempo() {
+  minutos = (tiempo.getMinutes() != 1 ? "minutos": "minuto");
+  segundos = (tiempo.getMinutes() != 1 ? "segundos": "segundo");
+}
+
+// Función para simplificar la creación de elementos DOM
+function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
+  var hijo = $(tipo);
+  hijo.attr(tipoValorAttr);
+  hijo.text(text);
+  idPadre.append(hijo);
+  return hijo;
 }

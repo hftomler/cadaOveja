@@ -22,7 +22,7 @@ var tiempo = 0; // Tiempo que se ha invertido en la partida.
 var mejorTiempo = new Date(0); // Mejor tiempo que el usuario actual ha conseguido.
     mejorTiempo.setHours(mejorTiempo.getHours()-1); // Ajuste horas
 var mejorPunt = 0; // Mejor puntuación del usuario actual
-var nombreJugador = "";
+var nombreJugador = ""; // La primera vez que se ejecuta el nombre está vacío.
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
 var posicion = "right";
 
@@ -410,6 +410,12 @@ function pideNombre() {
                     "<input type='button' id='bNombre' value='Guardar'>" +
                   "</div>" +
                 "</div>");
+    blurElement("#container", 5); 
+    $("#iNombre").focus();
+    $("#popup").fadeIn("slow");
+    var fondo = $(".popup-overlay");
+    fondo.fadeIn("slow");
+    fondo.height($(window).height());
     $("#bNombre").on ({
       click: function () {
         var nombreInt = $("#iNombre").val();
@@ -417,61 +423,29 @@ function pideNombre() {
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
-          nombreJugador = $("#iNombre").val();
+          nombreJugador = $("#iNombre").val().toUpperCase();
           Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
+          $("#popup, .popup-overlay").remove();
           playerZone();
           activaTeclaS();
         } else {
           $("#iNombre").focus();
         }      
       }
-    })
-    $("#close").on({
-      click: function() {
-        if ($("#iNombre").val() != "") {
+    });
+      $("#close, .popup-overlay").on ({
+      click: function () {
+        if (nombreJugador != "") {
+          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
-          nombreJugador = $("#iNombre").val();
-          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
+          $("#popup, .popup-overlay").remove();
           playerZone();
           activaTeclaS();
-        } else {
-          // Muestro el nombre anterior y lo selecciono completo.
-          $("#iNombre").on("focus", function () {
-             $(this).select();
-          });
-          $("#iNombre").focus();
         }
-      }
+      }    
     });
-    $("#popup").fadeIn("slow");
-    var fondo = $(".popup-overlay");
-    fondo.fadeIn("slow");
-    fondo.height($(window).height());
-    fondo.on({
-      click: function() {
-        if ($("#iNombre").val() != "") {
-          $('#popup').fadeOut('slow');
-          $('.popup-overlay').fadeOut('slow');
-          blurElement($("#container"), 0);
-          nombreJugador = $("#iNombre").val();
-          Cookies.set('nombre', nombreJugador, { expires: 7, path: ''});
-          playerZone();
-          activaTeclaS();
-          $("#popup").remove();
-          $(".popup-overlay").remove();
-        } else {
-          // Muestro el nombre anterior y lo selecciono completo.
-          $("#iNombre").on("focus", function () {
-             $(this).select();
-          });
-          $("#iNombre").focus();
-        }
-      }
-    });
-    blurElement("#container", 5); 
-    $("#iNombre").focus();
   } else {
     nombreJugador = Cookies.get("nombre");
     playerZone();
@@ -495,7 +469,7 @@ function playerZone() {
     $("#jugDat img").on ({
       click: function() {
         Cookies.remove('nombre', { path: '' });
-        nombreJugador = undefined;
+        //nombreJugador = undefined;
         $(document).off("keydown");
         padre.empty();
         $("#iNombre").val("");

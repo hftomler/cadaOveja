@@ -19,6 +19,7 @@ var pista; // Variable para intervalo pista de pulsación botón start.
 var crono; // Variable para el intervalo del cronómetro.
 var hinicio; // Variable para capturar hora de inicio del crono.
 var tiempo = 0; // Tiempo que se ha invertido en la partida.
+var mejorTiempo = new Date(0); // Mejor tiempo que el usuario actual ha conseguido.
 var nombreJugador = "";
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
 
@@ -48,6 +49,8 @@ function arrayCartas() {
 }
 
 $(document).ready (function () {
+  $("html").css("height", "100%");
+  $("body").css("min-height", "100%"); // Establezco el body a la altura máxima de pantalla
   crearTablero(); // Muestro el tablero por primera vez
     pideNombre();
   pista = setInterval(pistaIniciar, 6000);
@@ -199,6 +202,7 @@ function compruebaFin() {
   });
   if (numDesc == numCartas) {
     paraCrono();
+    mejorTiempo = (tiempo < mejorTiempo ? tiempo : mejorTiempo);
     // Uso el plugin jquery.fireworks.js para crear fuegos artif.
     $("body").fireworks();
     // Tras 8 segundos desactivo el plugin.
@@ -259,6 +263,7 @@ function acierto(carta) {
 }
 
 function crearTablero() {
+
   if ($("body").children().length == 0) { // Inicio del juego
     var padre = $("body");
     var atributos = {id: "container"};
@@ -370,9 +375,14 @@ function destruirJuego() {
   mensajeGameOver += tiempo.getMinutes() + " " + minutos + " y " + tiempo.getSeconds() + " " + segundos + ".<br/>";  
   mensajeGameOver += "Puntuación: " + $("#puntos").text() + " puntos";  
   tablero.empty().html(mensajeGameOver);
+  setTimeout(function() { // Vuelvo al mensaje de Inicio
+    tablero.empty().html(mensajeInicio);
+  }, 6000);
   $("#start").attr("src", "images/start.png");
+
   pista = setInterval(pistaIniciar, 6000);
   activaTeclaS();
+  playerZone();
 }
 
 function ajustaCadenaTiempo() {
@@ -479,8 +489,16 @@ function pideNombre() {
 
 function playerZone() {
   var padre = $("#jugDat");
+  var img = "1star.png";
+  if ($("#puntos").text() > 30) img = "2star.png";
+  if ($("#puntos").text() > 50) img = "3star.png";
+  if ($("#puntos").text() > 70) img = "4star.png";
+  if ($("#puntos").text() > 90) img = "5star.png";
   padre.empty();
-  padre.html("<img src='images/logout.png' /><span>Jugador</span><br/>" + nombreJugador);
+  padre.html("<div><img src='images/user.png' /><br/>" + nombreJugador +"</div>" +
+             "<div><img src='images/clock.png' /><br/>" + mejorTiempo.toLocaleTimeString() + "</div>" +
+             "<div><img src='images/"+ img + "' /><br/>" + $("#puntos").text() + " puntos</div>" +
+             "<div><img src='images/logout.png' />");
     $("#jugDat img").on ({
       click: function() {
         Cookies.remove('nombre', { path: '' });

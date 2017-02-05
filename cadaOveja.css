@@ -128,8 +128,6 @@ body {
   margin: 15px 11px 5px 16px;
   width: 95px;
   height: 130px;
-  background: url(images/reversocartagold.jpg);
-  background-size: 100% 100%;
   background-color: #ccc;
   border: 1px solid black;
   line-height: 120px;
@@ -138,6 +136,36 @@ body {
   font-family: Arial, sans-serif;
   text-shadow: 2px 2px #333;
   border-radius: 10px;
+}
+
+.cgreen {
+  background: url(images/reversocartagreen.jpg);
+  background-size: 100% 100%;  
+}
+
+.cgray {
+  background: url(images/reversocartagray.jpg);
+  background-size: 100% 100%;  
+}
+
+.cblue {
+  background: url(images/reversocartablue.jpg);
+  background-size: 100% 100%;  
+}
+
+.cgold {
+  background: url(images/reversocartagold.jpg);
+  background-size: 100% 100%;  
+}
+
+.cpurple {
+  background: url(images/reversocartapurple.jpg);
+  background-size: 100% 100%;  
+}
+
+.cred {
+  background: url(images/reversocartared.jpg);
+  background-size: 100% 100%;  
 }
 
 .cartaMostrada {
@@ -275,6 +303,12 @@ body {
   padding-bottom: 4px;
 }
 
+.content-popup span {
+  text-align: center;
+  color: #ff0;
+  text-shadow: 1px 1px #a50;
+}
+
 .content-popup div:nth-of-type(2) {
   text-align: center;
 }
@@ -312,11 +346,10 @@ body {
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
 }
 
-#bNombre, #bNombreESLA, #bNombreSTARW {
-  padding: 0 10px;
+#bNombre, #bNombreESLA, #bNombreSTARW  {
+  width: 110;
+  height: 34;
   font-size: 1.1em;
-  font-family: 'Gloria Hallelujah', cursive;
-  color: #0a0;
   margin: 10px 5px;
   border: 2px solid #050;
   border-radius: 10px 10px 10px 10px;

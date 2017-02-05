@@ -1,11 +1,10 @@
 var numCartas = 24; // Número par
 var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea simétrico.
-var enJuego = false;
+enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
 var mensajeGameOver = "";
 var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
-var muestraInicio = true; // False si no se quiere barrido al principio
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
 var valorMaxCarta = 12;
@@ -14,7 +13,6 @@ var intentos = "";
 var posX = 0; // Posición x del ratón. Para mostrar burbujas puntuación.
 var poxY = 0; // Posición y del ratón. Para mostrar burbujas puntuación.
 var tiempoFuegos = 8000; // Tiempo (ms) duran los fuegos art. finales
-var tiempoMuestraCarta = 300; // Tiempos en milisegundos que se muestra la carta
 var pista; // Variable para intervalo pista de pulsación botón start.
 var crono; // Variable para el intervalo del cronómetro.
 var hinicio; // Variable para capturar hora de inicio del crono.
@@ -25,7 +23,10 @@ var nombreJugador = "PY1UNN"; // La primera vez que se ejecuta el nombre está v
 var nombresPlayersESLA = ["Adrahil", "Aegnor", "Aerandir", "Aghan", "Aglahad", "Ailinel", "Alatar", "Aldamir", "Aldor", "Almarian", "Almiel", "Amandil", "Amdír", "Amlaith", "Amrod", "Amroth", "Anardil", "Anborn", "Ancalagon The Black", "Andróg", "Angbor", "Angelimar", "Angelimir", "Angrod", "Anárion", "Ar-Adûnakhôr", "Ar-Gimilzôr", "Ar-Pharazôn", "Ar-Sakalthôr", "Ar-Zimrathôn", "Arador", "Araglas", "Aragorn I", "Aragorn II Elessar", "Aragost", "Arahad I", "Arahad II", "Arahael", "Aranarth", "Aranuir", "Araphant", "Araphor", "Arassuil", "Arathorn I", "Arathorn II", "Araval", "Aravir", "Aravorn", "Arciryas", "Aredhel", "Argeleb I", "Argeleb II", "Argonui", "Arien", "Artamir", "Arthad", "Arvedui", "Arvegil", "Arveleg I", "Arveleg II", "Arwen", "Asgon", "Atanamir -Atanatar I", "Atanatar II", "Aulë", "Azaghâl", "Azog", "Bain", "Baldor", "Balin", "Barach", "Baragund", "Barahir", "Barahir (Steward)", "Baran", "Bard II", "Bard the Bowman", "Barliman Butterbur", "Beldis", "Belecthor I", "Belecthor II", "Beleg Cúthalion", "Beleg of Arnor", "Belegorn", "Belegund", "Belemir", "Belen", "Beorn", "Beregond", "Beregond (Captain)", "Beren", "Beren (Steward)", "Bergil", "Bilbo Baggins", "Angelica Baggins", "Bilbo Baggins", "Fosco Baggins", "Bungo Baggins", "Frodo Baggins", "Longo Baggins", "Mungo Baggins", "Pansy Baggins", "Bill", "Blanco", "Bob", "Bofur", "Bolg", "Fredegar Bolger", "Tom Bombadil", "Bombur", "Borin", "Borlach", "Borlad", "Boromir", "Boromir", "Boromir (Steward)", "Borthand", "Brand", "Amaranth Brandybuck", "Estella (Bolger) Brandybuck", "Madoc Brandybuck", "Meriadoc Brandybuck", "Brego", "Brodda", "Bungo Baggins", "Bëor", "Calimehtar", "Calmacil", "Captains of the West", "Caranthir", "Carc", "Carcharoth", "Castamir the Usurper", "Celeborn", "Celebrimbor", "Celebrindor", "Celebrían", "Celegorm", "Celepharn", "Cemendur", "Cirion", "Ciryandil", "Ciryatur", "Ciryon", "Curufin", "Círdan", "Farmer Cotton", "Rosie Cotton", "Eärendil", "Ecthelion I", "Ecthelion II", "Ecthelion of the Fountain", "Egalmoth Eilinel", "Elatan", "Elboron", "Eldacar of Gondor", "Eldalótë", "Eldarion", "Elemmakil", "Elendil", "Elfhild", "Elfwine", "Elladan and Elrohir", "Elmo", "Elrond", "Elros", "Eluréd and Elurín", "Elwing", "Enel", "Enerdhil", "Éomer", "Eorl the Young", "Eothain", "Éowyn", "Eradan", "Erchirion", "Erendis", "Erestor", "Erkenbrand", "Eru Ilúvatar", "Eärendil", "Eärendil of Gondor", "Eärendur (Lord of Andúnië)", "Eärendur of Arnor", "Eärendur of Númenor", "Eärnil I", "Eärnil II", "Eärnur", "Eärwen", "Eöl", "Eönwë", "Faramir", "Fastred", "Fengel", "Finarfin", "Findegil", "Finduilas", "Finduilas of Dol Amroth", "Fingolfin", "Fingon", "Finrod Felagund", "Finwë", "Folca", "Folcred", "Folcwine", "Forlong", "Forthwini", "Fram", "Freca", "Frodo Baggins", "Frumgar", "Frár", "Fréa", "Frëawine", "Frór", "Fuinur", "Fundin", "Fëanor", "Fíli", "Hadhod", "Hador", "Hador (Steward)", "Halbarad", "Haldad", "Haldar", "Haldir", "Haleth (Son of Háma)", "Hallacar", "Hallas (Steward)", "Halmir", "Harding", "Hareth", "Helm Hammerhand", "Herion", "Herucalmo", "Herumor", "Hirgon", "Fréaláf Hildeson", "Horn", "Tobias Hornblower", "Tobold Hornblower", "Huan", "Hunthor", "Hyarmendacil I", "Hyarmendacil II", "Háma", "Húrin", "Húrin I", "Húrin II", "Ibûn", "Idril", "Imin", "Imrahil", "Indis", "Ingwion", "Ingwë", "Inzilbêth", "Iorlas", "Irmo", "Isildur", "Isilmo", "Ivorwen", "Khamûl", "Khîm", "Kíli", "Legolas", "Lenwë", "Lindo", "Lindórië", "Lorgan", "Lothíriel", "Lugdush", "Léod", "Brytta Léofa", "Lúthien", "Mablung", "Mablung the Ranger", "Maedhros", "Maeglin", "Maglor", "Farmer Maggot", "Mahtan", "Mahud", "Mahúr", "Mairen", "Malach", "Mallor", "Malvegil", "Man in the Moon", "Mandos", "Marach", "Marcho", "Marhari", "Marhwini", "Master of Laketown", "Melian", "Melkor", "Meneldil", "Meneldor", "Minardil", "Minastan", "Mithrellas", "Morwen", "The Moth", "Mouth of Sauron", "Muzgash", "Míriel", "Mîm", "Narmacil I", "Narmacil II", "Nellas", "Nerdanel", "Nessa", "Nienna", "Nimloth (elf)", "Niënor", "Nob", "Náin I", "Númendil", "Olwë", "Ondoher Orchaldor", "Orcobal", "Ori", "Orodreth", "Orodreth (Steward)", "Oromë", "Oropher", "Orophin", "Ossë", "Ostoher", "Radagast", "River-woman", "Rogash", "Roäc", "Ruffian Leader", "Rumil", "Rómendacil I", "Rómendacil II", "Andwise Roper", "Rúmil", "Lobelia Sackville-Baggins", "Lotho Sackville-Baggins", "Sador", "Saeros", "Salmar", "Saruman", "Sauron", "Shadowfax", "Shagrat", "Shelob", "Silmariën", "Siriondil", "Smaug", "Sméagol", "Soronto", "Squint-eyed Southerner", "Morwen Steelsheen", "Robin Smallburrow", "Tar-Alcarin", "Tar-Aldarion", "Tar-Amandil", "Tar-Ancalimon", "Tar-Ancalimë", "Tar-Anárion", "Tar-Ardamin", "Tar-Atanamir", "Tar-Calmacil", "Tar-Ciryatan", "Tar-Elendil", "Tar-Meneldur", "Tar-Minastir", "Tar-Míriel -Tar-Palantir", "Tar-Súrion", "Tar-Telemmaitë", "Tar-Telperiën", "Tar-Vanimeldë", "Tarannon Falastur", "Tarcil", "Targon", "Tarondor", "Tata", "Telemnar", "Telumehtar", "Tevildo", "Thengel", "Thingol", "Thorin I", "Thorin II Oakenshield", "Thorin III Stonehelm", "Thorondir", "Thorondor", "Thranduil", "Thráin I", "Thráin II", "Thrór", "Théoden", "Théodred", "Tilion", "Tom, Bert, and William", "Tom Bombadil", "Adalgrim Took", "Bullroarer Took", "Adelard Took", "Goldilocks (Gardner) Took", "Peregrin Took", "Esmeralda Took", "Pimpernel Took", "Treebeard", "Tulkas", "Tuor", "Turambar", "Turgon", "Turgon (Steward)", "Two Watchers", "Túrin I", "Túrin II", "Túrin Turambar", "Daddy Twofoot", "Ulbar", "Uglúk", "Uinen", "Uldor", "Ulfang", "Ulfast", "Ulmo", "Ulrad", "Ulwarth", "Ungoliant", "Vairë", "Valacar", "Valandil", "Valandil of Andúnië", "Varda", "Vardamir Nólimon", "Vidugavia", "Vidumavi", "Vorondil the Hunter", "Voronwë", "Vána", "Vëantur", "Walda", "Wife of Barach", "Witch-king of Angmar", "Wulf", "Yavanna", "Zamîn"]
 var nombresPlayersSTARW = ["Anakin Skywalker", "Anakin Solo", "Arren Kae", "Ask Aak", "Attichitcuk", "Ayy Vida", "Banda Max Rebo", "Bene", "Biggs Darklighter", "Bodo Baas", "Bossk", "Cade Skywalker", "Capitán Rex", "Carlist Rieekan", "Darra Thel-Tanis", "Centinelas de Byss", "Chalmun", "Charal", "Chewbacca", "Clone trooper", "Conde Dooku", "Cordé", "Crix Madine", "Darth Bane", "Darth Caedus", "Darth Malak", "Darth Maul", "Darth Plagueis", "Darth Vader", "Dash Rendar", "Demetrius Zaarin", "Diva Funquita", "Diva Shaliqua", "Djas Puhr", "Doda Bodonawieedo", "Dominus", "Dormé", "Durge", "Dutch Vander", "Ephant Mon", "Fang Zar", "Feltipern Trevagg", "Ferus Olin", "Jango Fett", "Boba Fett", "Finis Valorum", "Finn", "Firmus Piett", "Galen Marek", "Garm Bel Iblis", "Garven Dreis", "General Grievous", "General Rahm Kota", "Gilramos Libkath", "Gizor Dellso", "Greeata", "Greedo", "Gregar Typho", "Guardia Real del Emperador", "Han Solo", "Ikrit", "Jabba el Hutt", "Jamillia", "Jan Dodonna", "Jar Jar Binks", "Jek Porkins", "Jerjerrod", "Joh Yowza", "Jorus C'baoth", "Korven Winex", "Kren Blista-Vanee", "Kylo Ren", "Labashi-Marduk", "Lama Su", "Lando Calrissian", "Lobot", "Lord Oscuro", "Lowbacca", "Luke Skywalker", "Lumpawarrump", "Lunae Minx", "Líder Supremo Snoke", "Maris Brood", "Mas Amedda", "Max Rebo", "Maximilian Veers", "Meena Tills", "Miko Reglia", "Momaw Nadon", "Nien Nunb", "Nom Anor", "Nute Gunray", "Olee Starstone", "Orn Free Taa", "Ozzik Sturn", "Palpatine", "Panaka", "Passel Argente", "Poe Dameron", "Poggle el Menor", "Roan Shryne", "Rogwa Wodrata", "Roos Tarpals", "Roron Corobb", "Rosh Penin", "Rugor Nass", "Rune Haako", "Sabé", "San Hill", "Sar Labooda", "Sarrissa Jeng", "Satal Keto", "Saul Karath", "Sebulba", "Señor Oscuro de los Sith", "Shaak Ti", "Shu Mai", "Sidonra Diath", "Sifo-Dyas", "Shmi Skywalker", "Stormtrooper", "Talon Karrde", "Tarfful", "Tavion Axmis", "Tenel Ka", "Terak", "Thon", "Thrawn", "Tikkes", "Tion Medon", "Tru Veld", "Tsui Choi", "Ulic Qel-Droma", "Vergere", "Watto", "Wedge Antilles", "Wicket W. Warrick", "Wilhuff Tarkin", "XizorYuthura Ban", "Zez-Kai Ell", "Zsinj", "Zuckuss"]
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
-var posPlayerZone = "right";
+tiempoMuestraCarta = 300; // Tiempo en milisegundos que se muestra la carta
+muestraInicio = true; // False si no se quiere barrido al principio
+posPlayerZone = "left";
+fondoCarta = "cred";
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -56,6 +57,7 @@ $(document).ready (function () {
   $("html").css("height", "100%");
   $("body").css("min-height", "100%"); // Establezco el body a la altura máxima de pantalla
   crearTablero(); // Muestro el tablero por primera vez
+  $(document).confCadaOveja(); // Ejecuto el plugin con las opciones por defecto.
   pideNombre();
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
@@ -159,7 +161,7 @@ function pistaIniciar() {
   }
 }
 
-function muestraCarta(carta) {
+function muestraCarta(carta, tMuestra) {
   carta.text(carta.attr("value"));
   //carta.css("background-image", "url(images/anversocarta.jpg)");
   carta.toggleClass("cartaMostrada");
@@ -167,7 +169,7 @@ function muestraCarta(carta) {
     fontSize:   "+=5px",
     color:      "#c00",
     fontWeigth: "bolder"
-  }, tiempoMuestraCarta, function() {
+  }, tMuestra, function() {
       if (cartaAnterior != null) { // Ya hay una carta descubierta
         compruebaPareja(carta);
         var tir = $("#numTiradas");
@@ -338,6 +340,7 @@ function crearCartas() {
     var carta = $("<div/>");
     // Guardo el valor de la carta en el atributo value
     carta.attr({id: "c"+i, class: "carta", value: arrCartas[i-1]});
+    carta.addClass(fondoCarta);
     padre.append(carta);
     // Las muestro según el valor de la variable cartasPorFila
     if (i%cartasPorFila == 0) {
@@ -347,7 +350,7 @@ function crearCartas() {
     }
     // Barrido de cartas. Después de crear las cartas se muestran durante 0.1 segundos. 
     if (muestraInicio) {
-        setTimeout(muestraCarta, retBarr*i, $("#c"+i));
+        setTimeout(muestraCarta, retBarr*i, $("#c"+i), retBarr);
     }
   }
   // Creo el evento click para las cartas.
@@ -359,7 +362,7 @@ function crearCartas() {
         posY = e.pageY;
         var carta = $(this);
         if (carta.text() == "") { // La carta no está mostrada
-          muestraCarta(carta);
+          muestraCarta(carta, tiempoMuestraCarta);
         } else {
           return; // Si ya se ha mostrado no hago nada.
         }
@@ -408,9 +411,13 @@ function pideNombre() {
                   "<div>" +
                     "<h2>Nombre del Jugador</h2>" +
                     "<input type='text' id='iNombre'><br/>" +
-                    "<input type='button' id='bNombre' value='Guardar'>" +
-                    "<input type='button' id='bNombreESLA' value='ESLA'>" +
-                    "<input type='button' id='bNombreSTARW' value='STARWARS'>" +
+                    "<input type='image' id='bNombre' " + 
+                           "title='Introduce tu nombre' src='images/botonNombre.jpg'>" +
+                    "<input type='image' id='bNombreESLA' " + 
+                           "title='Nombre aleatorio Señor de los Anillos'  src='images/botonEsla.jpg'>" +
+                    "<input type='image' id='bNombreSTARW' " + 
+                           "title='Nombre aleatorio Star Wars' src='images/botonStar.jpg'><br/>" +
+                    "<span>Pasa el ratón por cada botón para conocer su efecto</span>" +
                   "</div>" +
                 "</div>");
     $("#iNombre").focus();
@@ -493,7 +500,7 @@ function playerZone() {
   if ($("#puntos").text() > 70) img = "4star.png";
   if ($("#puntos").text() > 90) img = "5star.png";
   padre.empty();
-  padre.html("<div><img src='images/configuration.png' /></div>" +
+  padre.html("<div><img id='config' src='images/configuration.png' /></div>" +
              "<div><img src='images/user.png' /><br/>" + nombreJugador +"</div>" +
 
              "<div><img src='images/clock.png' /><br/>" + tiempoJug.toLocaleTimeString() + "</div>" +
@@ -509,7 +516,16 @@ function playerZone() {
           pideNombre();
         }
       }
-    })
+    });
+    $("#config").on ({
+      click: function() {
+        $(document).confCadaOveja({
+                    posPlayerZone: "left",
+                    tiempoMuestraCarta: 500,
+                    fondoCarta: "cred"
+        });
+      }
+    }); 
 }
 
 // FUNCTIONES AUXILIARES

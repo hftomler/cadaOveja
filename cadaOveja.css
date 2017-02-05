@@ -128,7 +128,7 @@ body {
   margin: 15px 11px 5px 16px;
   width: 95px;
   height: 130px;
-  background: url(images/reversocarta.jpg);
+  background: url(images/reversocartagold.jpg);
   background-size: 100% 100%;
   background-color: #ccc;
   border: 1px solid black;
@@ -312,7 +312,7 @@ body {
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
 }
 
-#bNombre, #bNombreAleat {
+#bNombre, #bNombreESLA, #bNombreSTARW {
   padding: 0 10px;
   font-size: 1.1em;
   font-family: 'Gloria Hallelujah', cursive;

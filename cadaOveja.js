@@ -27,6 +27,7 @@ tiempoMuestraCarta = 300; // Tiempo en milisegundos que se muestra la carta
 muestraInicio = true; // False si no se quiere barrido al principio
 posPlayerZone = "left";
 fondoCarta = "cred";
+estilosCarta = ["cgreen", "cgray", "cblue", "cgold", "cpurple", "cred"];
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -411,22 +412,35 @@ function pideNombre() {
                   "<div>" +
                     "<h2>Nombre del Jugador</h2>" +
                     "<input type='text' id='iNombre'><br/>" +
-                    "<input type='image' id='bNombre' " + 
-                           "title='Introduce tu nombre' src='images/botonNombre.jpg'>" +
-                    "<input type='image' id='bNombreESLA' " + 
-                           "title='Nombre aleatorio Señor de los Anillos'  src='images/botonEsla.jpg'>" +
-                    "<input type='image' id='bNombreSTARW' " + 
-                           "title='Nombre aleatorio Star Wars' src='images/botonStar.jpg'><br/>" +
+                    "<input type='image' id='bNombre' src='images/botonNombre.jpg'>" +
+                    "<input type='image' id='bNombreESLA' src='images/botonEsla.jpg'>" +
+                    "<input type='image' id='bNombreSTARW' src='images/botonStar.jpg'><br/>" +
                     "<span>Pasa el ratón por cada botón para conocer su efecto</span>" +
                   "</div>" +
                 "</div>");
-    $("#iNombre").focus();
     blurElement("#container", 5); 
     $("#popup").fadeIn("slow");
     var fondo = $(".popup-overlay");
     fondo.fadeIn("slow");
     fondo.height($(window).height());
+    $("#iNombre").on ({
+      focus: function () {
+        $("#bNombre").attr("src", "images/botonGuardar.jpg");
+      },
+      blur: function () {
+        $("#bNombre").attr("src", "images/botonNombre.jpg");
+      }
+    });
+    $("#iNombre").focus();
     $("#bNombre").on ({
+      mouseover: function () {
+        $(this).parent().children(":last-child").text("Usa este botón para usar un nombre escrito por ti");
+        $(this).attr("src", "images/botonGuardar.jpg");
+      }, 
+      mouseout: function () {
+        $(this).parent().children(":last-child").text("Pasa el ratón por cada botón para conocer su efecto");
+        $(this).attr("src", "images/botonNombre.jpg");
+      }, 
       click: function () {
         var nombreInt = $("#iNombre").val();
         if (nombreInt != "" && (valid.test(nombreInt))) {
@@ -443,10 +457,18 @@ function pideNombre() {
         }      
       }
     });
-      /* Si en la ventana modal se pulsa Nombre ESLA y el valor de nombreJugador es "PY1UNN", 
+      /* Si en la ventana modal se pulsa Nombre ESLA o STARWAR y el valor de nombreJugador es "PY1UNN", 
       se escoge un nombre aleatorio y se crea la cookie. 
       */
     $("#bNombreESLA").on ({
+      mouseover: function () {
+        $(this).parent().children(":last-child").text("Usa este botón para usar un nombre del Señor de los Anillos");
+        $(this).attr("src", "images/botonEslaOver.jpg");
+      }, 
+      mouseout: function () {
+        $(this).parent().children(":last-child").text("Pasa el ratón por cada botón para conocer su efecto");
+        $(this).attr("src", "images/botonEsla.jpg");
+      },       
       click: function () {
         if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersESLA[Math.floor(Math.random()*nombresPlayersESLA.length)];
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
@@ -459,6 +481,14 @@ function pideNombre() {
       }
     });
     $("#bNombreSTARW").on ({
+      mouseover: function () {
+        $(this).parent().children(":last-child").text("Usa este botón para usar un nombre de Star Wars");
+        $(this).attr("src", "images/botonStarOver.jpg");
+      }, 
+      mouseout: function () {
+        $(this).parent().children(":last-child").text("Pasa el ratón por cada botón para conocer su efecto");
+        $(this).attr("src", "images/botonStar.jpg");
+      },             
       click: function () {
         if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersSTARW[Math.floor(Math.random()*nombresPlayersSTARW.length)];
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
@@ -472,7 +502,7 @@ function pideNombre() {
     });
     $("#close, .popup-overlay").on ({
       click: function () {
-        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayers[Math.floor(Math.random()*nombresPlayers.length)];
+        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersESLA[Math.floor(Math.random()*nombresPlayersESLA.length)];
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');
@@ -493,7 +523,7 @@ function playerZone() {
   var tiempoJug = new Date(coo.tiempo);
   var puntosJug = coo.puntos;
   var padre = $("#jugDat");
-  padre.css(posPlayerZone, "15px");
+  padre.addClass("right left");
   var img = "1star.png";
   if ($("#puntos").text() > 30) img = "2star.png";
   if ($("#puntos").text() > 50) img = "3star.png";
@@ -519,13 +549,77 @@ function playerZone() {
     });
     $("#config").on ({
       click: function() {
-        $(document).confCadaOveja({
-                    posPlayerZone: "left",
-                    tiempoMuestraCarta: 500,
-                    fondoCarta: "cred"
-        });
+        formConfiguracion();
       }
     }); 
+}
+
+function formConfiguracion() {
+  var padre = $("body");
+  var atributos = {id: "popupcf", style: "display: none"};
+  var modal = crearElemento(padre, "<DIV/>", atributos);
+  atributos = {class: "popup-overlay"};
+  crearElemento(padre, "<DIV/>", atributos);
+  modal.html("<div class='content-popupcf'>" +
+                "<div class='close'>" + 
+                  "<a href='#' id='close'><img id='closBt' src='images/close.png' /></a>" +
+                "</div>" +
+                "<div>" +
+                  "<h2>Opciones de configuración</h2>" +
+                  "<fieldset id='colorCartaCf'><legend>Color Carta</legend>" +
+                    "<img src='' />" +
+                    "<input type='radio' name='radColCarta' value='cgreen'>Verde<br/>" +
+                    "<input type='radio' name='radColCarta' value='cgray'>Gris<br/>" +
+                    "<input type='radio' name='radColCarta' value='cblue'>Azul<br/>" +
+                    "<input type='radio' name='radColCarta' value='cgold'>Dorado<br/>" +
+                    "<input type='radio' name='radColCarta' value='cpurple'>Púrpura<br/>" +
+                    "<input type='radio' name='radColCarta' value='cred'>Rojo" +
+                  "</fieldset>" +
+                  "<fieldset id='posConf'><legend>Posición Barra Configuración</legend>" +
+                    "<input type='radio' name='posBarraConf' value='left'>Izquierda<br/>" +
+                    "<input type='radio' name='posBarraConf' value='right'>Derecha<br/>" +
+                  "</fieldset>" +
+                  "<input type='button' id='gConf' value='Guardar' />" +
+                "</div>" +
+              "</div>");
+  // Valores iniciales se obtienen de la configuración actual
+    // Color baraja cartas actual
+    $("input[name='radColCarta'").each ( function () {
+        if ($(this).attr("value") == fondoCarta) {
+          $(this).attr("checked", "checked");
+          $(this).siblings("img").addClass($(this).attr("value"));
+        }
+    });
+    // Posición actual barra configuración
+    $("input[name='posBarraConf'").each ( function () {
+        if ($(this).attr("value") == posPlayerZone) {
+          $(this).attr("checked", "checked");
+        }
+    });
+  blurElement("#container", 5); 
+  $("#popupcf").fadeIn("slow");
+  var fondo = $(".popup-overlay");
+  fondo.fadeIn("slow");
+  fondo.height($(window).height());
+  $("input[name='radColCarta'").on ({
+    click: function() {
+      $(this).siblings("img").removeClass().addClass($(this).attr("value"));
+    }
+  });
+  $("#gConf").on ({
+    click: function() {
+      var bkCarta = $('input:radio[name="radColCarta"]:checked').attr("value");
+      var posBrCfg = $('input:radio[name="posBarraConf"]:checked').attr("value");
+      $(document).confCadaOveja({
+          fondoCarta: bkCarta,
+          posPlayerZone: posBrCfg
+      });
+      $('#popupcf').fadeOut('slow');
+      $('.popup-overlay').fadeOut('slow');
+      blurElement($("#container"), 0);
+      $("#popupcf, .popup-overlay").remove();
+    }
+  });
 }
 
 // FUNCTIONES AUXILIARES

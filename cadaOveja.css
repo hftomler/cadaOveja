@@ -22,6 +22,14 @@ body {
   text-shadow: 2px 1px #050;
 }
 
+#jugDat.left {
+  left: 15px;
+}
+
+#jugDat.right {
+  right: 15px;
+}
+
 #jugDat div:first-of-type{
 }
 
@@ -125,7 +133,7 @@ body {
   position: relative;
   float: left;
   color: #f00;
-  margin: 15px 11px 5px 16px;
+  margin: 14px 11px 5px 16px;
   width: 95px;
   height: 130px;
   background-color: #ccc;
@@ -293,7 +301,8 @@ body {
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.45);
   background-image: url(images/tapete.jpg);
 }
-.content-popup h2 {
+
+.content-popup h2, .content-popupcf h2 {
   font-family: 'Gloria Hallelujah', cursive;
   font-size: 2em;
   text-shadow: 2px 2px #a50;
@@ -303,10 +312,10 @@ body {
   padding-bottom: 4px;
 }
 
-.content-popup span {
+.content-popup div, .content-popupcf div {
   text-align: center;
-  color: #ff0;
-  text-shadow: 1px 1px #a50;
+  color: #fff;
+  text-shadow: 1px 1px #500;
 }
 
 .content-popup div:nth-of-type(2) {
@@ -354,4 +363,69 @@ body {
   border: 2px solid #050;
   border-radius: 10px 10px 10px 10px;
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
+}
+
+/* FORMULARIO DE CONFIGURACION */
+
+#popupcf {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%);  
+  z-index: 1001;
+}
+
+.content-popupcf {
+  margin:0px auto;
+  margin-top:120px;
+  position:relative;
+  padding:10px;
+  width:700px;
+  min-height:300px;
+  border: 2px solid #050;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.45);
+  background-image: url(images/tapete.jpg);
+}
+
+input[type="radio"] {
+  margin-left: 10px;
+}
+
+fieldset#colorCartaCf {
+  margin: 0 10px;
+  padding: 0;
+  float: left;
+  text-align: left;
+  width: 250px;
+  font-size: 0.9em;
+}
+
+fieldset#colorCartaCf img{
+  float: right;
+  width: 95px;
+  height: 130px;
+  margin: 5px 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px #000;
+}
+
+fieldset#posConf {
+  margin: 0 10px;
+  padding: 0;
+  float: left;
+  text-align: left;
+  width: 250px;
+  font-size: 0.9em;
+}
+
+fieldset#posConf img{
+  float: right;
+  width: 95px;
+  height: 130px;
+  margin: 5px 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px #000;
 }

@@ -9,12 +9,11 @@ jQuery.fn.confCadaOveja = function(parametros) {
    jQuery.extend(conf, parametros);
 
       posPlayerZone = conf.posPlayerZone;
-      $("#jugDat").css(conf.posPlayerZone, "15px"); // si ya está mostrada la zona de Info del Jugador.
+      $("#jugDat").toggleClass(posPlayerZone);
       muestraInicio = conf.muestraInicio;
       tiempoMuestraCarta = conf.tiempoMuestraCarta;
       fondoCarta = conf.fondoCarta;
 
-      var estilosCarta = ["cgreen", "cgray", "cblue", "cgold", "cpurple", "cred"];
       if (enJuego) {
          $(".carta").each(function (){
             $(this).removeClass(estilosCarta.join(" ")).addClass(conf.fondoCarta);

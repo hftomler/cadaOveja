@@ -6,10 +6,11 @@
 {
   outline: 1px dotted yellow;
 }*/
+
 body {
   background-color: #000;
   background-image: url(images/tapete.jpg);
-  background-repeat: repeat;    
+  background-repeat: repeat;
 }
 
 #jugDat {
@@ -386,10 +387,17 @@ body {
   border-radius: 10px 10px 10px 10px;
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.45);
   background-image: url(images/tapete.jpg);
+  font-size: 14px;
 }
 
 input[type="radio"] {
   margin-left: 10px;
+}
+
+legend {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0px 15px;
 }
 
 fieldset#colorCartaCf {
@@ -398,34 +406,67 @@ fieldset#colorCartaCf {
   float: left;
   text-align: left;
   width: 250px;
-  font-size: 0.9em;
+  border: 2px groove white;
 }
 
 fieldset#colorCartaCf img{
   float: right;
-  width: 95px;
-  height: 130px;
-  margin: 5px 10px;
+  width: 80px;
+  height: 112px;
+  margin: 0px 10px;
   border: 1px solid black;
   border-radius: 10px;
   box-shadow: 2px 2px 2px #000;
 }
 
 fieldset#posConf {
-  margin: 0 10px;
-  padding: 0;
   float: left;
+  margin: 0 10px;
+  padding: 3px;
   text-align: left;
   width: 250px;
-  font-size: 0.9em;
+  border: 2px groove white;
 }
 
-fieldset#posConf img{
-  float: right;
-  width: 95px;
-  height: 130px;
-  margin: 5px 10px;
-  border: 1px solid black;
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px #000;
+#gConf {
+  float: left;
+  margin: 0 10px;
+  padding: 2px 5px;
+}
+
+#chkMuestraInicio {
+  float: left;
+  text-align: left;
+  width: 350px;
+  margin: 9px;
+  padding-left: 9px;
+}
+
+fieldset#valRetCarta {
+  float: left;
+  margin: 15px 10px;
+  padding: 3px;
+  text-align: left;
+  width: 360px;
+  border: 2px groove white;
+}
+
+#rangTmp {
+  width: 250px;
+}
+
+#rangTmp + span {
+  font-size: 16px;
+  font-weight: bold;
+  margin: -10px 0 0 15px;
+}
+
+#enviaConf {
+  float: left;
+  margin: 10px 10px;
+  width: 100px;
+}
+
+#enviaConf input {
+  box-shadow: 1px 1px 2px #000;
 }

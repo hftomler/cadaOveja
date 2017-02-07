@@ -23,10 +23,10 @@ var nombreJugador = "PY1UNN"; // La primera vez que se ejecuta el nombre está v
 var nombresPlayersESLA = ["Adrahil", "Aegnor", "Aerandir", "Aghan", "Aglahad", "Ailinel", "Alatar", "Aldamir", "Aldor", "Almarian", "Almiel", "Amandil", "Amdír", "Amlaith", "Amrod", "Amroth", "Anardil", "Anborn", "Ancalagon The Black", "Andróg", "Angbor", "Angelimar", "Angelimir", "Angrod", "Anárion", "Ar-Adûnakhôr", "Ar-Gimilzôr", "Ar-Pharazôn", "Ar-Sakalthôr", "Ar-Zimrathôn", "Arador", "Araglas", "Aragorn I", "Aragorn II Elessar", "Aragost", "Arahad I", "Arahad II", "Arahael", "Aranarth", "Aranuir", "Araphant", "Araphor", "Arassuil", "Arathorn I", "Arathorn II", "Araval", "Aravir", "Aravorn", "Arciryas", "Aredhel", "Argeleb I", "Argeleb II", "Argonui", "Arien", "Artamir", "Arthad", "Arvedui", "Arvegil", "Arveleg I", "Arveleg II", "Arwen", "Asgon", "Atanamir -Atanatar I", "Atanatar II", "Aulë", "Azaghâl", "Azog", "Bain", "Baldor", "Balin", "Barach", "Baragund", "Barahir", "Barahir (Steward)", "Baran", "Bard II", "Bard the Bowman", "Barliman Butterbur", "Beldis", "Belecthor I", "Belecthor II", "Beleg Cúthalion", "Beleg of Arnor", "Belegorn", "Belegund", "Belemir", "Belen", "Beorn", "Beregond", "Beregond (Captain)", "Beren", "Beren (Steward)", "Bergil", "Bilbo Baggins", "Angelica Baggins", "Bilbo Baggins", "Fosco Baggins", "Bungo Baggins", "Frodo Baggins", "Longo Baggins", "Mungo Baggins", "Pansy Baggins", "Bill", "Blanco", "Bob", "Bofur", "Bolg", "Fredegar Bolger", "Tom Bombadil", "Bombur", "Borin", "Borlach", "Borlad", "Boromir", "Boromir", "Boromir (Steward)", "Borthand", "Brand", "Amaranth Brandybuck", "Estella (Bolger) Brandybuck", "Madoc Brandybuck", "Meriadoc Brandybuck", "Brego", "Brodda", "Bungo Baggins", "Bëor", "Calimehtar", "Calmacil", "Captains of the West", "Caranthir", "Carc", "Carcharoth", "Castamir the Usurper", "Celeborn", "Celebrimbor", "Celebrindor", "Celebrían", "Celegorm", "Celepharn", "Cemendur", "Cirion", "Ciryandil", "Ciryatur", "Ciryon", "Curufin", "Círdan", "Farmer Cotton", "Rosie Cotton", "Eärendil", "Ecthelion I", "Ecthelion II", "Ecthelion of the Fountain", "Egalmoth Eilinel", "Elatan", "Elboron", "Eldacar of Gondor", "Eldalótë", "Eldarion", "Elemmakil", "Elendil", "Elfhild", "Elfwine", "Elladan and Elrohir", "Elmo", "Elrond", "Elros", "Eluréd and Elurín", "Elwing", "Enel", "Enerdhil", "Éomer", "Eorl the Young", "Eothain", "Éowyn", "Eradan", "Erchirion", "Erendis", "Erestor", "Erkenbrand", "Eru Ilúvatar", "Eärendil", "Eärendil of Gondor", "Eärendur (Lord of Andúnië)", "Eärendur of Arnor", "Eärendur of Númenor", "Eärnil I", "Eärnil II", "Eärnur", "Eärwen", "Eöl", "Eönwë", "Faramir", "Fastred", "Fengel", "Finarfin", "Findegil", "Finduilas", "Finduilas of Dol Amroth", "Fingolfin", "Fingon", "Finrod Felagund", "Finwë", "Folca", "Folcred", "Folcwine", "Forlong", "Forthwini", "Fram", "Freca", "Frodo Baggins", "Frumgar", "Frár", "Fréa", "Frëawine", "Frór", "Fuinur", "Fundin", "Fëanor", "Fíli", "Hadhod", "Hador", "Hador (Steward)", "Halbarad", "Haldad", "Haldar", "Haldir", "Haleth (Son of Háma)", "Hallacar", "Hallas (Steward)", "Halmir", "Harding", "Hareth", "Helm Hammerhand", "Herion", "Herucalmo", "Herumor", "Hirgon", "Fréaláf Hildeson", "Horn", "Tobias Hornblower", "Tobold Hornblower", "Huan", "Hunthor", "Hyarmendacil I", "Hyarmendacil II", "Háma", "Húrin", "Húrin I", "Húrin II", "Ibûn", "Idril", "Imin", "Imrahil", "Indis", "Ingwion", "Ingwë", "Inzilbêth", "Iorlas", "Irmo", "Isildur", "Isilmo", "Ivorwen", "Khamûl", "Khîm", "Kíli", "Legolas", "Lenwë", "Lindo", "Lindórië", "Lorgan", "Lothíriel", "Lugdush", "Léod", "Brytta Léofa", "Lúthien", "Mablung", "Mablung the Ranger", "Maedhros", "Maeglin", "Maglor", "Farmer Maggot", "Mahtan", "Mahud", "Mahúr", "Mairen", "Malach", "Mallor", "Malvegil", "Man in the Moon", "Mandos", "Marach", "Marcho", "Marhari", "Marhwini", "Master of Laketown", "Melian", "Melkor", "Meneldil", "Meneldor", "Minardil", "Minastan", "Mithrellas", "Morwen", "The Moth", "Mouth of Sauron", "Muzgash", "Míriel", "Mîm", "Narmacil I", "Narmacil II", "Nellas", "Nerdanel", "Nessa", "Nienna", "Nimloth (elf)", "Niënor", "Nob", "Náin I", "Númendil", "Olwë", "Ondoher Orchaldor", "Orcobal", "Ori", "Orodreth", "Orodreth (Steward)", "Oromë", "Oropher", "Orophin", "Ossë", "Ostoher", "Radagast", "River-woman", "Rogash", "Roäc", "Ruffian Leader", "Rumil", "Rómendacil I", "Rómendacil II", "Andwise Roper", "Rúmil", "Lobelia Sackville-Baggins", "Lotho Sackville-Baggins", "Sador", "Saeros", "Salmar", "Saruman", "Sauron", "Shadowfax", "Shagrat", "Shelob", "Silmariën", "Siriondil", "Smaug", "Sméagol", "Soronto", "Squint-eyed Southerner", "Morwen Steelsheen", "Robin Smallburrow", "Tar-Alcarin", "Tar-Aldarion", "Tar-Amandil", "Tar-Ancalimon", "Tar-Ancalimë", "Tar-Anárion", "Tar-Ardamin", "Tar-Atanamir", "Tar-Calmacil", "Tar-Ciryatan", "Tar-Elendil", "Tar-Meneldur", "Tar-Minastir", "Tar-Míriel -Tar-Palantir", "Tar-Súrion", "Tar-Telemmaitë", "Tar-Telperiën", "Tar-Vanimeldë", "Tarannon Falastur", "Tarcil", "Targon", "Tarondor", "Tata", "Telemnar", "Telumehtar", "Tevildo", "Thengel", "Thingol", "Thorin I", "Thorin II Oakenshield", "Thorin III Stonehelm", "Thorondir", "Thorondor", "Thranduil", "Thráin I", "Thráin II", "Thrór", "Théoden", "Théodred", "Tilion", "Tom, Bert, and William", "Tom Bombadil", "Adalgrim Took", "Bullroarer Took", "Adelard Took", "Goldilocks (Gardner) Took", "Peregrin Took", "Esmeralda Took", "Pimpernel Took", "Treebeard", "Tulkas", "Tuor", "Turambar", "Turgon", "Turgon (Steward)", "Two Watchers", "Túrin I", "Túrin II", "Túrin Turambar", "Daddy Twofoot", "Ulbar", "Uglúk", "Uinen", "Uldor", "Ulfang", "Ulfast", "Ulmo", "Ulrad", "Ulwarth", "Ungoliant", "Vairë", "Valacar", "Valandil", "Valandil of Andúnië", "Varda", "Vardamir Nólimon", "Vidugavia", "Vidumavi", "Vorondil the Hunter", "Voronwë", "Vána", "Vëantur", "Walda", "Wife of Barach", "Witch-king of Angmar", "Wulf", "Yavanna", "Zamîn"]
 var nombresPlayersSTARW = ["Anakin Skywalker", "Anakin Solo", "Arren Kae", "Ask Aak", "Attichitcuk", "Ayy Vida", "Banda Max Rebo", "Bene", "Biggs Darklighter", "Bodo Baas", "Bossk", "Cade Skywalker", "Capitán Rex", "Carlist Rieekan", "Darra Thel-Tanis", "Centinelas de Byss", "Chalmun", "Charal", "Chewbacca", "Clone trooper", "Conde Dooku", "Cordé", "Crix Madine", "Darth Bane", "Darth Caedus", "Darth Malak", "Darth Maul", "Darth Plagueis", "Darth Vader", "Dash Rendar", "Demetrius Zaarin", "Diva Funquita", "Diva Shaliqua", "Djas Puhr", "Doda Bodonawieedo", "Dominus", "Dormé", "Durge", "Dutch Vander", "Ephant Mon", "Fang Zar", "Feltipern Trevagg", "Ferus Olin", "Jango Fett", "Boba Fett", "Finis Valorum", "Finn", "Firmus Piett", "Galen Marek", "Garm Bel Iblis", "Garven Dreis", "General Grievous", "General Rahm Kota", "Gilramos Libkath", "Gizor Dellso", "Greeata", "Greedo", "Gregar Typho", "Guardia Real del Emperador", "Han Solo", "Ikrit", "Jabba el Hutt", "Jamillia", "Jan Dodonna", "Jar Jar Binks", "Jek Porkins", "Jerjerrod", "Joh Yowza", "Jorus C'baoth", "Korven Winex", "Kren Blista-Vanee", "Kylo Ren", "Labashi-Marduk", "Lama Su", "Lando Calrissian", "Lobot", "Lord Oscuro", "Lowbacca", "Luke Skywalker", "Lumpawarrump", "Lunae Minx", "Líder Supremo Snoke", "Maris Brood", "Mas Amedda", "Max Rebo", "Maximilian Veers", "Meena Tills", "Miko Reglia", "Momaw Nadon", "Nien Nunb", "Nom Anor", "Nute Gunray", "Olee Starstone", "Orn Free Taa", "Ozzik Sturn", "Palpatine", "Panaka", "Passel Argente", "Poe Dameron", "Poggle el Menor", "Roan Shryne", "Rogwa Wodrata", "Roos Tarpals", "Roron Corobb", "Rosh Penin", "Rugor Nass", "Rune Haako", "Sabé", "San Hill", "Sar Labooda", "Sarrissa Jeng", "Satal Keto", "Saul Karath", "Sebulba", "Señor Oscuro de los Sith", "Shaak Ti", "Shu Mai", "Sidonra Diath", "Sifo-Dyas", "Shmi Skywalker", "Stormtrooper", "Talon Karrde", "Tarfful", "Tavion Axmis", "Tenel Ka", "Terak", "Thon", "Thrawn", "Tikkes", "Tion Medon", "Tru Veld", "Tsui Choi", "Ulic Qel-Droma", "Vergere", "Watto", "Wedge Antilles", "Wicket W. Warrick", "Wilhuff Tarkin", "XizorYuthura Ban", "Zez-Kai Ell", "Zsinj", "Zuckuss"]
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
-tiempoMuestraCarta = 300; // Tiempo en milisegundos que se muestra la carta
-muestraInicio = true; // False si no se quiere barrido al principio
-posPlayerZone = "left";
-fondoCarta = "cred";
+tiempoMuestraCarta = 300; // Tiempo en milisegundos que se muestra la carta. Configurada por plugin.
+muestraInicio = true; // False si no se quiere barrido al principio. Configurada por plugin.
+posPlayerZone = ""; // Configurada con el plugin
+fondoCarta = ""; // Configurada con el plugin
 estilosCarta = ["cgreen", "cgray", "cblue", "cgold", "cpurple", "cred"];
 
 Array.prototype.barajar = function() {
@@ -523,19 +523,18 @@ function playerZone() {
   var tiempoJug = new Date(coo.tiempo);
   var puntosJug = coo.puntos;
   var padre = $("#jugDat");
-  padre.addClass("right left");
   var img = "1star.png";
   if ($("#puntos").text() > 30) img = "2star.png";
   if ($("#puntos").text() > 50) img = "3star.png";
   if ($("#puntos").text() > 70) img = "4star.png";
   if ($("#puntos").text() > 90) img = "5star.png";
   padre.empty();
-  padre.html("<div><img id='config' src='images/configuration.png' /></div>" +
-             "<div><img src='images/user.png' /><br/>" + nombreJugador +"</div>" +
+  padre.html("<div><img id='config' src='images/configuration-off.png' title='Configuración'/></div>" +
+             "<div><img src='images/user.png' title='Nombre Usuario'/><br/>" + nombreJugador +"</div>" +
 
-             "<div><img src='images/clock.png' /><br/>" + tiempoJug.toLocaleTimeString() + "</div>" +
-             "<div><img src='images/"+ img + "' /><br/>" + puntosJug + " puntos</div>" +
-             "<div><img id='logout' src='images/logout.png' />");
+             "<div><img src='images/clock.png' title='Mejor Tiempo'/><br/>" + tiempoJug.toLocaleTimeString() + "</div>" +
+             "<div><img src='images/"+ img + "' title='Mejor Puntuación'/><br/>" + puntosJug + " puntos</div>" +
+             "<div><img id='logout' src='images/logout.png' title='Logout'/>");
     $("#logout").on ({
       click: function() {
         if (!enJuego) {
@@ -548,6 +547,12 @@ function playerZone() {
       }
     });
     $("#config").on ({
+      mouseover: function () {
+        $(this).attr("src", "images/configuration.png");
+      }, 
+      mouseout: function () {
+        $(this).attr("src", "images/configuration-off.png");
+      },  
       click: function() {
         formConfiguracion();
       }
@@ -575,11 +580,21 @@ function formConfiguracion() {
                     "<input type='radio' name='radColCarta' value='cpurple'>Púrpura<br/>" +
                     "<input type='radio' name='radColCarta' value='cred'>Rojo" +
                   "</fieldset>" +
-                  "<fieldset id='posConf'><legend>Posición Barra Configuración</legend>" +
-                    "<input type='radio' name='posBarraConf' value='left'>Izquierda<br/>" +
+                  "<fieldset id='posConf'><legend>Posición Config.</legend>" +
+                    "<input type='radio' name='posBarraConf' value='left'>Izquierda" +
                     "<input type='radio' name='posBarraConf' value='right'>Derecha<br/>" +
                   "</fieldset>" +
-                  "<input type='button' id='gConf' value='Guardar' />" +
+                  "<div id='enviaConf' >" +
+                    "<input type='button' id='gConf' value='Guardar' />" +
+                  "</div>" +
+                  "<fieldset id='valRetCarta'><legend>Tiempo muestra cartas</legend>" +
+                    "<input id='rangTmp' type='range' value='0' step='50' min='300' max='1500'>" +
+                    "<span id='rangSpan'></span><br/>" +
+                  "</fieldset>" +
+                  "<div id='chkMuestraInicio' >" +
+                    "<input type='checkbox' name='showStart' " +
+                            "value='true'>Muestra cartas al iniciar el juego" +
+                  "</div>" +
                 "</div>" +
               "</div>");
   // Valores iniciales se obtienen de la configuración actual
@@ -596,6 +611,26 @@ function formConfiguracion() {
           $(this).attr("checked", "checked");
         }
     });
+    // Estado del barrido inicial de cartas
+    $("input[name='showStart'").each ( function () {
+        if (posPlayerZone) {
+          $(this).attr("checked", "checked");
+        }
+    });
+
+    // Estado del range del tiempo de muestra de las cartas y muestra milisegundos
+    var rT = $("#rangTmp");
+    rT.attr("value", tiempoMuestraCarta);
+    $("#rangSpan").text(rT.val() + " mseg.");
+    // Actualización del range de tiempo
+    rT.on ({
+      change: function() {
+        var valorActual = $(this).val() + " mseg.";
+        $("#rangSpan").text(valorActual);
+      }
+    });
+
+
   blurElement("#container", 5); 
   $("#popupcf").fadeIn("slow");
   var fondo = $(".popup-overlay");
@@ -608,11 +643,15 @@ function formConfiguracion() {
   });
   $("#gConf").on ({
     click: function() {
-      var bkCarta = $('input:radio[name="radColCarta"]:checked').attr("value");
-      var posBrCfg = $('input:radio[name="posBarraConf"]:checked').attr("value");
+      var bkCarta = $(':radio[name="radColCarta"]:checked').attr("value");
+      var posBrCfg = $(':radio[name="posBarraConf"]:checked').attr("value");
+      var ckStart = ($(':checkbox[name="showStart"]')[0].checked);
+      var tmpCarta = $("#rangTmp").val();
       $(document).confCadaOveja({
           fondoCarta: bkCarta,
-          posPlayerZone: posBrCfg
+          posPlayerZone: posBrCfg,
+          muestraInicio: ckStart,
+          tiempoMuestraCarta: tmpCarta
       });
       $('#popupcf').fadeOut('slow');
       $('.popup-overlay').fadeOut('slow');

@@ -3,16 +3,19 @@ jQuery.fn.confCadaOveja = function(parametros) {
       posPlayerZone: "right", // left or rigth
       muestraInicio: true, // true or false
       tiempoMuestraCarta: 500, // milisegundos que se muestra cada carta
-      fondoCarta: "cblue" // color del anverso de cada carta
+      fondoCarta: "cred" // color del anverso de cada carta
    }
 
    jQuery.extend(conf, parametros);
 
-      posPlayerZone = conf.posPlayerZone;
-      $("#jugDat").toggleClass(posPlayerZone);
+      // Actualizo variables con los valores pasados por el plugin.
+      posPlayerZone = conf.posPlayerZone; 
       muestraInicio = conf.muestraInicio;
       tiempoMuestraCarta = conf.tiempoMuestraCarta;
       fondoCarta = conf.fondoCarta;
+      var confBloque = $("#jugDat");
+      confBloque.removeClass(); // Elimino las clases que pudiera tener asignadas.
+      (posPlayerZone == "right") ? confBloque.addClass("right") : confBloque.addClass("left");
 
       if (enJuego) {
          $(".carta").each(function (){

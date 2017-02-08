@@ -349,7 +349,7 @@ function crearCartas() {
       rompeFila.attr("class", "clear");
       padre.append(rompeFila);
     }
-    // Barrido de cartas. Después de crear las cartas se muestran durante 0.1 segundos. 
+    // Si muestraInicio = true. Barrido de cartas. Después de crear las cartas se muestran durante 0.1 segundos. 
     if (muestraInicio) {
         setTimeout(muestraCarta, retBarr*i, $("#c"+i), retBarr);
     }
@@ -613,7 +613,7 @@ function formConfiguracion() {
     });
     // Estado del barrido inicial de cartas
     $("input[name='showStart'").each ( function () {
-        if (posPlayerZone) {
+        if (muestraInicio) {
           $(this).attr("checked", "checked");
         }
     });
@@ -659,6 +659,15 @@ function formConfiguracion() {
       $("#popupcf, .popup-overlay").remove();
     }
   });
+    $("#close, .popup-overlay").on ({
+      click: function () {
+          $('#popupcf').fadeOut('slow');
+          $('.popup-overlay').fadeOut('slow');
+          blurElement($("#container"), 0);
+          $("#popupcf, .popup-overlay").remove();
+          activaTeclaS();
+      }    
+    });
 }
 
 // FUNCTIONES AUXILIARES

@@ -60,6 +60,7 @@ $(document).ready (function () {
   crearTablero(); // Muestro el tablero por primera vez
   $(document).confCadaOveja(); // Ejecuto el plugin con las opciones por defecto.
   pideNombre();
+  reproduceSonido("concerningHobbits.mp3", 0.2, true);
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -211,6 +212,7 @@ function compruebaFin() {
     paraCrono();
     // Uso el plugin jquery.fireworks.js para crear fuegos artif.
     $("body").fireworks();
+    reproduceSonido("fireworks.mp3");
     // Tras tiempoFuegos->segundos desactivo el plugin.
     setTimeout(function () { 
         $('body').fireworks('destroy');
@@ -226,8 +228,7 @@ function burbuja(carta, puntObt) {
   var idB = (puntObt<5? "burbOra": "burbBlue");
   var idbR = (puntObt<5? "burbOraRota": "burbBlueRota");
   atributos = {id: idB, class: "burbuja " + idB};
-  crearElemento(padre, "<DIV/>", atributos);
-  var burbuja = $("#"+idB);
+  var burbuja = crearElemento(padre, "<DIV/>", atributos);
   burbuja.css({left: posX, top: posY});
   burbuja.text(puntObt);
   burbuja.animate({
@@ -238,6 +239,7 @@ function burbuja(carta, puntObt) {
                         burbuja.toggleClass(clases);
                        }
   );
+  reproduceSonido("bubble.mp3");
   burbuja.animate({
     opacity: "0.2",
     top: "+=50px",
@@ -247,6 +249,14 @@ function burbuja(carta, puntObt) {
     lineHeight: "-=100px",
     fontSize: "-=80px"
   }, 300 , function () { burbuja.remove()});
+}
+
+function reproduceSonido(sonido, volumen = 1, loop = false) {
+  var aud = document.createElement("audio");
+  aud.setAttribute("src", "sonidos/" + sonido);
+  aud.volume = volumen;
+  aud.loop = loop;
+  aud.play();
 }
 
 function ocultaCarta(carta) {
@@ -618,7 +628,7 @@ function formConfiguracion() {
         }
     });
 
-    // Estado del range del tiempo de muestra de las cartas y muestra milisegundos
+    // Estado del range del tiempo de muestra de las cartas. Muestra milisegundos
     var rT = $("#rangTmp");
     rT.attr("value", tiempoMuestraCarta);
     $("#rangSpan").text(rT.val() + " mseg.");

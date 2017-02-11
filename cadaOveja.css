@@ -13,6 +13,22 @@ body {
   background-repeat: repeat;
 }
 
+footer {
+  font-size: 0.9em;
+  color: #fff;
+}
+
+footer a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #fff;
+}
+
+footer img {
+  margin: 0 15px;
+  height: 15px;
+}
+
 #jugDat {
   position: absolute;
   top: 115px;
@@ -519,6 +535,7 @@ fieldset#valRetCarta {
 #hS span.nJHS {
   text-shadow: 2px 2px #fff !important;
   color:#49f !important;
+  font-size: +0.1em;
 }
 
 .limpia {

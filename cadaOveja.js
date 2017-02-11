@@ -4,7 +4,9 @@ enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
 var mensajeGameOver = "";
-var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>";
+var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + 
+                    " <a href='https://github.com/hftomler'>github -> hftomler </a>" + 
+                    " <a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Intérprete Aitua<img src='images/cc.png' /></a>";
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
 var valorMaxCarta = 12;
@@ -60,9 +62,9 @@ function arrayCartas() {
 $(document).ready (function () {
   $("html").css("height", "100%");
   $("body").css("min-height", "100%"); // Establezco el body a la altura máxima de pantalla
+  poblarJugadores();
   crearTablero(); // Muestro el tablero por primera vez
   $(document).confCadaOveja(); // Ejecuto el plugin con las opciones por defecto.
-  var allCook = Cookies.getJSON();
   pideNombre();
   reproduceSonido(musicaFondo, 1, true);
   pista = setInterval(pistaIniciar, 6000);
@@ -400,7 +402,7 @@ function destruirJuego() {
   mensajeGameOver += "Puntuación: " + $("#puntos").text() + " puntos";  
   tablero.empty().html(mensajeGameOver);
   guardaDatos(nombreJugador, tiempo, $("#puntos").text()); // Guarda los datos en la cookie del jugador si son mejores que los que había.
-  //muestraHS(ordenHS);
+  muestraHS(ordenHS);
   setTimeout(function() { // Vuelvo al mensaje de Inicio
     tablero.empty().html(mensajeInicio);
   }, 15000);
@@ -423,7 +425,7 @@ function muestraHS(orden) {
       var listado = Cookies.getJSON();
       var hS = [];
       for (i in listado) {
-        if (i.toLowerCase() != "conf") { // Elimina la cookie de configuración del listado
+        if (i.toLowerCase() != "conf" && i.toLowerCase() != "n1") { // Elimina la cookie de configuración y de control
           var nombre = i;
           var tiempo = new Date(listado[i].tiempo);
           var puntos = listado[i].puntos;
@@ -463,7 +465,9 @@ function muestraHS(orden) {
   contHS.animate({
     top: -800
   }, 15000, function() {
-              $("#tablero").empty().html(mensajeInicio);
+              if (!enJuego) {
+                $("#tablero").empty().html(mensajeInicio);
+              }
             });
 }
 
@@ -812,7 +816,7 @@ function crearElemento(idPadre, tipo, tipoValorAttr, text = "") {
 
 // Guarda los datos del jugador en su cookie
 
-function guardaDatos(nombreJugador, tiempo, puntos) {
+function guardaDatos(nombreJugador, tiempo, puntos, continua = true) {
   if (Cookies.getJSON(nombreJugador) == undefined) {
     Cookies.set(nombreJugador, {tiempo: tiempo, puntos: puntos}, { expires: 7, path: ''});
   } else {
@@ -824,5 +828,15 @@ function guardaDatos(nombreJugador, tiempo, puntos) {
     // Vuelvo a almacenar la cookie y actualizo el PlayerZone*/
     Cookies.set(nombreJugador, {tiempo: fechaNew, puntos: puntosNuevo}, { expires: 7, path: ''});
   }
-  playerZone();
+  if (continua) playerZone();
+}
+
+function poblarJugadores(num = 10) {
+  if (Cookies.get("n1") == undefined) {
+    for (var i= 0; i<num; i++) {
+      var tmp = tiempoNewPlayer.setSeconds(tiempoNewPlayer.getSeconds() + Math.ceil(Math.random()*100));
+      guardaDatos(nombresPlayersESLA[Math.floor(Math.random()*nombresPlayersESLA.length)].toUpperCase(), tmp, Math.ceil(Math.random()*120), false);
+    }
+  }
+  guardaDatos("n1",tmp, Math.ceil(Math.random()*120), false);
 }

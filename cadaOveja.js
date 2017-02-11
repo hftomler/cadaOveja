@@ -59,8 +59,9 @@ $(document).ready (function () {
   $("body").css("min-height", "100%"); // Establezco el body a la altura máxima de pantalla
   crearTablero(); // Muestro el tablero por primera vez
   $(document).confCadaOveja(); // Ejecuto el plugin con las opciones por defecto.
+  var allCook = Cookies.getJSON();
   pideNombre();
-  reproduceSonido("concerningHobbits.mp3", 0.2, true);
+  //reproduceSonido("concerningHobbits.mp3", 0.1, true);
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -69,7 +70,7 @@ $(document).ready (function () {
         clearInterval(pista); // Elimino la pista de donde pulsar
         crearTablero(); // Limpio el tablero y muestro cartas.
         if (muestraInicio) { // Retardo para esperar que acabe el barrido de cartas inicial
-         setTimeout(inicVar, retBarr*(numCartas+4)); 
+          setTimeout(inicVar, retBarr*(numCartas+4)); 
         } else {
           inicVar(); // Si no hay barrido inicial de cartas
         }
@@ -88,7 +89,7 @@ function activaTeclaS() {
           clearInterval(pista);
           crearTablero(); // Limpio el tablero y muestro cartas.
           if (muestraInicio) {
-           setTimeout(inicVar, retBarr*(numCartas+4)); 
+           setTimeout(inicVar, retBarr*(numCartas+4));
           } else {
             inicVar();
           }      
@@ -107,6 +108,7 @@ function inicVar() {
   mensajeGameOver = "<br/>¡ FELICIDADES, ";
   $("#start").attr("src", "images/startPulsado.png");
   iniciaCrono();
+  sonidoCarta = true;
 }
 
 
@@ -163,10 +165,10 @@ function pistaIniciar() {
   }
 }
 
-function muestraCarta(carta, tMuestra) {
+function muestraCarta(carta, tMuestra, sonido = true) {
   carta.text(carta.attr("value"));
-  //carta.css("background-image", "url(images/anversocarta.jpg)");
   carta.toggleClass("cartaMostrada");
+  if (sonido) {reproduceSonido("card-flip.mp3")}
   carta.animate({
     fontSize:   "+=5px",
     color:      "#c00",
@@ -260,6 +262,7 @@ function reproduceSonido(sonido, volumen = 1, loop = false) {
 }
 
 function ocultaCarta(carta) {
+  //if (sonidoCarta) reproduceSonido("dealing-card.mp3");  
   carta.animate({
     fontSize:   "-=5px",
     color:      "#fff",
@@ -295,6 +298,7 @@ function crearTablero() {
     atributos = {id: "tablero", class: "tableroInicioFin"};
     var tablero = crearElemento(container, "<DIV/>", atributos);
     tablero.html(mensajeInicio);
+    muestraHS();
     atributos = {id: "copyright", class: "footer"};
     var foot = crearElemento(container, "<FOOTER/>", atributos);
     foot.html(mensajeFooter);
@@ -361,7 +365,7 @@ function crearCartas() {
     }
     // Si muestraInicio = true. Barrido de cartas. Después de crear las cartas se muestran durante 0.1 segundos. 
     if (muestraInicio) {
-        setTimeout(muestraCarta, retBarr*i, $("#c"+i), retBarr);
+        setTimeout(muestraCarta, retBarr*i, $("#c"+i), retBarr, false);
     }
   }
   // Creo el evento click para las cartas.
@@ -393,14 +397,66 @@ function destruirJuego() {
   mensajeGameOver += "Puntuación: " + $("#puntos").text() + " puntos";  
   tablero.empty().html(mensajeGameOver);
   guardaDatos(nombreJugador, tiempo, $("#puntos").text()); // Guarda los datos en la cookie del jugador si son mejores que los que había.
-  setTimeout(function() { // Vuelvo al mensaje de Inicio
+  /*setTimeout(function() { // Vuelvo al mensaje de Inicio
     tablero.empty().html(mensajeInicio);
-  }, 6000);
+  }, 6000);*/
+  muestraHS();
   $("#start").attr("src", "images/start.png");
 
   pista = setInterval(pistaIniciar, 6000);
   activaTeclaS();
   playerZone();
+}
+
+function muestraHS() {
+  var padre = $("#tablero");
+  padre.empty();
+  var atributos = {id: "hS"};
+  var contHS = crearElemento(padre, "<DIV/>", atributos);
+  contHS.css("top", padre.height());
+
+  var txt = "<h2>High Scores</h2>";
+  // Crea listado
+      var listado = Cookies.getJSON();
+      var hS = [];
+      for (i in listado) {
+        var nombre = i;
+        var tiempo = new Date(listado[i].tiempo);
+        var puntos = listado[i].puntos;
+        hS.push([nombre, tiempo, puntos]);
+      }
+
+      function eliminaVacios() {
+        for (var i = 0; i<hS.length; i++) {
+          if (hS[i][1].toLocaleTimeString() == "1:00:00") {
+            hS.splice(i, 1);
+            i--;
+          }
+        }
+      }
+      eliminaVacios();
+      hS.sort(ordenarTiempos);
+      txt += "<span class='nombreHS tituloHS'>Jugador</span><span class='tiempoHS tituloHS'>Tiempo</span><span class='puntosHS tituloHS'>Puntos</span>";
+      var topCuantos = 10; // Cuantas mejores puntuaciones quieres mostrar
+      crearHighScore(topCuantos);
+      function crearHighScore() {
+        for (var i = 0; i<topCuantos; i++) {
+          txt += "<span class='nombreHS'>" + hS[i][0] + "</span><span class='tiempoHS'>" + hS[i][1].toLocaleTimeString() + "</span><span class='puntosHS'>" + hS[i][2] + "</span><br class='limpia' />"; 
+        }
+      }
+
+      function ordenarPuntos(a,b) {
+        return b[2] - a[2];
+      }
+
+      function ordenarTiempos(a, b) {
+        return a[1] - b[1];
+      }
+
+  contHS.html(txt);
+  contHS.animate({
+    top: -1000
+  }, 15000)
 }
 
 
@@ -446,6 +502,7 @@ function pideNombre() {
       mouseover: function () {
         $(this).parent().children(":last-child").text("Usa este botón para usar un nombre escrito por ti");
         $(this).attr("src", "images/botonGuardar.jpg");
+        reproduceSonido("over.mp3");
       }, 
       mouseout: function () {
         $(this).parent().children(":last-child").text("Pasa el ratón por cada botón para conocer su efecto");
@@ -454,6 +511,7 @@ function pideNombre() {
       click: function () {
         var nombreInt = $("#iNombre").val();
         if (nombreInt != "" && (valid.test(nombreInt))) {
+          reproduceSonido("click.mp3");
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
@@ -474,6 +532,7 @@ function pideNombre() {
       mouseover: function () {
         $(this).parent().children(":last-child").text("Usa este botón para usar un nombre del Señor de los Anillos");
         $(this).attr("src", "images/botonEslaOver.jpg");
+        reproduceSonido("over.mp3");
       }, 
       mouseout: function () {
         $(this).parent().children(":last-child").text("Pasa el ratón por cada botón para conocer su efecto");
@@ -481,6 +540,7 @@ function pideNombre() {
       },       
       click: function () {
         if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersESLA[Math.floor(Math.random()*nombresPlayersESLA.length)];
+          reproduceSonido("click.mp3");
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');
@@ -494,6 +554,7 @@ function pideNombre() {
       mouseover: function () {
         $(this).parent().children(":last-child").text("Usa este botón para usar un nombre de Star Wars");
         $(this).attr("src", "images/botonStarOver.jpg");
+        reproduceSonido("over.mp3");
       }, 
       mouseout: function () {
         $(this).parent().children(":last-child").text("Pasa el ratón por cada botón para conocer su efecto");
@@ -501,6 +562,7 @@ function pideNombre() {
       },             
       click: function () {
         if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersSTARW[Math.floor(Math.random()*nombresPlayersSTARW.length)];
+          reproduceSonido("click.mp3");
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
           $('#popup').fadeOut('slow');
           $('.popup-overlay').fadeOut('slow');

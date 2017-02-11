@@ -112,7 +112,6 @@ body {
   color: #fff;
   text-shadow: 4px 4px #555;
   line-height: 1.3em;
-
 }
 
 .gloria {
@@ -469,4 +468,54 @@ fieldset#valRetCarta {
 
 #enviaConf input {
   box-shadow: 1px 1px 2px #000;
+}
+
+/* HIGH SCORE ESTILOS */
+
+#hS {
+  position: absolute;
+  font-family: 'Gloria Hallelujah', cursive;
+  line-height: 1.3em;
+  width: 100%;
+  text-shadow: 2px 2px #a50;
+  color:#ff0;
+}
+
+#hS h2 {
+  font-size: 55px;
+  text-decoration: underline;
+}
+
+#hS span {
+  display:block;
+  float: left;
+  margin: 0 30px;
+  font-size: 30px;
+}
+
+#hS span.tituloHS {
+  text-align: center !important;
+  font-size: 40px;
+  margin-bottom: 15px;
+  border-bottom: 1px dotted #ff0;
+}
+
+#hS span.nombreHS {
+  text-align: left;
+  width: 400px;
+  margin-left: 50px;
+}
+
+#hS span.tiempoHS {
+  text-align: center;
+  width: 150px;
+}
+
+#hS span.puntosHS {
+  text-align: right;
+  width: 100px;
+}
+
+.limpia {
+  clear: both;
 }

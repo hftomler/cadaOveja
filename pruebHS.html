@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Práctica 1. Ejercicio 3. JQuery</title>
+    <script src="jquery-3.1.1.min.js" charset="utf-8"></script>
+    <script src="jquery.color.plus-names-2.1.2.js" charset="utf-8"></script>
+    <script src="js.cookie.js"></script>
+    <style>
+      span {
+        display:inline-block;
+        float: left;
+        width: 400px;
+      }
+    </style>
+    <!-- Plugin fuegos artificiales -->
+  </head>
+  <body>
+    <script>
+      var listado = Cookies.getJSON();
+      var hS = [];
+      var txt = "";
+      for (i in listado) {
+        var nombre = i;
+        var tiempo = new Date(listado[i].tiempo);
+        var puntos = listado[i].puntos;
+        hS.push([nombre, tiempo, puntos]);
+      }
+
+      function eliminaVacios() {
+        for (var i = 0; i<hS.length; i++) {
+          if (hS[i][1].toLocaleTimeString() == "1:00:00") {
+            hS.splice(i, 1);
+            i--;
+          }
+        }
+      }
+      eliminaVacios();
+      hS.sort(ordenarTiempos);
+      crearHighScore();
+      function crearHighScore() {
+        txt = "<div>";
+        for (var i = 0; i<hS.length; i++) {
+          txt += "<span id='nombreHS'>" + hS[i][0] + "</span><span id='tiempoHS'>" + hS[i][1].toLocaleTimeString() + "</span><span id='puntosHS'>" + hS[i][2] + "</span><br/>"; 
+        }
+        txt += "</div>";
+      }
+
+      $("body").html(txt);
+
+      function ordenarPuntos(a,b) {
+        return b[2] - a[2];
+      }
+
+      function ordenarTiempos(a, b) {
+        return a[1] - b[1];
+      }
+
+    </script>
+  </body>
+</html>

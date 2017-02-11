@@ -15,13 +15,18 @@ body {
 
 footer {
   font-size: 0.9em;
+  color: #444;
+  text-align: center;
+}
+
+footer:hover, footer a:hover {
   color: #fff;
 }
 
 footer a {
   margin: 0 15px;
   text-decoration: none;
-  color: #fff;
+  color: #444;
 }
 
 footer img {
@@ -288,12 +293,6 @@ footer img {
   border: 2px solid rgba(0,50,0, 1);
   background-color:rgba(0,0,0,0.3);
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
-}
-
-#copyright {
-  font-size: 0.8;
-  color: white;
-  text-align: center;
 }
 
 /* VENTANA MODAL */

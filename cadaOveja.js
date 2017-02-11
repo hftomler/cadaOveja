@@ -304,7 +304,7 @@ function crearTablero() {
     var tablero = crearElemento(container, "<DIV/>", atributos);
     tablero.html(mensajeInicio);
     muestraHS(ordenHS);
-    atributos = {id: "copyright", class: "footer"};
+    atributos = {};
     var foot = crearElemento(container, "<FOOTER/>", atributos);
     foot.html(mensajeFooter);
     return; // Salgo de la función;

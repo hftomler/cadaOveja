@@ -23,11 +23,14 @@ var nombreJugador = "PY1UNN"; // La primera vez que se ejecuta el nombre está v
 var nombresPlayersESLA = ["Adrahil", "Aegnor", "Aerandir", "Aghan", "Aglahad", "Ailinel", "Alatar", "Aldamir", "Aldor", "Almarian", "Almiel", "Amandil", "Amdír", "Amlaith", "Amrod", "Amroth", "Anardil", "Anborn", "Ancalagon The Black", "Andróg", "Angbor", "Angelimar", "Angelimir", "Angrod", "Anárion", "Ar-Adûnakhôr", "Ar-Gimilzôr", "Ar-Pharazôn", "Ar-Sakalthôr", "Ar-Zimrathôn", "Arador", "Araglas", "Aragorn I", "Aragorn II Elessar", "Aragost", "Arahad I", "Arahad II", "Arahael", "Aranarth", "Aranuir", "Araphant", "Araphor", "Arassuil", "Arathorn I", "Arathorn II", "Araval", "Aravir", "Aravorn", "Arciryas", "Aredhel", "Argeleb I", "Argeleb II", "Argonui", "Arien", "Artamir", "Arthad", "Arvedui", "Arvegil", "Arveleg I", "Arveleg II", "Arwen", "Asgon", "Atanamir -Atanatar I", "Atanatar II", "Aulë", "Azaghâl", "Azog", "Bain", "Baldor", "Balin", "Barach", "Baragund", "Barahir", "Barahir (Steward)", "Baran", "Bard II", "Bard the Bowman", "Barliman Butterbur", "Beldis", "Belecthor I", "Belecthor II", "Beleg Cúthalion", "Beleg of Arnor", "Belegorn", "Belegund", "Belemir", "Belen", "Beorn", "Beregond", "Beregond (Captain)", "Beren", "Beren (Steward)", "Bergil", "Bilbo Baggins", "Angelica Baggins", "Bilbo Baggins", "Fosco Baggins", "Bungo Baggins", "Frodo Baggins", "Longo Baggins", "Mungo Baggins", "Pansy Baggins", "Bill", "Blanco", "Bob", "Bofur", "Bolg", "Fredegar Bolger", "Tom Bombadil", "Bombur", "Borin", "Borlach", "Borlad", "Boromir", "Boromir", "Boromir (Steward)", "Borthand", "Brand", "Amaranth Brandybuck", "Estella (Bolger) Brandybuck", "Madoc Brandybuck", "Meriadoc Brandybuck", "Brego", "Brodda", "Bungo Baggins", "Bëor", "Calimehtar", "Calmacil", "Captains of the West", "Caranthir", "Carc", "Carcharoth", "Castamir the Usurper", "Celeborn", "Celebrimbor", "Celebrindor", "Celebrían", "Celegorm", "Celepharn", "Cemendur", "Cirion", "Ciryandil", "Ciryatur", "Ciryon", "Curufin", "Círdan", "Farmer Cotton", "Rosie Cotton", "Eärendil", "Ecthelion I", "Ecthelion II", "Ecthelion of the Fountain", "Egalmoth Eilinel", "Elatan", "Elboron", "Eldacar of Gondor", "Eldalótë", "Eldarion", "Elemmakil", "Elendil", "Elfhild", "Elfwine", "Elladan and Elrohir", "Elmo", "Elrond", "Elros", "Eluréd and Elurín", "Elwing", "Enel", "Enerdhil", "Éomer", "Eorl the Young", "Eothain", "Éowyn", "Eradan", "Erchirion", "Erendis", "Erestor", "Erkenbrand", "Eru Ilúvatar", "Eärendil", "Eärendil of Gondor", "Eärendur (Lord of Andúnië)", "Eärendur of Arnor", "Eärendur of Númenor", "Eärnil I", "Eärnil II", "Eärnur", "Eärwen", "Eöl", "Eönwë", "Faramir", "Fastred", "Fengel", "Finarfin", "Findegil", "Finduilas", "Finduilas of Dol Amroth", "Fingolfin", "Fingon", "Finrod Felagund", "Finwë", "Folca", "Folcred", "Folcwine", "Forlong", "Forthwini", "Fram", "Freca", "Frodo Baggins", "Frumgar", "Frár", "Fréa", "Frëawine", "Frór", "Fuinur", "Fundin", "Fëanor", "Fíli", "Hadhod", "Hador", "Hador (Steward)", "Halbarad", "Haldad", "Haldar", "Haldir", "Haleth (Son of Háma)", "Hallacar", "Hallas (Steward)", "Halmir", "Harding", "Hareth", "Helm Hammerhand", "Herion", "Herucalmo", "Herumor", "Hirgon", "Fréaláf Hildeson", "Horn", "Tobias Hornblower", "Tobold Hornblower", "Huan", "Hunthor", "Hyarmendacil I", "Hyarmendacil II", "Háma", "Húrin", "Húrin I", "Húrin II", "Ibûn", "Idril", "Imin", "Imrahil", "Indis", "Ingwion", "Ingwë", "Inzilbêth", "Iorlas", "Irmo", "Isildur", "Isilmo", "Ivorwen", "Khamûl", "Khîm", "Kíli", "Legolas", "Lenwë", "Lindo", "Lindórië", "Lorgan", "Lothíriel", "Lugdush", "Léod", "Brytta Léofa", "Lúthien", "Mablung", "Mablung the Ranger", "Maedhros", "Maeglin", "Maglor", "Farmer Maggot", "Mahtan", "Mahud", "Mahúr", "Mairen", "Malach", "Mallor", "Malvegil", "Man in the Moon", "Mandos", "Marach", "Marcho", "Marhari", "Marhwini", "Master of Laketown", "Melian", "Melkor", "Meneldil", "Meneldor", "Minardil", "Minastan", "Mithrellas", "Morwen", "The Moth", "Mouth of Sauron", "Muzgash", "Míriel", "Mîm", "Narmacil I", "Narmacil II", "Nellas", "Nerdanel", "Nessa", "Nienna", "Nimloth (elf)", "Niënor", "Nob", "Náin I", "Númendil", "Olwë", "Ondoher Orchaldor", "Orcobal", "Ori", "Orodreth", "Orodreth (Steward)", "Oromë", "Oropher", "Orophin", "Ossë", "Ostoher", "Radagast", "River-woman", "Rogash", "Roäc", "Ruffian Leader", "Rumil", "Rómendacil I", "Rómendacil II", "Andwise Roper", "Rúmil", "Lobelia Sackville-Baggins", "Lotho Sackville-Baggins", "Sador", "Saeros", "Salmar", "Saruman", "Sauron", "Shadowfax", "Shagrat", "Shelob", "Silmariën", "Siriondil", "Smaug", "Sméagol", "Soronto", "Squint-eyed Southerner", "Morwen Steelsheen", "Robin Smallburrow", "Tar-Alcarin", "Tar-Aldarion", "Tar-Amandil", "Tar-Ancalimon", "Tar-Ancalimë", "Tar-Anárion", "Tar-Ardamin", "Tar-Atanamir", "Tar-Calmacil", "Tar-Ciryatan", "Tar-Elendil", "Tar-Meneldur", "Tar-Minastir", "Tar-Míriel -Tar-Palantir", "Tar-Súrion", "Tar-Telemmaitë", "Tar-Telperiën", "Tar-Vanimeldë", "Tarannon Falastur", "Tarcil", "Targon", "Tarondor", "Tata", "Telemnar", "Telumehtar", "Tevildo", "Thengel", "Thingol", "Thorin I", "Thorin II Oakenshield", "Thorin III Stonehelm", "Thorondir", "Thorondor", "Thranduil", "Thráin I", "Thráin II", "Thrór", "Théoden", "Théodred", "Tilion", "Tom, Bert, and William", "Tom Bombadil", "Adalgrim Took", "Bullroarer Took", "Adelard Took", "Goldilocks (Gardner) Took", "Peregrin Took", "Esmeralda Took", "Pimpernel Took", "Treebeard", "Tulkas", "Tuor", "Turambar", "Turgon", "Turgon (Steward)", "Two Watchers", "Túrin I", "Túrin II", "Túrin Turambar", "Daddy Twofoot", "Ulbar", "Uglúk", "Uinen", "Uldor", "Ulfang", "Ulfast", "Ulmo", "Ulrad", "Ulwarth", "Ungoliant", "Vairë", "Valacar", "Valandil", "Valandil of Andúnië", "Varda", "Vardamir Nólimon", "Vidugavia", "Vidumavi", "Vorondil the Hunter", "Voronwë", "Vána", "Vëantur", "Walda", "Wife of Barach", "Witch-king of Angmar", "Wulf", "Yavanna", "Zamîn"]
 var nombresPlayersSTARW = ["Anakin Skywalker", "Anakin Solo", "Arren Kae", "Ask Aak", "Attichitcuk", "Ayy Vida", "Banda Max Rebo", "Bene", "Biggs Darklighter", "Bodo Baas", "Bossk", "Cade Skywalker", "Capitán Rex", "Carlist Rieekan", "Darra Thel-Tanis", "Centinelas de Byss", "Chalmun", "Charal", "Chewbacca", "Clone trooper", "Conde Dooku", "Cordé", "Crix Madine", "Darth Bane", "Darth Caedus", "Darth Malak", "Darth Maul", "Darth Plagueis", "Darth Vader", "Dash Rendar", "Demetrius Zaarin", "Diva Funquita", "Diva Shaliqua", "Djas Puhr", "Doda Bodonawieedo", "Dominus", "Dormé", "Durge", "Dutch Vander", "Ephant Mon", "Fang Zar", "Feltipern Trevagg", "Ferus Olin", "Jango Fett", "Boba Fett", "Finis Valorum", "Finn", "Firmus Piett", "Galen Marek", "Garm Bel Iblis", "Garven Dreis", "General Grievous", "General Rahm Kota", "Gilramos Libkath", "Gizor Dellso", "Greeata", "Greedo", "Gregar Typho", "Guardia Real del Emperador", "Han Solo", "Ikrit", "Jabba el Hutt", "Jamillia", "Jan Dodonna", "Jar Jar Binks", "Jek Porkins", "Jerjerrod", "Joh Yowza", "Jorus C'baoth", "Korven Winex", "Kren Blista-Vanee", "Kylo Ren", "Labashi-Marduk", "Lama Su", "Lando Calrissian", "Lobot", "Lord Oscuro", "Lowbacca", "Luke Skywalker", "Lumpawarrump", "Lunae Minx", "Líder Supremo Snoke", "Maris Brood", "Mas Amedda", "Max Rebo", "Maximilian Veers", "Meena Tills", "Miko Reglia", "Momaw Nadon", "Nien Nunb", "Nom Anor", "Nute Gunray", "Olee Starstone", "Orn Free Taa", "Ozzik Sturn", "Palpatine", "Panaka", "Passel Argente", "Poe Dameron", "Poggle el Menor", "Roan Shryne", "Rogwa Wodrata", "Roos Tarpals", "Roron Corobb", "Rosh Penin", "Rugor Nass", "Rune Haako", "Sabé", "San Hill", "Sar Labooda", "Sarrissa Jeng", "Satal Keto", "Saul Karath", "Sebulba", "Señor Oscuro de los Sith", "Shaak Ti", "Shu Mai", "Sidonra Diath", "Sifo-Dyas", "Shmi Skywalker", "Stormtrooper", "Talon Karrde", "Tarfful", "Tavion Axmis", "Tenel Ka", "Terak", "Thon", "Thrawn", "Tikkes", "Tion Medon", "Tru Veld", "Tsui Choi", "Ulic Qel-Droma", "Vergere", "Watto", "Wedge Antilles", "Wicket W. Warrick", "Wilhuff Tarkin", "XizorYuthura Ban", "Zez-Kai Ell", "Zsinj", "Zuckuss"]
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
+var ordenHS = 2; // 1 = tiempo, 2 = Puntuación
+var topCuantos = 10; // Cuantas mejores puntuaciones quieres mostrar
 tiempoMuestraCarta = 300; // Tiempo en milisegundos que se muestra la carta. Configurada por plugin.
 muestraInicio = true; // False si no se quiere barrido al principio. Configurada por plugin.
 posPlayerZone = ""; // Configurada con el plugin
 fondoCarta = ""; // Configurada con el plugin
 estilosCarta = ["cgreen", "cgray", "cblue", "cgold", "cpurple", "cred"];
+musicaFondo = "kanonInD.mp3";
 
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
@@ -61,7 +64,7 @@ $(document).ready (function () {
   $(document).confCadaOveja(); // Ejecuto el plugin con las opciones por defecto.
   var allCook = Cookies.getJSON();
   pideNombre();
-  //reproduceSonido("concerningHobbits.mp3", 0.1, true);
+  reproduceSonido(musicaFondo, 1, true);
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -298,7 +301,7 @@ function crearTablero() {
     atributos = {id: "tablero", class: "tableroInicioFin"};
     var tablero = crearElemento(container, "<DIV/>", atributos);
     tablero.html(mensajeInicio);
-    muestraHS();
+    muestraHS(ordenHS);
     atributos = {id: "copyright", class: "footer"};
     var foot = crearElemento(container, "<FOOTER/>", atributos);
     foot.html(mensajeFooter);
@@ -397,10 +400,10 @@ function destruirJuego() {
   mensajeGameOver += "Puntuación: " + $("#puntos").text() + " puntos";  
   tablero.empty().html(mensajeGameOver);
   guardaDatos(nombreJugador, tiempo, $("#puntos").text()); // Guarda los datos en la cookie del jugador si son mejores que los que había.
-  /*setTimeout(function() { // Vuelvo al mensaje de Inicio
+  //muestraHS(ordenHS);
+  setTimeout(function() { // Vuelvo al mensaje de Inicio
     tablero.empty().html(mensajeInicio);
-  }, 6000);*/
-  muestraHS();
+  }, 15000);
   $("#start").attr("src", "images/start.png");
 
   pista = setInterval(pistaIniciar, 6000);
@@ -408,22 +411,24 @@ function destruirJuego() {
   playerZone();
 }
 
-function muestraHS() {
+function muestraHS(orden) {
   var padre = $("#tablero");
   padre.empty();
   var atributos = {id: "hS"};
   var contHS = crearElemento(padre, "<DIV/>", atributos);
   contHS.css("top", padre.height());
 
-  var txt = "<h2>High Scores</h2>";
+  var txt = "<h2>High Scores TOP "+ topCuantos + "</h2>";
   // Crea listado
       var listado = Cookies.getJSON();
       var hS = [];
       for (i in listado) {
-        var nombre = i;
-        var tiempo = new Date(listado[i].tiempo);
-        var puntos = listado[i].puntos;
-        hS.push([nombre, tiempo, puntos]);
+        if (i.toLowerCase() != "conf") { // Elimina la cookie de configuración del listado
+          var nombre = i;
+          var tiempo = new Date(listado[i].tiempo);
+          var puntos = listado[i].puntos;
+          hS.push([nombre, tiempo, puntos]);
+        }
       }
 
       function eliminaVacios() {
@@ -435,13 +440,14 @@ function muestraHS() {
         }
       }
       eliminaVacios();
-      hS.sort(ordenarTiempos);
-      txt += "<span class='nombreHS tituloHS'>Jugador</span><span class='tiempoHS tituloHS'>Tiempo</span><span class='puntosHS tituloHS'>Puntos</span>";
-      var topCuantos = 10; // Cuantas mejores puntuaciones quieres mostrar
+      (orden == 1) ? hS.sort(ordenarTiempos): hS.sort(ordenarPuntos);
+      txt += "<span class='nombreHS tituloHS'>Jugador</span><span class='tiempoHS tituloHS'>Tiempo</span><span class='puntosHS tituloHS'>Puntos&nbsp;&nbsp;</span>";
+      if (hS.length <= topCuantos) topCuantos = hS.length; 
       crearHighScore(topCuantos);
       function crearHighScore() {
         for (var i = 0; i<topCuantos; i++) {
-          txt += "<span class='nombreHS'>" + hS[i][0] + "</span><span class='tiempoHS'>" + hS[i][1].toLocaleTimeString() + "</span><span class='puntosHS'>" + hS[i][2] + "</span><br class='limpia' />"; 
+          var claseEsp = (nombreJugador == hS[i][0])? " nJHS": "";
+          txt += "<span class='nombreHS" + claseEsp + "'>" + hS[i][0] + "</span><span class='tiempoHS" + claseEsp + "'>" + hS[i][1].toLocaleTimeString() + "</span><span class='puntosHS" + claseEsp + "'>" + hS[i][2] + "</span><br class='limpia' />"; 
         }
       }
 
@@ -455,12 +461,14 @@ function muestraHS() {
 
   contHS.html(txt);
   contHS.animate({
-    top: -1000
-  }, 15000)
+    top: -800
+  }, 15000, function() {
+              $("#tablero").empty().html(mensajeInicio);
+            });
 }
 
 
-// Pedir nombre. De momento con prompt()
+// Pedir nombre.
 
 function pideNombre() {
   if (Cookies.getJSON(nombreJugador) == undefined) {
@@ -539,7 +547,7 @@ function pideNombre() {
         $(this).attr("src", "images/botonEsla.jpg");
       },       
       click: function () {
-        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersESLA[Math.floor(Math.random()*nombresPlayersESLA.length)];
+        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersESLA[Math.floor(Math.random()*nombresPlayersESLA.length)].toUpperCase();
           reproduceSonido("click.mp3");
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
           $('#popup').fadeOut('slow');
@@ -561,7 +569,7 @@ function pideNombre() {
         $(this).attr("src", "images/botonStar.jpg");
       },             
       click: function () {
-        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersSTARW[Math.floor(Math.random()*nombresPlayersSTARW.length)];
+        if (nombreJugador == "PY1UNN") nombreJugador = nombresPlayersSTARW[Math.floor(Math.random()*nombresPlayersSTARW.length)].toUpperCase();
           reproduceSonido("click.mp3");
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
           $('#popup').fadeOut('slow');

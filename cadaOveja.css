@@ -503,7 +503,7 @@ fieldset#valRetCarta {
 #hS span.nombreHS {
   text-align: left;
   width: 400px;
-  margin-left: 50px;
+  margin-left: 95px;
 }
 
 #hS span.tiempoHS {
@@ -514,6 +514,11 @@ fieldset#valRetCarta {
 #hS span.puntosHS {
   text-align: right;
   width: 100px;
+}
+
+#hS span.nJHS {
+  text-shadow: 2px 2px #fff !important;
+  color:#49f !important;
 }
 
 .limpia {

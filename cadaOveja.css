@@ -7,6 +7,7 @@
   outline: 1px dotted yellow;
 }*/
 
+
 body {
   background-color: #000;
   background-image: url(images/tapete.jpg);
@@ -451,17 +452,28 @@ fieldset#posConf {
 #chkMuestraInicio {
   float: left;
   text-align: left;
-  width: 350px;
-  margin: 9px;
+  width: 380px;
+  margin: 10px 10px 0 ;
   padding-left: 9px;
 }
 
+#cancionFondo {
+  float: left;
+  text-align: center;
+  width: 95%;
+  margin: 10px 10px 0 ;
+  padding-left: 9px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
 fieldset#valRetCarta {
   float: left;
-  margin: 15px 10px;
-  padding: 3px;
   text-align: left;
-  width: 360px;
+  width: 380px;
+  margin: 10px 10px 0;
+  padding: 3px;
   border: 2px groove white;
 }
 

@@ -4,9 +4,14 @@ enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
 var mensajeGameOver = "";
-var mensajeFooter = "&copy; Agustín Lorenzo " + new Date().getFullYear() + 
-                    " <a href='https://github.com/hftomler'>github -> hftomler </a>" + 
-                    " <a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Intérprete Aitua<img src='images/cc.png' /></a>";
+canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)"];
+sonando = ["<a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Aitua<img src='images/cc.png' /></a>",
+               "<a href='http://freemusicarchive.org/music/Maxim_Kornyshev'>Sonando: 'Sappfire Wind' - Maxim Kornyshev<img src='images/cc.png' /></a>",
+               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl<img src='images/cc.png' /></a>"];
+musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "winterSmoke.mp3"];
+pistaActual = ""; // Pista actual de música de fondo que está sonando.
+var copyright = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>"; 
+                    
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
 var valorMaxCarta = 12;
@@ -31,9 +36,7 @@ tiempoMuestraCarta = 300; // Tiempo en milisegundos que se muestra la carta. Con
 muestraInicio = true; // False si no se quiere barrido al principio. Configurada por plugin.
 posPlayerZone = ""; // Configurada con el plugin
 fondoCarta = ""; // Configurada con el plugin
-estilosCarta = ["cgreen", "cgray", "cblue", "cgold", "cpurple", "cred"];
-musicaFondo = "kanonInD.mp3";
-
+estilosCarta = ["cgreen", "cgray", "cblue", "cgold", "cpurple", "cred"]; // Colores para el fondo de cartas
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
       var j = Math.floor( i * Math.random());
@@ -66,7 +69,6 @@ $(document).ready (function () {
   crearTablero(); // Muestro el tablero por primera vez
   $(document).confCadaOveja(); // Ejecuto el plugin con las opciones por defecto.
   pideNombre();
-  reproduceSonido(musicaFondo, 1, true);
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
   $("#start").on({
@@ -258,9 +260,13 @@ function burbuja(carta, puntObt) {
   }, 300 , function () { burbuja.remove()});
 }
 
-function reproduceSonido(sonido, volumen = 1, loop = false) {
+function reproduceSonido(sonido, volumen = 1, loop = false, fondo = false) {
   var aud = document.createElement("audio");
   aud.setAttribute("src", "sonidos/" + sonido);
+  if (fondo) {
+    aud.setAttribute("id", "musicaFondo");
+    document.body.appendChild(aud);
+  }
   aud.volume = volumen;
   aud.loop = loop;
   aud.play();
@@ -304,9 +310,8 @@ function crearTablero() {
     var tablero = crearElemento(container, "<DIV/>", atributos);
     tablero.html(mensajeInicio);
     muestraHS(ordenHS);
-    atributos = {};
+    atributos = {id:"foot"};
     var foot = crearElemento(container, "<FOOTER/>", atributos);
-    foot.html(mensajeFooter);
     return; // Salgo de la función;
   } else { //
      $("#tablero").empty(); // Vacío el tablero para poner las cartas.
@@ -463,8 +468,8 @@ function muestraHS(orden) {
 
   contHS.html(txt);
   contHS.animate({
-    top: -800
-  }, 15000, function() {
+    top: -650
+  }, 12000, function() {
               if (!enJuego) {
                 $("#tablero").empty().html(mensajeInicio);
               }
@@ -673,11 +678,15 @@ function formConfiguracion() {
                   "</div>" +
                   "<fieldset id='valRetCarta'><legend>Tiempo muestra cartas</legend>" +
                     "<input id='rangTmp' type='range' value='0' step='50' min='300' max='1500'>" +
-                    "<span id='rangSpan'></span><br/>" +
+                    "<span id='rangSpan'></span>" +
                   "</fieldset>" +
                   "<div id='chkMuestraInicio' >" +
                     "<input type='checkbox' name='showStart' " +
                             "value='true'>Muestra cartas al iniciar el juego" +
+                  "</div>" +
+                  "<div id='cancionFondo' >Música de Fondo: " +
+                    "<select id='selCancion'>" +
+                    "</select>" +
                   "</div>" +
                 "</div>" +
               "</div>");
@@ -714,28 +723,39 @@ function formConfiguracion() {
       }
     });
 
+    // Opciones de música de fondo y establecimiento de la actual.
+    var sel = $("#selCancion");
+    for (var i = 0; i<canciones.length; i++) {
+      // Si la pistaActual coincide con la opción que se crea se pone como seleccionada.
+      (i == pistaActual) ? atributos = {value: musicaFondo[i], selected: true} : atributos = {value: musicaFondo[i]};
+      var opt = crearElemento(sel, "<OPTION/>", atributos, canciones[i]);
+    }
+
+    // Cambio de la imagen de la carta si se cambia el radio Button
+    $("input[name='radColCarta'").on ({
+      click: function() {
+        $(this).siblings("img").removeClass().addClass($(this).attr("value"));
+      }
+    });
 
   blurElement("#container", 5); 
   $("#popupcf").fadeIn("slow");
   var fondo = $(".popup-overlay");
   fondo.fadeIn("slow");
   fondo.height($(window).height());
-  $("input[name='radColCarta'").on ({
-    click: function() {
-      $(this).siblings("img").removeClass().addClass($(this).attr("value"));
-    }
-  });
   $("#gConf").on ({
     click: function() {
       var bkCarta = $(':radio[name="radColCarta"]:checked').attr("value");
       var posBrCfg = $(':radio[name="posBarraConf"]:checked').attr("value");
       var ckStart = ($(':checkbox[name="showStart"]')[0].checked);
       var tmpCarta = $("#rangTmp").val();
+      var pistaSel = $("#selCancion").prop('selectedIndex');
       $(document).confCadaOveja({
           fondoCarta: bkCarta,
           posPlayerZone: posBrCfg,
           muestraInicio: ckStart,
-          tiempoMuestraCarta: tmpCarta
+          tiempoMuestraCarta: tmpCarta,
+          pistaActual: pistaSel
       });
       $('#popupcf').fadeOut('slow');
       $('.popup-overlay').fadeOut('slow');
@@ -831,6 +851,7 @@ function guardaDatos(nombreJugador, tiempo, puntos, continua = true) {
   if (continua) playerZone();
 }
 
+// La primera vez que se juega se crean 10 jugadores (nombre, puntuación y tiempo aleatorios). Además se crea cookie de control n1.
 function poblarJugadores(num = 10) {
   if (Cookies.get("n1") == undefined) {
     for (var i= 0; i<num; i++) {

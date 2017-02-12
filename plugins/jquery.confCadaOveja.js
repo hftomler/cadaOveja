@@ -3,7 +3,8 @@ jQuery.fn.confCadaOveja = function(parametros) {
       posPlayerZone: "right", // left or rigth
       muestraInicio: true, // true or false
       tiempoMuestraCarta: 500, // milisegundos que se muestra cada carta
-      fondoCarta: "cred" // color del anverso de cada carta
+      fondoCarta: "cred", // color del anverso de cada carta
+      pistaActual: 2 // Pista por defecto música de fondo.
    }
 
    jQuery.extend(conf, parametros);
@@ -13,6 +14,15 @@ jQuery.fn.confCadaOveja = function(parametros) {
       muestraInicio = conf.muestraInicio;
       tiempoMuestraCarta = conf.tiempoMuestraCarta;
       fondoCarta = conf.fondoCarta;
+      // Música fondo
+      if (pistaActual != "") { // Ya está sonando una canción
+         $("#musicaFondo").remove();
+      }
+      pistaActual = conf.pistaActual;
+      // Reproduzco la canción seleccionada en pistaActual;
+      $("audio").remove();
+      reproduceSonido(musicaFondo[pistaActual], 1, true, true);
+      $("#foot").html(copyright + sonando[pistaActual]);
       var confBloque = $("#jugDat");
       confBloque.removeClass(); // Elimino las clases que pudiera tener asignadas.
       (posPlayerZone == "right") ? confBloque.addClass("right") : confBloque.addClass("left");

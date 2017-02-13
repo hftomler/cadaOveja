@@ -4,14 +4,15 @@ enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
 var mensajeGameOver = "";
-canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)"];
-sonando = ["<a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Aitua<img src='images/cc.png' /></a>",
+canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)", "Concerning Hobbits"];
+var sonando = ["<a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Aitua<img src='images/cc.png' /></a>",
                "<a href='http://freemusicarchive.org/music/Maxim_Kornyshev'>Sonando: 'Sappfire Wind' - Maxim Kornyshev<img src='images/cc.png' /></a>",
-               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl<img src='images/cc.png' /></a>"];
-musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "winterSmoke.mp3"];
+               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl<img src='images/cc.png' /></a>", 
+               "<a href='http://downloads.khinsider.com/game-soundtracks/album/lord-of-the-rings-the-fellowship-of-the-ring-howard-shore/02-concerning-hobbits.mp3'>Sonando: 'Concerning Hobbits' - Howard Shore<img src='images/cc.png' /></a>"];
+musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "winterSmoke.mp3", "concerningHobbits.mp3"];
 pistaActual = ""; // Pista actual de música de fondo que está sonando.
 var copyright = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>"; 
-                    
+var ctrlSonido = "<img src='images/playinGray.png' id='speaker' />";                    
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
 var valorMaxCarta = 12;
@@ -71,23 +72,10 @@ $(document).ready (function () {
   pideNombre();
   pista = setInterval(pistaIniciar, 6000);
   // Si se pulsa la imagen Start o la tecla S, comienza el juego
-  $("#start").on({
-    click: function() {
-      if (!enJuego) {
-        clearInterval(pista); // Elimino la pista de donde pulsar
-        crearTablero(); // Limpio el tablero y muestro cartas.
-        if (muestraInicio) { // Retardo para esperar que acabe el barrido de cartas inicial
-          setTimeout(inicVar, retBarr*(numCartas+4)); 
-        } else {
-          inicVar(); // Si no hay barrido inicial de cartas
-        }
-      }
-    }
-  })
 });
 
 
-function activaTeclaS() {
+function activaTeclaSBotonInicio() {
   $(document).on( {
     keydown: function(event){
       if ((event.key).toUpperCase() == "S" ) {
@@ -100,6 +88,20 @@ function activaTeclaS() {
           } else {
             inicVar();
           }      
+        }
+      }
+    }
+  });
+  $("#start").on({
+    click: function() {
+      $("#start").off("click");
+      if (!enJuego) {
+        clearInterval(pista); // Elimino la pista de donde pulsar
+        crearTablero(); // Limpio el tablero y muestro cartas.
+        if (muestraInicio) { // Retardo para esperar que acabe el barrido de cartas inicial
+          setTimeout(inicVar, retBarr*(numCartas+4)); 
+        } else {
+          inicVar(); // Si no hay barrido inicial de cartas
         }
       }
     }
@@ -414,7 +416,7 @@ function destruirJuego() {
   $("#start").attr("src", "images/start.png");
 
   pista = setInterval(pistaIniciar, 6000);
-  activaTeclaS();
+  activaTeclaSBotonInicio();
   playerZone();
 }
 
@@ -535,7 +537,7 @@ function pideNombre() {
           nombreJugador = $("#iNombre").val().toUpperCase();
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaS();
+          activaTeclaSBotonInicio();
           playerZone();
         } else {
           $("#iNombre").focus();
@@ -563,7 +565,7 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaS();
+          activaTeclaSBotonInicio();
           playerZone();
       }
     });
@@ -585,7 +587,7 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaS();
+          activaTeclaSBotonInicio();
           playerZone();
       }
     });
@@ -597,12 +599,12 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaS();
+          activaTeclaSBotonInicio();
           playerZone();
       }    
     });
   } else {
-    activaTeclaS();
+    activaTeclaSBotonInicio();
     playerZone();
   }
 }
@@ -618,7 +620,7 @@ function playerZone() {
   if ($("#puntos").text() > 70) img = "4star.png";
   if ($("#puntos").text() > 90) img = "5star.png";
   padre.empty();
-  padre.html("<div><img id='config' src='images/configuration-off.png' title='Configuración'/></div>" +
+  padre.html("<div><img id='config' src='images/configuration.png' title='Configuración'/></div>" +
              "<div><img src='images/user.png' title='Nombre Usuario'/><br/>" + nombreJugador +"</div>" +
 
              "<div><img src='images/clock.png' title='Mejor Tiempo'/><br/>" + tiempoJug.toLocaleTimeString() + "</div>" +
@@ -635,13 +637,7 @@ function playerZone() {
         }
       }
     });
-    $("#config").on ({
-      mouseover: function () {
-        $(this).attr("src", "images/configuration.png");
-      }, 
-      mouseout: function () {
-        $(this).attr("src", "images/configuration-off.png");
-      },  
+    $("#config").on ({  
       click: function() {
         formConfiguracion();
       }
@@ -769,7 +765,7 @@ function formConfiguracion() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popupcf, .popup-overlay").remove();
-          activaTeclaS();
+          activaTeclaSBotonInicio();
       }    
     });
 }
@@ -814,6 +810,19 @@ function paraCrono() {
         '-moz-transition':'all 0.5s ease-out',
         '-o-transition':'all 0.5s ease-out'
     });
+}
+
+// Mute o sonido de la música de fondo
+
+function pausaPlay() {
+  var mF = document.getElementById("musicaFondo");
+  if (mF.paused) {
+    $("#speaker").attr("src", "images/playinGray.png");
+    mF.play();
+  } else {
+    $("#speaker").attr("src", "images/muteGray.png");
+    mF.pause();    
+  }
 }
 
 // Para mostrar strings de tiempo

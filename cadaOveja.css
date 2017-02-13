@@ -18,6 +18,8 @@ footer {
   font-size: 0.9em;
   color: #444;
   text-align: center;
+  width: 1000px;
+  margin: 5px auto;
 }
 
 footer:hover, footer a:hover {
@@ -34,6 +36,12 @@ footer img {
   margin: 0 15px;
   height: 15px;
 }
+
+footer #speaker {
+  float: right;
+  margin: 0 5px;
+}
+
 
 #jugDat {
   position: absolute;
@@ -72,6 +80,16 @@ footer img {
 #jugDat span {
   font-size: 1.1em;
   font-weight: bold;
+}
+
+
+/* Sombra en hover sin necesidad de imagen adicional */
+footer #speaker:hover, #jugDat img:hover {
+  -webkit-filter: drop-shadow(0 2px 2px rgba(0,0,0,.7));
+  -moz-filter: drop-shadow(0 2px 2px rgba(0,0,0,.7));
+  -ms-filter: drop-shadow(0 2px 2px rgba(0,0,0,.7));
+  -o-filter: drop-shadow(0 2px 2px rgba(0,0,0,.7));
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.7));
 }
 
 #marcador, #tablero {

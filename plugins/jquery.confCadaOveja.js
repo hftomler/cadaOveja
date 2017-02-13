@@ -22,7 +22,8 @@ jQuery.fn.confCadaOveja = function(parametros) {
       // Reproduzco la canción seleccionada en pistaActual;
       $("audio").remove();
       reproduceSonido(musicaFondo[pistaActual], 1, true, true);
-      $("#foot").html(copyright + sonando[pistaActual]);
+      $("#foot").html(copyright + sonando[pistaActual] + ctrlSonido );
+      $("#speaker").on("click", pausaPlay);
       var confBloque = $("#jugDat");
       confBloque.removeClass(); // Elimino las clases que pudiera tener asignadas.
       (posPlayerZone == "right") ? confBloque.addClass("right") : confBloque.addClass("left");

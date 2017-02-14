@@ -317,6 +317,7 @@ footer #speaker:hover, #jugDat img:hover {
 /* VENTANA MODAL */
 #popup {
   position: absolute;
+  display: none;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -100%);  

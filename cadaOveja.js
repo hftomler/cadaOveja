@@ -4,12 +4,13 @@ enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
 var mensajeGameOver = "";
-canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)", "Concerning Hobbits"];
+canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)", "Concerning Hobbits", "Rainy Sun"];
 var sonando = ["<a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Aitua<img src='images/cc.png' /></a>",
                "<a href='http://freemusicarchive.org/music/Maxim_Kornyshev'>Sonando: 'Sappfire Wind' - Maxim Kornyshev<img src='images/cc.png' /></a>",
-               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl<img src='images/cc.png' /></a>", 
+               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl<img src='images/ccncnd.png' /></a>", 
+               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Rainy Sun' - The Owl<img src='images/ccncnd.png' /></a>", 
                "<a href='http://downloads.khinsider.com/game-soundtracks/album/lord-of-the-rings-the-fellowship-of-the-ring-howard-shore/02-concerning-hobbits.mp3'>Sonando: 'Concerning Hobbits' - Howard Shore<img src='images/cc.png' /></a>"];
-musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "winterSmoke.mp3", "concerningHobbits.mp3"];
+musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "winterSmoke.mp3", "rainySun.mp3", "concerningHobbits.mp3"];
 pistaActual = ""; // Pista actual de música de fondo que está sonando.
 var copyright = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>"; 
 var ctrlSonido = "<img src='images/playinGray.png' id='speaker' />";                    
@@ -487,7 +488,7 @@ function pideNombre() {
     // Crea el div para la ventana modal
     var padre = $("body");
     var valid = /^[a-zA-ZáéíóúÁÉÍÓÚÑñ]{3,16}$/;
-    var atributos = {id: "popup", style: "display: none"};
+    var atributos = {id: "popup"};
     var modal = crearElemento(padre, "<DIV/>", atributos);
     atributos = {class: "popup-overlay"};
     crearElemento(padre, "<DIV/>", atributos);
@@ -647,7 +648,7 @@ function playerZone() {
 
 function formConfiguracion() {
   var padre = $("body");
-  var atributos = {id: "popupcf", style: "display: none"};
+  var atributos = {id: "popupcf"};
   var modal = crearElemento(padre, "<DIV/>", atributos);
   atributos = {class: "popup-overlay"};
   crearElemento(padre, "<DIV/>", atributos);

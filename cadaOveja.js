@@ -267,6 +267,7 @@ function reproduceSonido(sonido, volumen = 1, loop = false, fondo = false) {
   aud.setAttribute("src", "sonidos/" + sonido);
   if (fondo) {
     aud.setAttribute("id", "musicaFondo");
+    aud.setAttribute("pista", pistaActual);
     document.body.appendChild(aud);
   }
   aud.volume = volumen;

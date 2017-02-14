@@ -15,13 +15,17 @@ jQuery.fn.confCadaOveja = function(parametros) {
       tiempoMuestraCarta = conf.tiempoMuestraCarta;
       fondoCarta = conf.fondoCarta;
       // Música fondo
-      if (pistaActual != "") { // Ya está sonando una canción
-         $("#musicaFondo").remove();
+      var mf = $("#musicaFondo");
+      // Ya está sonando una canción y no es la misma que se quiere configurar
+      if (pistaActual != "" && mf.attr("pista") != conf.pistaActual) {
+         mf.remove();
       }
-      pistaActual = conf.pistaActual;
-      // Reproduzco la canción seleccionada en pistaActual;
-      $("audio").remove();
-      reproduceSonido(musicaFondo[pistaActual], 1, true, true);
+      if (mf.attr("pista") != conf.pistaActual) {
+         pistaActual = conf.pistaActual;
+         // Reproduzco la canción seleccionada en pistaActual;
+         $("audio").remove();
+         reproduceSonido(musicaFondo[pistaActual], 1, true, true);
+      }
       $("#foot").html(copyright + sonando[pistaActual] + ctrlSonido );
       $("#speaker").on("click", pausaPlay);
       var confBloque = $("#jugDat");

@@ -315,7 +315,7 @@ footer #speaker:hover, #jugDat img:hover {
 }
 
 /* VENTANA MODAL */
-#popup {
+#popup{
   position: absolute;
   display: none;
   left: 50%;
@@ -337,7 +337,29 @@ footer #speaker:hover, #jugDat img:hover {
   background-image: url(images/tapete.jpg);
 }
 
-.content-popup h2, .content-popupcf h2 {
+#popupCook {
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%);  
+  z-index: 1001;
+}
+
+.content-popupCook {
+  margin:0px auto;
+  margin-top:120px;
+  position:relative;
+  padding:10px;
+  width:750px;
+  min-height:175px;
+  border: 2px solid #050;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.45);
+  background-image: url(images/tapete.jpg);
+}
+
+.content-popup h2, .content-popupcf h2, .content-popupCook h2 {
   font-family: 'Gloria Hallelujah', cursive;
   font-size: 2em;
   text-shadow: 2px 2px #a50;
@@ -347,10 +369,15 @@ footer #speaker:hover, #jugDat img:hover {
   padding-bottom: 4px;
 }
 
-.content-popup div, .content-popupcf div {
+.content-popup div, .content-popupcf div, .content-popupCook div {
   text-align: center;
   color: #fff;
   text-shadow: 1px 1px #500;
+}
+
+.content-popupCook div p {
+  text-align: justify;
+  text-shadow: none;
 }
 
 .content-popup div:nth-of-type(2) {

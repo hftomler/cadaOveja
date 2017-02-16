@@ -1,13 +1,16 @@
+var politicaCookies = "Utilizamos cookies para facilitarte el uso de nuestra página web. Las cookies son pequeños ficheros de información que nos permiten comparar y entender cómo nuestros usuarios navegan a través de nuestra página web y enriquecer su experiencia de usuario.<br/><br/>";
+politicaCookies += "Estas cookies nos permiten recordar su nombre de usuario, su puntuación y demás datos relativos a su uso de nuestra web. Al visitar nuestra página web, aceptas la instalación de estas cookies en tu dispositivo";
 var numCartas = 24; // Número par
 var cartasPorFila = 8; // Debe ser divisor exacto de numCartas para que sea simétrico.
 enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
 var mensajeGameOver = "";
-canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)", "Concerning Hobbits", "Rainy Sun"];
+var ccncnd = "<img src='images/ccncnd.png' />";
+canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)", "Rainy Sun", "Concerning Hobbits"];
 var sonando = ["<a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Aitua<img src='images/cc.png' /></a>",
                "<a href='http://freemusicarchive.org/music/Maxim_Kornyshev'>Sonando: 'Sappfire Wind' - Maxim Kornyshev<img src='images/cc.png' /></a>",
-               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl<img src='images/ccncnd.png' /></a>", 
+               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl" + ccncnd + "</a>", 
                "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Rainy Sun' - The Owl<img src='images/ccncnd.png' /></a>", 
                "<a href='http://downloads.khinsider.com/game-soundtracks/album/lord-of-the-rings-the-fellowship-of-the-ring-howard-shore/02-concerning-hobbits.mp3'>Sonando: 'Concerning Hobbits' - Howard Shore<img src='images/cc.png' /></a>"];
 musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "winterSmoke.mp3", "rainySun.mp3", "concerningHobbits.mp3"];
@@ -65,14 +68,22 @@ function arrayCartas() {
 }
 
 $(document).ready (function () {
-  $("html").css("height", "100%");
-  $("body").css("min-height", "100%"); // Establezco el body a la altura máxima de pantalla
+  var imagenes = ["startPulsado.png", "lArrBl.png", "rArrBl.png", "lArrRed.png", "rArrRed.png", "start.png", "close.png", 
+                  "botonNombre.jpg", "botonGuardar.jpg", "botonEsla.jpg", "botonEslaOver.jpg", "botonStar.jpg", "botonStarOver.jpg", 
+                  "1star.png", "2star.png", "3star.png", "4star.png", "5star.png", "configuration.png", "user.png", "logout.png", 
+                  "muteGray.png", "playinGray.png", "tapete.jpg", "reversocartagreen.jpg", "reversocartagray.jpg",
+                  "reversocartablue.jpg", "reversocartagold.jpg", "reversocartapurple.jpg", "reversocartared.jpg", 
+                  "anversocarta.jpg", "cartaacertada.jpg", "burbOrange.png", "burbBlue.png", "burbOraRota.png", "burbBlueRota.png"];
+  preload(imagenes);
   poblarJugadores();
   crearTablero(); // Muestro el tablero por primera vez
+  if (Cookies.getJSON("aceptacookie") == undefined) {
+    aceptarCookies();
+  } else {
+    pideNombre();
+  }
   $(document).confCadaOveja(); // Ejecuto el plugin con las opciones por defecto.
-  pideNombre();
   pista = setInterval(pistaIniciar, 6000);
-  // Si se pulsa la imagen Start o la tecla S, comienza el juego
 });
 
 
@@ -423,6 +434,7 @@ function destruirJuego() {
 }
 
 function muestraHS(orden) {
+  $(document).off("keydown"); // Desactivo la pulsación de la tecla S.
   var padre = $("#tablero");
   padre.empty();
   var atributos = {id: "hS"};
@@ -434,7 +446,7 @@ function muestraHS(orden) {
       var listado = Cookies.getJSON();
       var hS = [];
       for (i in listado) {
-        if (i.toLowerCase() != "conf" && i.toLowerCase() != "n1") { // Elimina la cookie de configuración y de control
+        if (i.toLowerCase() != "conf" && i.toLowerCase() != "aceptacookie" && i.toLowerCase() != "n1") { // Elimina la cookie de configuración y de control
           var nombre = i;
           var tiempo = new Date(listado[i].tiempo);
           var puntos = listado[i].puntos;
@@ -442,7 +454,7 @@ function muestraHS(orden) {
         }
       }
 
-      function eliminaVacios() {
+      function eliminaVacios() { // Elimino los jugadores que nunca terminaron una partida.
         for (var i = 0; i<hS.length; i++) {
           if (hS[i][1].toLocaleTimeString() == "1:00:00") {
             hS.splice(i, 1);
@@ -454,8 +466,9 @@ function muestraHS(orden) {
       (orden == 1) ? hS.sort(ordenarTiempos): hS.sort(ordenarPuntos);
       txt += "<span class='nombreHS tituloHS'>Jugador</span><span class='tiempoHS tituloHS'>Tiempo</span><span class='puntosHS tituloHS'>Puntos&nbsp;&nbsp;</span>";
       if (hS.length <= topCuantos) topCuantos = hS.length; 
+      
       crearHighScore(topCuantos);
-      function crearHighScore() {
+      function crearHighScore(topCuantos) {
         for (var i = 0; i<topCuantos; i++) {
           var claseEsp = (nombreJugador == hS[i][0])? " nJHS": "";
           txt += "<span class='nombreHS" + claseEsp + "'>" + hS[i][0] + "</span><span class='tiempoHS" + claseEsp + "'>" + hS[i][1].toLocaleTimeString() + "</span><span class='puntosHS" + claseEsp + "'>" + hS[i][2] + "</span><br class='limpia' />"; 
@@ -476,6 +489,7 @@ function muestraHS(orden) {
   }, 12000, function() {
               if (!enJuego) {
                 $("#tablero").empty().html(mensajeInicio);
+                activaTeclaSBotonInicio();
               }
             });
 }
@@ -539,7 +553,7 @@ function pideNombre() {
           nombreJugador = $("#iNombre").val().toUpperCase();
           guardaDatos(nombreJugador, tiempoNewPlayer, 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaSBotonInicio();
+          //activaTeclaSBotonInicio();
           playerZone();
         } else {
           $("#iNombre").focus();
@@ -567,7 +581,7 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaSBotonInicio();
+          //activaTeclaSBotonInicio();
           playerZone();
       }
     });
@@ -589,7 +603,7 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaSBotonInicio();
+          //activaTeclaSBotonInicio();
           playerZone();
       }
     });
@@ -601,7 +615,7 @@ function pideNombre() {
           $('.popup-overlay').fadeOut('slow');
           blurElement($("#container"), 0);
           $("#popup, .popup-overlay").remove();
-          activaTeclaSBotonInicio();
+          //activaTeclaSBotonInicio();
           playerZone();
       }    
     });
@@ -871,4 +885,53 @@ function poblarJugadores(num = 10) {
     }
   }
   guardaDatos("n1",tmp, Math.ceil(Math.random()*120), false);
+  tiempoNewPlayer.setTime(0);
+}
+
+// PRELOADS DE IMÁGENES
+
+function preload(imageArray, index) {
+        index = index || 0;
+        if (imageArray && imageArray.length > index) {
+            var img = new Image ();
+            img.onload = function() {
+                preload(imageArray, index + 1);
+            }
+            img.src = "images/" + imageArray[index];
+        }
+}
+
+// ACEPTACION LEGAL DE COOKIES
+
+function aceptarCookies() {
+    // Crea el div para la ventana modal
+    var padre = $("body");
+    var valid = /^[a-zA-ZáéíóúÁÉÍÓÚÑñ]{3,16}$/;
+    var atributos = {id: "popupCook"};
+    var modal = crearElemento(padre, "<DIV/>", atributos);
+    atributos = {class: "popup-overlay"};
+    crearElemento(padre, "<DIV/>", atributos);
+    modal.html("<div class='content-popupCook'>" +
+                  "<div>" +
+                    "<h2>Política de cookies</h2>" +
+                    "<p>" + politicaCookies + "</p>" +
+                    "<input type='button' id='siCookie' value='Acepto' />" +
+                  "</div>" +
+                "</div>");
+    blurElement("#container", 5); 
+    $("#popupCook").fadeIn("slow");
+    var fondo = $(".popup-overlay");
+    fondo.fadeIn("slow");
+    fondo.height($(window).height());
+    $("#siCookie").on ({
+      click: function () {
+        reproduceSonido("click.mp3");
+        $('#popupCook').fadeOut('slow');
+        $('.popup-overlay').fadeOut('slow');
+        blurElement($("#container"), 0);
+        Cookies.set("aceptacookie", true, { expires: 1000, path: ''});
+        $("#popupCook, .popup-overlay").remove();
+        pideNombre();
+      }
+    });
 }

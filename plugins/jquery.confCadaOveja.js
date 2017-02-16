@@ -4,7 +4,7 @@ jQuery.fn.confCadaOveja = function(parametros) {
       muestraInicio: true, // true or false
       tiempoMuestraCarta: 500, // milisegundos que se muestra cada carta
       fondoCarta: "cred", // color del anverso de cada carta
-      pistaActual: 3 // Pista por defecto música de fondo.
+      pistaActual: 0 // Pista por defecto música de fondo.
    }
 
    jQuery.extend(conf, parametros);
@@ -16,15 +16,15 @@ jQuery.fn.confCadaOveja = function(parametros) {
       fondoCarta = conf.fondoCarta;
       // Música fondo
       var mf = $("#musicaFondo");
-      // Ya está sonando una canción y no es la misma que se quiere configurar
+      // Ya está sonando una canción y no es la misma que se quiere configurar la elimino
       if (pistaActual != "" && mf.attr("pista") != conf.pistaActual) {
          mf.remove();
       }
-      if (mf.attr("pista") != conf.pistaActual) {
+      if (mf.attr("pista") != conf.pistaActual) { // Si no es la misma añado la nueva
          pistaActual = conf.pistaActual;
          // Reproduzco la canción seleccionada en pistaActual;
          $("audio").remove();
-         reproduceSonido(musicaFondo[pistaActual], 1, true, true);
+         reproduceSonido(musicaFondo[pistaActual], 0.5, true, true);
       }
       $("#foot").html(copyright + sonando[pistaActual] + ctrlSonido );
       $("#speaker").on("click", pausaPlay);

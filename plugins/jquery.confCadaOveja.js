@@ -16,7 +16,7 @@ jQuery.fn.confCadaOveja = function(parametros) {
       fondoCarta = conf.fondoCarta;
       // Música fondo
       var mf = $("#musicaFondo");
-      // Ya está sonando una canción y no es la misma que se quiere configurar la elimino
+      // Si Ya está sonando una canción y no es la misma que se quiere configurar la elimino
       if (pistaActual != "" && mf.attr("pista") != conf.pistaActual) {
          mf.remove();
       }

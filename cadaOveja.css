@@ -187,32 +187,38 @@ footer #speaker:hover, #jugDat img:hover {
 }
 
 .cgreen {
-  background: url(images/reversocartagreen.jpg);
+  background: url(images/reversos2.jpg);
+  background-position: 0 0;
   background-size: 100% 100%;  
 }
 
 .cgray {
-  background: url(images/reversocartagray.jpg);
+  background: url(images/reversos2.jpg);
+  background-position: 0 95px;
   background-size: 100% 100%;  
 }
 
 .cblue {
-  background: url(images/reversocartablue.jpg);
+  background: url(images/reversos2.jpg);
+  background-position: 0 190px;
   background-size: 100% 100%;  
 }
 
 .cgold {
-  background: url(images/reversocartagold.jpg);
+  background: url(images/reversos2.jpg);
+  background-position: 0 285px;
   background-size: 100% 100%;  
 }
 
 .cpurple {
-  background: url(images/reversocartapurple.jpg);
+  background: url(images/reversos2.jpg);
+  background-position: 0 380px;
   background-size: 100% 100%;  
 }
 
 .cred {
-  background: url(images/reversocartared.jpg);
+  background: url(images/reversos2.jpg);
+  background-position: 0 475px;
   background-size: 100% 100%;  
 }
 
@@ -228,6 +234,34 @@ footer #speaker:hover, #jugDat img:hover {
 
 .clear {
     clear: both;
+}
+
+/* Estrellas */
+
+.star1 {
+    background: url(images/stars.png);
+    background-position: 0 0;
+}
+
+.star2 {
+    background: url(images/stars.png);
+    background-position: 0 30;
+}
+
+
+.star3 {
+    background: url(images/stars.png);
+    background-position: 0 60;
+}
+
+.star4 {
+    background: url(images/stars.png);
+    background-position: 0 90;
+}
+
+.star5 {
+    background: url(images/stars.png);
+    background-position: 0 120;
 }
 
 /* Burbujas */

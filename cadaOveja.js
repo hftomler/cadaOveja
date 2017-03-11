@@ -137,7 +137,7 @@ function pistaIniciar() {
   if (!($("#leftStart").is("img"))) { // Ya se está mostrando una flecha.
     var sup = $("#startSup");
     var inf = $("#startInf");
-    atributos = {
+    var atributos = {
       id: "leftStart",
       src: "images/lArrBl.png",
       title: "Haz clic Botón para Iniciar"
@@ -150,9 +150,7 @@ function pistaIniciar() {
       src: "images/rArrBl.png",
       title: "Haz clic Botón para Iniciar"
     };
-    var fleDer = $("<img/>");
-    fleDer.attr(atributos);
-    sup.append(fleDer);
+    var fleDer = crearElemento(sup, "img", atributos);
     fleIzq.animate({
       marginRight: "1px"
     }, 1000, function () {
@@ -169,10 +167,8 @@ function pistaIniciar() {
                   opacity: "0.2",
                 }, 750, function () { fleDer.remove()});
              });
-    var textInf = $("<p/>");
-    textInf.attr({id: "textInf"});
-    inf.append(textInf);
-    textInf.text("Haz clic en el botón o pulsa 'S'");
+    atributos = {id: "textInf"};
+    var textInf = crearElemento(inf, "p", atributos, "Haz clic en el botón o pulsa 'S'");
     textInf.animate({
       fontSize: "+=0.5em",
       opacity: "1"    
@@ -375,15 +371,12 @@ function crearMarcador() {
 function crearCartas() {
   var padre = $("#tablero");
   for (var i = 1; i<=numCartas; i++) {
-    var carta = $("<div/>");
     // Guardo el valor de la carta en el atributo value
-    carta.attr({id: "c"+i, class: "carta", value: arrCartas[i-1]});
-    carta.addClass(fondoCarta);
-    padre.append(carta);
+    var atributos = {id: "c"+i, class: "carta " + fondoCarta, value: arrCartas[i-1]};
+    var carta = crearElemento(padre, "div", atributos);
     // Las muestro según el valor de la variable cartasPorFila
     if (i%cartasPorFila == 0) {
-      var rompeFila = $("<br/>");
-      rompeFila.attr("class", "clear");
+      var rompeFila = $("<br/>").attr("class", "clear");
       padre.append(rompeFila);
     }
     // Si muestraInicio = true. Barrido de cartas. Después de crear las cartas se muestran durante 0.1 segundos. 
@@ -777,9 +770,9 @@ function iniciaCrono() {
   hInicio = new Date();
   crono = setInterval(actualizaCrono, 1);
   var inf = $("#startInf");
-  var textInf = $("<DIV/>");
-  textInf.attr({id: "crono"});
-  inf.append(textInf);
+  inf.empty();
+  var atributos = {id: "crono"};
+  crearElemento(inf, "DIV", atributos);
 }
 
 function actualizaCrono() {
@@ -792,10 +785,10 @@ function actualizaCrono() {
 
 function paraCrono() {
   clearInterval(crono);
-  $("#crono").remove();
+  $("#startInf").empty();
 }
 
-// Función para desenfocar un elemento. Lo uso en el modal para el fondo
+// Función para desenfocar un elemento. Lo uso en el modal para desenfocar el fondo
  function blurElement(element, size) {
     var filterVal = 'blur(' + size + 'px)';
     $(element).css({

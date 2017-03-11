@@ -4,7 +4,7 @@ jQuery.fn.confCadaOveja = function(parametros) {
       muestraInicio: true, // true or false
       tiempoMuestraCarta: 500, // milisegundos que se muestra cada carta
       fondoCarta: "cred", // color del anverso de cada carta
-      pistaActual: 0 // Pista por defecto música de fondo.
+      pistaActual: Math.floor(Math.random()*musicaFondo.length) // Pista por defecto música de fondo.
    }
 
    jQuery.extend(conf, parametros);

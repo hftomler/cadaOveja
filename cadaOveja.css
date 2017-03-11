@@ -184,42 +184,31 @@ footer #speaker:hover, #jugDat img:hover {
   font-family: Arial, sans-serif;
   text-shadow: 2px 2px #333;
   border-radius: 10px;
+  background-image: url(images/reversos2.jpg);
 }
 
 .cgreen {
-  background: url(images/reversos2.jpg);
   background-position: 0 0;
-  background-size: 100% 100%;  
 }
 
 .cgray {
-  background: url(images/reversos2.jpg);
-  background-position: 0 95px;
-  background-size: 100% 100%;  
+  background-position: -95px 0;
 }
 
 .cblue {
-  background: url(images/reversos2.jpg);
-  background-position: 0 190px;
-  background-size: 100% 100%;  
+  background-position: -190px 0;
 }
 
 .cgold {
-  background: url(images/reversos2.jpg);
-  background-position: 0 285px;
-  background-size: 100% 100%;  
+  background-position: -285px 0;
 }
 
 .cpurple {
-  background: url(images/reversos2.jpg);
-  background-position: 0 380px;
-  background-size: 100% 100%;  
+  background-position: -380px 0;
 }
 
 .cred {
-  background: url(images/reversos2.jpg);
-  background-position: 0 475px;
-  background-size: 100% 100%;  
+  background-position: -475px 0;
 }
 
 .cartaMostrada {

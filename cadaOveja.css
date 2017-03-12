@@ -234,23 +234,23 @@ footer #speaker:hover, #jugDat img:hover {
 
 .star2 {
     background: url(images/stars.png);
-    background-position: 0 30;
+    background-position: -30px 0;
 }
 
 
 .star3 {
     background: url(images/stars.png);
-    background-position: 0 60;
+    background-position: -60px 0;
 }
 
 .star4 {
     background: url(images/stars.png);
-    background-position: 0 90;
+    background-position: -90px 0;
 }
 
 .star5 {
     background: url(images/stars.png);
-    background-position: 0 120;
+    background-position: -120px 0;
 }
 
 /* Burbujas */

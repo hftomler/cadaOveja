@@ -6,17 +6,18 @@ enJuego = false;
 var insertCoin = "<br/>Insert coin<br/><br/><img src='images/coin.gif' width='90px' /><br/>or press 'S' to play";
 var mensajeInicio = "¡ Sheep Couples !" + insertCoin;
 var mensajeGameOver = "";
-var ccncnd = "<a href=' https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES' ><img src='images/ccncnd.png' title='Reconocimiento, No Comercial y Sin Obra Derivada'/></a>";
-var cc = "<a href=' https://creativecommons.org/licenses/by/4.0/deed.es_ES' ><img src='images/cc.png' title='Reconocimiento'/></a>";
-canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Winter Smoke (The Owl)", "Rainy Sun", "Concerning Hobbits"];
-var sonando = ["<a href='http://freemusicarchive.org/music/Aitua/'>Sonando: 'Canon in D' (Pachelbel) - Aitua</a>" + cc,
-               "<a href='http://freemusicarchive.org/music/Maxim_Kornyshev'>Sonando: 'Sappfire Wind' - Maxim Kornyshev</a>" + cc,
-               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Winter Smoke' - The Owl</a>" + ccncnd, 
-               "<a href='http://freemusicarchive.org/music/The_Owl/'>Sonando: 'Rainy Sun' - The Owl</a>" + ccncnd, 
-               "<a href='http://downloads.khinsider.com/game-soundtracks/album/lord-of-the-rings-the-fellowship-of-the-ring-howard-shore/02-concerning-hobbits.mp3'>Sonando: 'Concerning Hobbits' - Howard Shore<img src='images/cc.png' /></a>"];
-musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "winterSmoke.mp3", "rainySun.mp3", "concerningHobbits.mp3"];
+var ccncnd = "<a href=' https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es_ES' target='blank'><img src='images/ccncnd.png' title='Reconocimiento, No Comercial y Sin Obra Derivada'/></a>";
+var cc = "<a href=' https://creativecommons.org/licenses/by/4.0/deed.es_ES' target='blank' ><img src='images/cc.png' title='Reconocimiento'/></a>";
+canciones = ["Canon in D (Aitua)", "Sappfire Wind (Maxim Kornyshev)", "Night Radiance (Maxim Kornyshev", "Winter Smoke (The Owl)", "Rainy Sun", "Concerning Hobbits"];
+var sonando = ["<a href='http://freemusicarchive.org/music/Aitua/' target='blank'>Sonando: 'Canon in D' (Pachelbel) - Aitua</a>" + cc,
+               "<a href='http://freemusicarchive.org/music/Maxim_Kornyshev' target='blank'>Sonando: 'Sappfire Wind' - Maxim Kornyshev</a>" + cc,
+               "<a href='http://freemusicarchive.org/music/Maxim_Kornyshev' target='blank'>Sonando: 'Night Radiance' - Maxim Kornyshev</a>" + cc,
+               "<a href='http://freemusicarchive.org/music/The_Owl/' target='blank'>Sonando: 'Winter Smoke' - The Owl</a>" + ccncnd, 
+               "<a href='http://freemusicarchive.org/music/The_Owl/' target='blank'>Sonando: 'Rainy Sun' - The Owl</a>" + ccncnd, 
+               "<a href='http://downloads.khinsider.com/game-soundtracks/album/lord-of-the-rings-the-fellowship-of-the-ring-howard-shore/02-concerning-hobbits.mp3' target='blank'>Sonando: 'Concerning Hobbits' - Howard Shore<img src='images/cc.png' /></a>"];
+musicaFondo = ["kanonInD.mp3", "SappfireWind.mp3", "nightRadiance.mp3", "winterSmoke.mp3", "rainySun.mp3", "concerningHobbits.mp3"];
 pistaActual = ""; // Pista actual de música de fondo que está sonando.
-var copyright = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler'>github -> hftomler </a>"; 
+var copyright = "&copy; Agustín Lorenzo " + new Date().getFullYear() + " <a href='https://github.com/hftomler' target='blank'>github -> hftomler </a>"; 
 var ctrlSonido = "<img src='images/playinGray.png' id='speaker' />";                    
 var retBarr = 100 // Milisegundos para mostrar siguiente carta en el barrido inicial.
 var arrCartas = [];
@@ -37,12 +38,13 @@ var nombresPlayersESLA = ["Adrahil", "Aegnor", "Aerandir", "Aghan", "Aglahad", "
 var nombresPlayersSTARW = ["Anakin Skywalker", "Anakin Solo", "Arren Kae", "Ask Aak", "Attichitcuk", "Ayy Vida", "Banda Max Rebo", "Bene", "Biggs Darklighter", "Bodo Baas", "Bossk", "Cade Skywalker", "Capitán Rex", "Carlist Rieekan", "Darra Thel-Tanis", "Centinelas de Byss", "Chalmun", "Charal", "Chewbacca", "Clone trooper", "Conde Dooku", "Cordé", "Crix Madine", "Darth Bane", "Darth Caedus", "Darth Malak", "Darth Maul", "Darth Plagueis", "Darth Vader", "Dash Rendar", "Demetrius Zaarin", "Diva Funquita", "Diva Shaliqua", "Djas Puhr", "Doda Bodonawieedo", "Dominus", "Dormé", "Durge", "Dutch Vander", "Ephant Mon", "Fang Zar", "Feltipern Trevagg", "Ferus Olin", "Jango Fett", "Boba Fett", "Finis Valorum", "Finn", "Firmus Piett", "Galen Marek", "Garm Bel Iblis", "Garven Dreis", "General Grievous", "General Rahm Kota", "Gilramos Libkath", "Gizor Dellso", "Greeata", "Greedo", "Gregar Typho", "Guardia Real del Emperador", "Han Solo", "Ikrit", "Jabba el Hutt", "Jamillia", "Jan Dodonna", "Jar Jar Binks", "Jek Porkins", "Jerjerrod", "Joh Yowza", "Jorus C'baoth", "Korven Winex", "Kren Blista-Vanee", "Kylo Ren", "Labashi-Marduk", "Lama Su", "Lando Calrissian", "Lobot", "Lord Oscuro", "Lowbacca", "Luke Skywalker", "Lumpawarrump", "Lunae Minx", "Líder Supremo Snoke", "Maris Brood", "Mas Amedda", "Max Rebo", "Maximilian Veers", "Meena Tills", "Miko Reglia", "Momaw Nadon", "Nien Nunb", "Nom Anor", "Nute Gunray", "Olee Starstone", "Orn Free Taa", "Ozzik Sturn", "Palpatine", "Panaka", "Passel Argente", "Poe Dameron", "Poggle el Menor", "Roan Shryne", "Rogwa Wodrata", "Roos Tarpals", "Roron Corobb", "Rosh Penin", "Rugor Nass", "Rune Haako", "Sabé", "San Hill", "Sar Labooda", "Sarrissa Jeng", "Satal Keto", "Saul Karath", "Sebulba", "Señor Oscuro de los Sith", "Shaak Ti", "Shu Mai", "Sidonra Diath", "Sifo-Dyas", "Shmi Skywalker", "Stormtrooper", "Talon Karrde", "Tarfful", "Tavion Axmis", "Tenel Ka", "Terak", "Thon", "Thrawn", "Tikkes", "Tion Medon", "Tru Veld", "Tsui Choi", "Ulic Qel-Droma", "Vergere", "Watto", "Wedge Antilles", "Wicket W. Warrick", "Wilhuff Tarkin", "XizorYuthura Ban", "Zez-Kai Ell", "Zsinj", "Zuckuss"]
 var minutos, segundos; // Cadenas para ajustar plural y singular de segundos;
 var ordenHS = 2; // 1 = tiempo, 2 = Puntuación
-var topCuantos = 10; // Cuantas mejores puntuaciones quieres mostrar
+var topCuantos = 10; // Número de records que quieres mostrar
 tiempoMuestraCarta = 300; // Tiempo en milisegundos que se muestra la carta. Configurada por plugin.
 muestraInicio = true; // False si no se quiere barrido al principio. Configurada por plugin.
 posPlayerZone = ""; // Configurada con el plugin
 fondoCarta = ""; // Configurada con el plugin
 estilosCarta = ["cgreen", "cgray", "cblue", "cgold", "cpurple", "cred"]; // Colores para el fondo de cartas
+
 Array.prototype.barajar = function() {
   for ( var i = this.length-1; i > 0; i-- ) {
       var j = Math.floor( i * Math.random());
@@ -137,19 +139,11 @@ function pistaIniciar() {
   if (!($("#leftStart").is("img"))) { // Ya se está mostrando una flecha.
     var sup = $("#startSup");
     var inf = $("#startInf");
-    var atributos = {
-      id: "leftStart",
-      src: "images/lArrBl.png",
-      title: "Haz clic Botón para Iniciar"
-    };
+    var atributos = {id: "leftStart", src: "images/lArrBl.png", title: "Haz clic Botón para Iniciar"};
     var fleIzq = $("<img/>");
     fleIzq.attr(atributos);
     sup.prepend(fleIzq);
-    atributos = {
-      id: "rightStart",
-      src: "images/rArrBl.png",
-      title: "Haz clic Botón para Iniciar"
-    };
+    atributos = {id: "rightStart", src: "images/rArrBl.png", title: "Haz clic Botón para Iniciar"};
     var fleDer = crearElemento(sup, "img", atributos);
     fleIzq.animate({
       marginRight: "1px"
@@ -283,7 +277,6 @@ function reproduceSonido(sonido, volumen = 1, loop = false, fondo = false) {
 }
 
 function ocultaCarta(carta) {
-  //if (sonidoCarta) reproduceSonido("dealing-card.mp3");  
   carta.animate({
     fontSize:   "-=5px",
     color:      "#fff",
@@ -353,11 +346,7 @@ function crearMarcador() {
       atributos = {id: "startInf"};
       var startInf = crearElemento(start, "DIV", atributos);
   // DIV Botón
-  atributos = {
-    id: "start",
-    src: "images/start.png",
-    title: "Haz clic para Iniciar"
-  };
+  atributos = {id: "start", src: "images/start.png", title: "Haz clic para Iniciar"};
   var botStart = crearElemento(startSup, "img", atributos);
   // DIV Tiradas
   atributos = {id: "tiradas"};
@@ -457,14 +446,18 @@ function muestraHS(orden) {
 
       eliminaVacios();
       (orden == 1) ? hS.sort(ordenarTiempos): hS.sort(ordenarPuntos);
-      txt += "<span class='nombreHS tituloHS'>Jugador</span><span class='tiempoHS tituloHS'>Tiempo</span><span class='puntosHS tituloHS'>Puntos&nbsp;&nbsp;</span>";
+      txt += "<span class='nombreHS tituloHS'>Jugador</span>"; 
+      txt += "<span class='tiempoHS tituloHS'>Tiempo</span>";
+      txt += "<span class='puntosHS tituloHS'>Puntos&nbsp;&nbsp;</span>";
       if (hS.length <= topCuantos) topCuantos = hS.length; 
       
       crearHighScore(topCuantos);
       function crearHighScore(topCuantos) {
         for (var i = 0; i<topCuantos; i++) {
           var claseEsp = (nombreJugador == hS[i][0])? " nJHS": "";
-          txt += "<span class='nombreHS" + claseEsp + "'>" + hS[i][0] + "</span><span class='tiempoHS" + claseEsp + "'>" + hS[i][1].toLocaleTimeString() + "</span><span class='puntosHS" + claseEsp + "'>" + hS[i][2] + "</span><br class='limpia' />"; 
+          txt += "<span class='nombreHS" + claseEsp + "'>" + hS[i][0] + "</span>";
+          txt += "<span class='tiempoHS" + claseEsp + "'>" + hS[i][1].toLocaleTimeString() + "</span>";
+          txt += "<span class='puntosHS" + claseEsp + "'>" + hS[i][2] + "</span><br class='limpia' />"; 
         }
       }
 

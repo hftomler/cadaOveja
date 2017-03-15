@@ -71,13 +71,17 @@ function arrayCartas() {
 }
 
 $(document).ready (function () {
-  //TODO: Gestionar con un Service Worker de cacheo.
+  // SERVICE WORKER: PRIMERO COMPRUEBA CACHÉ Y EN SEGUNDO PLANO ACTUALIZA DE LA RED.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('cadaOvejaSW.js');
+  }
+  /*
   var imagenes = ["startPulsado.png", "lArrBl.png", "rArrBl.png", "lArrRed.png", "rArrRed.png", "start.png", "close.png", 
                   "botonNombre.jpg", "botonGuardar.jpg", "botonEsla.jpg", "botonEslaOver.jpg", "botonStar.jpg", "botonStarOver.jpg", 
                   "stars.png", "configuration.png", "user.png", "logout.png", 
                   "muteGray.png", "playinGray.png", "tapete.jpg", "reversos2.jpg", 
                   "anversocarta.jpg", "cartaacertada.jpg", "burbOrange.png", "burbBlue.png", "burbOraRota.png", "burbBlueRota.png"];
-  preload(imagenes);
+  preload(imagenes);*/
   poblarJugadores();
   crearTablero(); // Muestro el tablero por primera vez
   // Si no se han aceptado aún las cookies se muestra modal, en caso contrario se pideNombre.
